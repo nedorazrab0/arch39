@@ -48,9 +48,10 @@ genfstab -Up /mnt | sed 's/lz4/zstd:6,compress_chksum/' > /mnt/etc/fstab
 curl -o /mnt/tmp/inchroot.sh https://raw.githubusercontent.com/nedorazrab0/test/main/inchroot.sh
 chmod 500 /mnt/tmp/inchroot.sh
 arch-chroot /mnt /tmp/inchroot.sh "$name" "$password" "$zone"
-echo -e '#!/usr/bin/env bash\n\nflatpak install flathub com.google.Chrome com.discordapp.Discord io.mpv.Mpv org.gnome.Boxes org.telegram.desktop org.onlyoffice.desktopeditors com.transmissionbt.Transmission --noninteractive -y\n rm -f "$(realpath "$0")"' > /mnt/usr/bin/flatpaks.sh
-chmod 555 /mnt/usr/bin/flatpaks.sh
 rm -f /mnt/tmp/inchroot.sh
+
+cp ./fin.sh /mnt/usr/bin
+chmod +x /mnt/usr/bin/fin.sh
 echo 'Goodbye ;)'
 sleep 1
 umount -R /mnt
