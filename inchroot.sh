@@ -7,7 +7,7 @@ hwclock --systohc
 useradd -mg users -G wheel "$1"
 echo "$2" | passwd --stdin "$1"
 pacman -Syu --noconfirm
-pacman -S android-tools android-udev opendoas networkmanager network-manager-applet git bash-completion flatpak zram-generator micro \
+pacman -S android-tools android-udev opendoas networkmanager network-manager-applet git bash-completion flatpak zram-generator nano \
           vulkan-radeon libva-mesa-driver \
           gdm gnome grub efibootmgr --noconfirm
 
