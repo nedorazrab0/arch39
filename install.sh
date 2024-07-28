@@ -13,7 +13,7 @@ case "$agreement" in
     *) exit 1;;
 esac
 
-lsblk -do name,model,size,rm,tran
+lsblk -o name,vendor,model,size,label,type,rm,serial,tran
 read -p '- Disk name: ' disk
 sleep 1
 umount /dev/$disk*
