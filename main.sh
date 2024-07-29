@@ -69,4 +69,4 @@ cp $path/zram-generator.conf /usr/lib/systemd
 echo '- Goodbye ;)'
 sleep 2
 umount -R /mnt
-poweroff
+systemctl poweroff
