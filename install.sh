@@ -18,7 +18,7 @@ esac
 cd /
 lsblk -o name,vendor,model,size,label,type,rm,serial,tran
 read -p '- Disk name: ' disk
-sleep 1
+sleep 2
 umount /dev/$disk*
 wipefs --all /dev/$disk
 echo -e 'label:gpt\n,1G,U,-,\n,+,\n' | sfdisk /dev/$disk
@@ -45,7 +45,7 @@ cat /tmp/mlist > /mnt/etc/pacman.d/mirrorlist
 sed -i -e 's/#en_US.UTF-8/en_US.UTF-8/' -e "s/#$kbl.UTF-8/$kbl.UTF-8/" /mnt/etc/locale.gen
 genfstab -Up /mnt | sed 's/lz4/zstd:6,compress_chksum/' > /mnt/etc/fstab
 
-curl -o /mnt/tmp/inchroot.sh https://raw.githubusercontent.com/nedorazrab0/test/main/inchroot.sh
+curl -o /mnt/tmp/inchroot.sh 'https://raw.githubusercontent.com/nedorazrab0/test/main/inchroot.sh'
 chmod 500 /mnt/tmp/inchroot.sh
 arch-chroot /mnt /tmp/inchroot.sh "$name" "$password" "$zone"
 rm -f /mnt/tmp/inchroot.sh
@@ -57,9 +57,15 @@ cp ./fin.sh /mnt/usr/bin
 chmod +x /mnt/usr/bin/fin.sh
 echo 'arch' > /mnt/etc/hostname
 
-
+cp ./60-ioschedulers.rules /mnt/etc/udev/rules.d
+cp ./99-sysctl.conf /mnt/etc/sysctl.d
+cat ./arch.conf | sed "s/uuidv/$uuid/" > /mnt/boot/loader/entries/arch.conf
+cat ./arch.conf | sed -e "s/uuidv/$uuid/" -e 's/zen/zen-fallback/g' -e 's/Arch Linux/fallback initramfs/' > /mnt/boot/loader/entries/arch-fb.conf
+cp ./loader.conf /mnt/boot/loader
+cp ./nanorc /mnt/etc
+cp ./zram-generator.conf /usr/lib/systemd
 
 echo '- Goodbye ;)'
-sleep 1
+sleep 2
 umount -R /mnt
 poweroff
