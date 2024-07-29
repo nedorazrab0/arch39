@@ -1,5 +1,4 @@
 set afterends
-set backup
 set indicator
 set linenumbers
 set magic
