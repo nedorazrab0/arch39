@@ -58,13 +58,13 @@ cp $path/fin.sh /mnt/usr/bin
 chmod +x /mnt/usr/bin/fin.sh
 echo 'arch' > /mnt/etc/hostname
 
-cp $path/60-ioschedulers.rules /mnt/etc/udev/rules.d
-cp $path/99-sysctl.conf /mnt/etc/sysctl.d
-cat $path/arch.conf | sed "s/uuidv/$uuid/" > /mnt/boot/loader/entries/arch.conf
-cat $path/arch.conf | sed -e "s/uuidv/$uuid/" -e 's/zen/zen-fallback/g' -e 's/Arch Linux/fallback initramfs/' > /mnt/boot/loader/entries/arch-fb.conf
-cat $path/loader.conf > /mnt/boot/loader/loader.conf
-cat $path/nanorc > /mnt/etc/nanorc
-cp $path/zram-generator.conf /usr/lib/systemd
+cp $path/sys-configs/60-ioschedulers.rules /mnt/etc/udev/rules.d
+cp $path/sys-configs/99-sysctl.conf /mnt/etc/sysctl.d
+cat $path/sys-configs/arch.conf | sed "s/uuidv/$uuid/" > /mnt/boot/loader/entries/arch.conf
+cat $path/sys-configs/arch.conf | sed -e "s/uuidv/$uuid/" -e 's/zen/zen-fallback/g' -e 's/Arch Linux/fallback initramfs/' > /mnt/boot/loader/entries/arch-fb.conf
+cat $path/sys-configs/loader.conf > /mnt/boot/loader/loader.conf
+cat $path/sys-configs/nanorc > /mnt/etc/nanorc
+cp $path/sys-configs/zram-generator.conf /usr/lib/systemd
 
 echo '- Goodbye ;)'
 sleep 2
