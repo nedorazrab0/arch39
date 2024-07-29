@@ -41,7 +41,7 @@ curl "https://archlinux.org/mirrorlist/?country=${loc}&protocol=https&use_mirror
 cat $path/mlist > /etc/pacman.d/mirrorlist
 
 # installing
-pacstrap -K /mnt base linux-lts linux-firmware amd-ucode
+pacstrap -K /mnt base linux-zen linux-firmware amd-ucode
 cat /tmp/mlist > /mnt/etc/pacman.d/mirrorlist
 sed -i -e 's/#en_US.UTF-8/en_US.UTF-8/' -e "s/#$kbl.UTF-8/$kbl.UTF-8/" /mnt/etc/locale.gen
 genfstab -U /mnt | sed 's/lz4/zstd:6,compress_chksum/' > /mnt/etc/fstab
