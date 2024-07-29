@@ -18,20 +18,17 @@ read -p '- Disk name: ' disk
 sleep 1
 umount /dev/$disk*
 wipefs --all /dev/$disk
-echo -e 'label:gpt\n,512M,U,-,\n,1G,\n,+,\n' | sfdisk /dev/$disk
+echo -e 'label:gpt\n,1G,U,-,\n,+,\n' | sfdisk /dev/$disk
 
 mkfs.fat -F32 -n 'ESP' /dev/$disk*1
-mke2fs -FL 'boot' /dev/$disk*2
-mkfs.f2fs -fil 'arch' -O extra_attr,inode_checksum,sb_checksum,compression /dev/$disk*3
+mkfs.f2fs -fil 'arch' -O extra_attr,inode_checksum,sb_checksum,compression /dev/$disk*2
 
 umount -R /mnt
-mount /dev/$disk*3 /mnt
+mount /dev/$disk*2 /mnt
 mkdir -p /mnt/boot
-mount /dev/$disk*2 /mnt/boot
-mkdir -p /mnt/boot/efi
-mount /dev/$disk*1 /mnt/boot/efi
-sed -i -e 's/#ParallelDownloads = 5/ParallelDownloads = 15/' -e 's/#Colors/Colors/' -e 's/#VerbosePkgLists/VerbosePkgLists/' /etc/pacman.conf
+mount /dev/$disk*1 /mnt/boot
 
+sed -i -e 's/#ParallelDownloads = 5/ParallelDownloads = 15/' -e 's/#Colors/Colors/' -e 's/#VerbosePkgLists/VerbosePkgLists/' /etc/pacman.conf
 pacman -Sy
 pacman -S pacman-contrib --noconfirm
 curl "https://archlinux.org/mirrorlist/?country=${loc}&protocol=https&use_mirror_status=on" | sed -e 's/^#Server/Server/' -e '/^#/d' | rankmirrors -wn 2 - > /tmp/mlist
