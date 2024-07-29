@@ -25,6 +25,7 @@ echo -e 'label:gpt\n,1G,U,-,\n,+,\n' | sfdisk /dev/$disk
 
 mkfs.fat -F32 -n 'ESP' /dev/$disk*1
 mkfs.f2fs -fil 'arch' -O extra_attr,inode_checksum,sb_checksum,compression /dev/$disk*2
+uuid="$(blkid -s UUID -o value /dev/$disk*2)"
 
 umount -R /mnt
 mount /dev/$disk*2 /mnt
@@ -52,12 +53,13 @@ rm -f /mnt/tmp/inchroot.sh
 # post configuration
 echo 'permit persist :wheel as root' > /mnt/etc/doas.conf
 chmod 400 /mnt/etc/doas.conf
-echo 'arch' > /mnt/etc/hostname
-
 cp ./fin.sh /mnt/usr/bin
 chmod +x /mnt/usr/bin/fin.sh
+echo 'arch' > /mnt/etc/hostname
 
-echo 'Goodbye ;)'
+
+
+echo '- Goodbye ;)'
 sleep 1
 umount -R /mnt
 poweroff
