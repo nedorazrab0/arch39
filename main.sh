@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+path='/tmp/njk'
 
 # install configurating
 read -p '- Username: ' name
@@ -36,34 +37,34 @@ mount /dev/$disk*1 /mnt/boot
 sed -i -e 's/#ParallelDownloads = 5/ParallelDownloads = 15/' -e 's/#Colors/Colors/' -e 's/#VerbosePkgLists/VerbosePkgLists/' /etc/pacman.conf
 pacman -Sy
 pacman -S pacman-contrib --noconfirm
-curl "https://archlinux.org/mirrorlist/?country=${loc}&protocol=https&use_mirror_status=on" | sed -e 's/^#Server/Server/' -e '/^#/d' | rankmirrors -wn 2 - > /tmp/mlist
-cat /tmp/mlist > /etc/pacman.d/mirrorlist
+curl "https://archlinux.org/mirrorlist/?country=${loc}&protocol=https&use_mirror_status=on" | sed -e 's/^#Server/Server/' -e '/^#/d' | rankmirrors -wn 2 - > $path/mlist
+cat $path/mlist > /etc/pacman.d/mirrorlist
 
 # installing
 pacstrap -K /mnt base linux-lts linux-firmware amd-ucode
 cat /tmp/mlist > /mnt/etc/pacman.d/mirrorlist
 sed -i -e 's/#en_US.UTF-8/en_US.UTF-8/' -e "s/#$kbl.UTF-8/$kbl.UTF-8/" /mnt/etc/locale.gen
-genfstab -Up /mnt | sed 's/lz4/zstd:6,compress_chksum/' > /mnt/etc/fstab
+genfstab -U /mnt | sed 's/lz4/zstd:6,compress_chksum/' > /mnt/etc/fstab
 
-cp ./cfg/inchroot.sh /mnt/tmp
-chmod 500 /mnt/tmp/inchroot.sh
-arch-chroot /mnt /tmp/inchroot.sh "$name" "$password" "$zone"
-rm -f /mnt/tmp/inchroot.sh
+cp $path/inchroot.sh /mnt/usr/bin
+chmod 500 /mnt/usr/bin/inchroot.sh
+arch-chroot /mnt /usr/bin/inchroot.sh "$name" "$password" "$zone"
+rm -f /mnt/usr/bin/inchroot.sh
 
 # post configuration
 echo 'permit persist :wheel as root' > /mnt/etc/doas.conf
 chmod 400 /mnt/etc/doas.conf
-cp ./fin.sh /mnt/usr/bin
+cp $path/fin.sh /mnt/usr/bin
 chmod +x /mnt/usr/bin/fin.sh
 echo 'arch' > /mnt/etc/hostname
 
-cp ./60-ioschedulers.rules /mnt/etc/udev/rules.d
-cp ./99-sysctl.conf /mnt/etc/sysctl.d
-cat ./arch.conf | sed "s/uuidv/$uuid/" > /mnt/boot/loader/entries/arch.conf
-cat ./arch.conf | sed -e "s/uuidv/$uuid/" -e 's/zen/zen-fallback/g' -e 's/Arch Linux/fallback initramfs/' > /mnt/boot/loader/entries/arch-fb.conf
-cat ./loader.conf > /mnt/boot/loader/loader.conf
-cat ./nanorc > /mnt/etc/nanorc
-cp ./zram-generator.conf /usr/lib/systemd
+cp $path/60-ioschedulers.rules /mnt/etc/udev/rules.d
+cp $path/99-sysctl.conf /mnt/etc/sysctl.d
+cat $path/arch.conf | sed "s/uuidv/$uuid/" > /mnt/boot/loader/entries/arch.conf
+cat $path/arch.conf | sed -e "s/uuidv/$uuid/" -e 's/zen/zen-fallback/g' -e 's/Arch Linux/fallback initramfs/' > /mnt/boot/loader/entries/arch-fb.conf
+cat $path/loader.conf > /mnt/boot/loader/loader.conf
+cat $path/nanorc > /mnt/etc/nanorc
+cp $path/zram-generator.conf /usr/lib/systemd
 
 echo '- Goodbye ;)'
 sleep 2
