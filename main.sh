@@ -29,7 +29,7 @@ mkfs.f2fs -fil 'arch' -O extra_attr,inode_checksum,sb_checksum,compression /dev/
 uuid="$(blkid -s UUID -o value /dev/$disk*2)"
 
 umount -R /mnt
-mount -o 'compress=zstd:6,compress_chksum' /dev/$disk*2 /mnt
+mount -o 'compress_algorithm=zstd:6,compress_chksum' /dev/$disk*2 /mnt
 mkdir -p /mnt/boot
 mount -o 'fmask=0137,dmask=0027' /dev/$disk*1 /mnt/boot
 
