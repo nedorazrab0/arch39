@@ -30,7 +30,7 @@ mkfs.f2fs -fil 'arch' -O extra_attr,inode_checksum,sb_checksum,compression /dev/
 umount -R /mnt
 mount -o 'compress_algorithm=zstd:6,compress_chksum' /dev/$disk*2 /mnt
 mkdir -p /mnt/boot
-mount -o 'fmask=0137,dmask=0027' /dev/$disk*1 /mnt/boot
+mount -o 'fmask=0177,dmask=0077' /dev/$disk*1 /mnt/boot
 
 # pacman configuration
 sed -i -e 's/#ParallelDownloads = 5/ParallelDownloads = 15/' -e 's/#Colors/Colors/' -e 's/#VerbosePkgLists/VerbosePkgLists/' /etc/pacman.conf
