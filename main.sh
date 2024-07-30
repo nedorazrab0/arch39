@@ -29,9 +29,9 @@ mkfs.f2fs -fil 'arch' -O extra_attr,inode_checksum,sb_checksum,compression /dev/
 uuid="$(blkid -s UUID -o value /dev/$disk*2)"
 
 umount -R /mnt
-mount /dev/$disk*2 /mnt
+mount -o 'compress=zstd:6,compress_chksum' /dev/$disk*2 /mnt
 mkdir -p /mnt/boot
-mount /dev/$disk*1 /mnt/boot
+mount -o 'fmask=0137,dmask=0027' /dev/$disk*1 /mnt/boot
 
 # pacman configuration
 sed -i -e 's/#ParallelDownloads = 5/ParallelDownloads = 15/' -e 's/#Colors/Colors/' -e 's/#VerbosePkgLists/VerbosePkgLists/' /etc/pacman.conf
@@ -44,7 +44,7 @@ cat $path/mlist > /etc/pacman.d/mirrorlist
 pacstrap -K /mnt base linux-zen linux-firmware amd-ucode
 cat /tmp/mlist > /mnt/etc/pacman.d/mirrorlist
 sed -i -e 's/#en_US.UTF-8/en_US.UTF-8/' -e "s/#$kbl.UTF-8/$kbl.UTF-8/" /mnt/etc/locale.gen
-genfstab -U /mnt | sed 's/lz4/zstd:6,compress_chksum/' > /mnt/etc/fstab
+genfstab -U /mnt > /mnt/etc/fstab
 
 cp $path/inchroot.sh /mnt/usr/bin
 chmod 500 /mnt/usr/bin/inchroot.sh
