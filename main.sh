@@ -57,6 +57,7 @@ chmod 400 /mnt/etc/doas.conf
 cp $path/fin.sh /mnt/usr/bin
 chmod +x /mnt/usr/bin/fin.sh
 echo 'arch' > /mnt/etc/hostname
+sed -i 's/#DefaultTimeoutStopSec=.*/DefaultTimeoutStopSec=5s/' /etc/systemd/system.conf
 
 cp $path/sys-configs/60-ioschedulers.rules /mnt/etc/udev/rules.d
 cp $path/sys-configs/99-sysctl.conf /mnt/etc/sysctl.d
