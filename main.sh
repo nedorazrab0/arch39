@@ -36,12 +36,12 @@ mount -o 'fmask=0137,dmask=0027' /dev/$disk*1 /mnt/boot
 sed -i -e 's/#ParallelDownloads = 5/ParallelDownloads = 15/' -e 's/#Colors/Colors/' -e 's/#VerbosePkgLists/VerbosePkgLists/' /etc/pacman.conf
 pacman -Sy
 pacman -S pacman-contrib --noconfirm
-curl "https://archlinux.org/mirrorlist/?country=${loc}&protocol=https&use_mirror_status=on" | sed -e 's/^#Server/Server/' -e '/^#/d' | rankmirrors -wn 2 - > $path/mlist
-cat $path/mlist > /etc/pacman.d/mirrorlist
+curl "https://archlinux.org/mirrorlist/?country=${loc}&protocol=https&use_mirror_status=on" | sed -e 's/^#Server/Server/' -e '/^#/d' | rankmirrors -wn 2 - > /etc/pacman.d/mirrorlist
 
 # installing
-pacstrap -K /mnt base linux-zen linux-firmware amd-ucode
-cat /tmp/mlist > /mnt/etc/pacman.d/mirrorlist
+pacstrap -KP /mnt base linux-zen linux-firmware amd-ucode \
+                  android-tools android-udev git bash-completion flatpak zram-generator nano \
+                  opendoas networkmanager vulkan-radeon libva-mesa-driver gnome ntp --ignore totem --ignore gnome-tour
 sed -i -e 's/#en_US.UTF-8/en_US.UTF-8/' -e "s/#$kbl.UTF-8/$kbl.UTF-8/" /mnt/etc/locale.gen
 genfstab -U /mnt > /mnt/etc/fstab
 
