@@ -14,4 +14,4 @@ gsettings set org.gnome.nautilus.preferences show-image-thumbnails always
 gsettings set org.gnome.nautilus.preferences show-directory-item-counts always
 
 flatpak install flathub com.google.Chrome com.discordapp.Discord io.mpv.Mpv org.gnome.Boxes org.telegram.desktop org.onlyoffice.desktopeditors com.transmissionbt.Transmission --noninteractive -y
-rm -f "$(realpath "$0")"
+doas rm -f "$(realpath "$0")"
