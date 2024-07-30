@@ -26,7 +26,6 @@ echo -e 'label:gpt\n,1G,U,-,\n,+,\n' | sfdisk /dev/$disk
 
 mkfs.fat -F32 -n 'ESP' /dev/$disk*1
 mkfs.f2fs -fil 'arch' -O extra_attr,inode_checksum,sb_checksum,compression /dev/$disk*2
-uuid="$(blkid -s UUID -o value /dev/$disk*2)"
 
 umount -R /mnt
 mount -o 'compress_algorithm=zstd:6,compress_chksum' /dev/$disk*2 /mnt
@@ -57,8 +56,9 @@ chmod 400 /mnt/etc/doas.conf
 cp $path/fin.sh /mnt/usr/bin
 chmod +x /mnt/usr/bin/fin.sh
 echo 'arch' > /mnt/etc/hostname
-sed -i 's/#DefaultTimeoutStopSec=.*/DefaultTimeoutStopSec=5s/' /etc/systemd/system.conf
+sed -i 's/#DefaultTimeoutStopSec=.*/DefaultTimeoutStopSec=5s/' /mnt/etc/systemd/system.conf
 
+uuid="$(blkid -s UUID -o value /dev/$disk*2)"
 cp $path/sys-configs/60-ioschedulers.rules /mnt/etc/udev/rules.d
 cp $path/sys-configs/99-sysctl.conf /mnt/etc/sysctl.d
 cat $path/sys-configs/arch.conf | sed "s/uuidv/$uuid/" > /mnt/boot/loader/entries/arch.conf
