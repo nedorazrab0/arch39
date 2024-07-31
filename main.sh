@@ -39,7 +39,7 @@ pacman -S pacman-contrib --noconfirm
 curl "https://archlinux.org/mirrorlist/?country=${loc}&protocol=https&use_mirror_status=on" | sed -e 's/^#Server/Server/' -e '/^#/d' | rankmirrors -wn 2 - > /etc/pacman.d/mirrorlist
 
 # installing
-pacstrap -KP /mnt base linux-zen linux-firmware amd-ucode \
+pacstrap -KP /mnt base linux-zen linux-lts linux-firmware amd-ucode \
                   android-tools android-udev git bash-completion flatpak zram-generator nano \
                   opendoas networkmanager vulkan-radeon libva-mesa-driver gnome ntp --ignore totem --ignore gnome-tour
 sed -i -e 's/#en_US.UTF-8/en_US.UTF-8/' -e "s/#$kbl.UTF-8/$kbl.UTF-8/" /mnt/etc/locale.gen
@@ -55,14 +55,18 @@ echo 'permit persist :wheel as root' > /mnt/etc/doas.conf
 chmod 400 /mnt/etc/doas.conf
 cp $path/fin.sh /mnt/usr/bin
 chmod +x /mnt/usr/bin/fin.sh
-echo 'arch' > /mnt/etc/hostname
+echo 'nedocomp' > /mnt/etc/hostname
 sed -i 's/#DefaultTimeoutStopSec=.*/DefaultTimeoutStopSec=5s/' /mnt/etc/systemd/system.conf
 
 uuid="$(blkid -s UUID -o value /dev/$disk*2)"
+sed -i "s/uuidv/$uuid/" $path/sys-configs/arch.conf
+cat $path/sys-configs/arch.conf | sed -e 's/sortkeyv/1/' -e 's/Arch Linux/& ZEN/' > /mnt/boot/loader/entries/arch-zen.conf
+cat $path/sys-configs/arch.conf | sed -e 's/sortkeyv/3/' -e 's/zen/&-fallback/g' -e 's/Arch Linux/& ZEN (fallback initramfs)/' > /mnt/boot/loader/entries/arch-zen-fb.conf
+cat $path/sys-configs/arch.conf | sed -e 's/sortkeyv/2/' -e 's/zen/lts/g' -e 's/Arch Linux/& LTS/' > /mnt/boot/loader/entries/arch-lts.conf
+cat $path/sys-configs/arch.conf | sed -e 's/sortkeyv/4/' -e 's/zen/lts-fallback/g' -e 's/Arch Linux/& LTS (fallback initramfs)/' > /mnt/boot/loader/entries/arch-lts-fb.conf
+
 cp $path/sys-configs/60-ioschedulers.rules /mnt/etc/udev/rules.d
 cp $path/sys-configs/99-sysctl.conf /mnt/etc/sysctl.d
-cat $path/sys-configs/arch.conf | sed "s/uuidv/$uuid/" > /mnt/boot/loader/entries/arch.conf
-cat $path/sys-configs/arch.conf | sed -e "s/uuidv/$uuid/" -e 's/zen/zen-fallback/g' -e 's/Arch Linux/fallback initramfs/' > /mnt/boot/loader/entries/arch-fb.conf
 cat $path/sys-configs/loader.conf > /mnt/boot/loader/loader.conf
 cat $path/sys-configs/nanorc > /mnt/etc/nanorc
 cp $path/sys-configs/zram-generator.conf /usr/lib/systemd
