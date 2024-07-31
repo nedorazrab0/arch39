@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-mkdir "$HOME/Trash"
+mkdir "$HOME/trash"
 
 gsettings set org.gnome.desktop.interface clock-show-seconds true
 gsettings set org.gnome.desktop.interface clock-show-date false
