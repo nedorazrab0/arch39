@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+[[ "$1" == '--help' ]] && echo '- Use it to create wireless adb connect' && exit 0
+
+adb kill-server
+adb start-server
+
+echo '- Waititng for USB connected device...'
+adb wait-for-usb-device
+addr="$(adb shell ifconfig wlan0 | grep -w 'inet' | awk '{print $2}' | awk -F ':' '{print $2}')"
+adb tcpip 5555
+read -p '- Disconect your device from USB and press [Enter]'
+adb connect "$addr:5555"

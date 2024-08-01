@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+# adb() { '/usr/bin/adb' "$@"; }
+
+files_echo() {
+    case "$1" in
+         'list') echo "$files" | awk '{print NR,$0}';;
+         'graw') echo "$files" | sed -n "${file_number}p";;
+    esac
+}
+
+files() {
+    case "$1" in
+        'pc') files="$(find $HOME/atp/* -maxdepth 0 -type f -exec basename -a '{}' \+)";;
+        'sp') files="$(adb shell find /storage/emulated/0/atp/* -maxdepth 0 -type f -exec basename -a '{}' \+)";;
+    esac
+    files_echo "$2"
+}
+
+case "$1" in
+    to)
+        files pc list
+        read -p '- Select file number: ' file_number
+        file="$(files pc graw)"
+        echo '- Waiting for device...'
+        adb wait-for-device
+        adb shell mkdir -p /storage/emulated/0/atp
+        adb push "$HOME/$file" /storage/emulated/0/atp -z brotli
+        ;;
+    from)
+        echo '- Waiting for device...'
+        adb wait-for-device
+        files sp list
+        read -p '-  Select file number: ' file_number
+        file="$(files sp graw)"
+        mkdir -p "$HOME/atp"
+        adb pull "/storage/emulated/0/atp/$file" "$HOME/atp" -z brotli
+        ;;
+     --help)
+        echo '- Transfering files beetwen $HOME/atp and /storage/emulated/0/atp via adb'
+        echo '  to      push file to /storage/emulated/0/atp'
+        echo '  from    pull file from /storage/emulated/0/atp'
+        echo '  cp      create symlink $2 -> $HOME/atp/...'
+        ;;
+    cp) ln -sf "$2" "$HOME/atp";;
+    *) exit 1;;
+esac
