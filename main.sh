@@ -1,4 +1,10 @@
 #!/usr/bin/env bash
+
+if [[ -z "$1" ]]; then
+    echo '! Enter the target disk name!'
+    exit 1
+fi
+disk="$1"
 path='/tmp/njk'
 
 # install configurating
@@ -16,13 +22,10 @@ case "$agreement" in
 esac
 
 # disk partition
-cd /
-lsblk -o name,vendor,model,size,label,type,rm,serial,tran
-read -p '- Disk name: ' disk
 sleep 2
+cd /
 umount /dev/$disk*
-wipefs --all /dev/$disk
-echo -e 'label:gpt\n,1G,U,-,\n,+,\n' | sfdisk /dev/$disk
+echo -e 'label:gpt\n,1G,U,-,\n,+,\n' | sfdisk -w always -W always /dev/$disk
 
 mkfs.fat -F32 -n 'ESP' /dev/$disk*1
 mkfs.f2fs -fil 'arch' -O extra_attr,inode_checksum,sb_checksum,compression /dev/$disk*2
@@ -45,10 +48,9 @@ pacstrap -KP /mnt base linux-zen linux-lts linux-firmware amd-ucode \
 sed -i -e 's/#en_US.UTF-8/en_US.UTF-8/' -e "s/#$kbl.UTF-8/$kbl.UTF-8/" /mnt/etc/locale.gen
 genfstab -U /mnt > /mnt/etc/fstab
 
-cp $path/inchroot.sh /mnt/usr/bin
-chmod 500 /mnt/usr/bin/inchroot.sh
-arch-chroot /mnt /usr/bin/inchroot.sh "$name" "$password" "$zone"
-rm -f /mnt/usr/bin/inchroot.sh
+mkdir -p /mnt/var/njk
+mount --bind "$path" /mnt/var/njk
+arch-chroot /mnt bash /var/njk/inchroot.sh "$name" "$password" "$zone"
 
 # post configuration
 echo 'permit persist :wheel as root' > /mnt/etc/doas.conf
