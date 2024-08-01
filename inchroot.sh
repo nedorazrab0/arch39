@@ -11,4 +11,6 @@ systemctl enable NetworkManager gdm ntpd
 systemctl disable avahi-daemon
 systemctl mask avahi-daemon
 
-bootctl install
+bootctl install --esp-path=/boot
+echo '- Exiting chroot'
+exit
