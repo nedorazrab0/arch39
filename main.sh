@@ -44,7 +44,7 @@ curl "https://archlinux.org/mirrorlist/?country=${loc}&protocol=https&use_mirror
 # installing
 pacstrap -KP /mnt base linux-zen linux-lts linux-firmware amd-ucode \
                   android-tools android-udev git bash-completion flatpak zram-generator nano \
-                  opendoas networkmanager vulkan-radeon libva-mesa-driver gnome ntp --ignore totem --ignore gnome-tour
+                  opendoas networkmanager vulkan-radeon libva-mesa-driver gnome ntp pipewire pipewire-alsa pipewire-pulse pipewire-jack f2fs-tools --ignore totem --ignore gnome-tour
 sed -i -e 's/#en_US.UTF-8/en_US.UTF-8/' -e "s/#$kbl.UTF-8/$kbl.UTF-8/" /mnt/etc/locale.gen
 genfstab -U /mnt > /mnt/etc/fstab
 
