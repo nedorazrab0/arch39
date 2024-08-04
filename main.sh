@@ -44,7 +44,8 @@ curl "https://archlinux.org/mirrorlist/?country=${loc}&protocol=https&use_mirror
 # installing
 pacstrap -KP /mnt base linux-zen linux-lts linux-firmware amd-ucode \
                   android-tools android-udev git bash-completion flatpak zram-generator nano \
-                  opendoas networkmanager vulkan-radeon libva-mesa-driver gnome ntp pipewire pipewire-alsa pipewire-pulse pipewire-jack f2fs-tools --ignore totem --ignore gnome-tour
+                  opendoas networkmanager vulkan-radeon libva-mesa-driver gnome ntp f2fs-tools \
+                  pipewire pipewire-alsa pipewire-pulse pipewire-jack --ignore totem --ignore gnome-tour
 sed -i -e 's/#en_US.UTF-8/en_US.UTF-8/' -e "s/#$kbl.UTF-8/$kbl.UTF-8/" /mnt/etc/locale.gen
 genfstab -U /mnt > /mnt/etc/fstab
 
@@ -55,7 +56,7 @@ arch-chroot /mnt bash /var/njk/inchroot.sh "$name" "$password" "$zone"
 # post configuration
 echo 'permit persist :wheel as root' > /mnt/etc/doas.conf
 chmod 400 /mnt/etc/doas.conf
-cp $path/fin.sh /mnt/usr/bin
+cp $path/bin/fin.sh /mnt/usr/bin
 chmod +x /mnt/usr/bin/fin.sh
 echo 'nedocomp' > /mnt/etc/hostname
 sed -i 's/#DefaultTimeoutStopSec=.*/DefaultTimeoutStopSec=5s/' /mnt/etc/systemd/system.conf
