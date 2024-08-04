@@ -7,7 +7,7 @@ hwclock --systohc
 useradd -mg users -G wheel "$1"
 echo "$1:$2" | chpasswd
 
-systemctl enable NetworkManager gdm ntpd
+systemctl enable systemd-networkd wpa_supplicant gdm ntpd
 systemctl disable avahi-daemon
 systemctl mask avahi-daemon
 
