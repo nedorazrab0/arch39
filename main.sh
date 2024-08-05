@@ -32,8 +32,7 @@ mkfs.f2fs -fil 'arch' -O 'extra_attr,inode_checksum,sb_checksum,compression' /de
 
 umount -R /mnt
 mount -t f2fs -o 'compress_algorithm=zstd:6,compress_cache,compress_chksum' /dev/$disk*2 /mnt
-mkdir -p /mnt/boot
-mount -t vfat -o 'umask=0177,shortname=winnt,utf8=false,discard' /dev/$disk*1 /mnt/boot
+mount --mkdir=600 -t vfat -o 'umask=0177,shortname=winnt,utf8=false,discard' /dev/$disk*1 /mnt/boot
 
 # pacman configuration
 sed -i -e 's/#ParallelDownloads = 5/ParallelDownloads = 15/' -e 's/#Colors/Colors/' -e 's/#VerbosePkgLists/VerbosePkgLists/' /etc/pacman.conf
@@ -49,8 +48,7 @@ pacstrap -KP /mnt base linux-zen linux-lts linux-firmware amd-ucode \
 sed -i -e 's/#en_US.UTF-8/en_US.UTF-8/' -e "s/#$kbl.UTF-8/$kbl.UTF-8/" /mnt/etc/locale.gen
 genfstab -U /mnt > /mnt/etc/fstab
 
-mkdir -p /mnt/var/njk
-mount --bind "$path" /mnt/var/njk
+mount -m --bind "$path" /mnt/var/njk
 arch-chroot /mnt bash /var/njk/inchroot.sh "$name" "$password" "$zone"
 
 # post configuration
