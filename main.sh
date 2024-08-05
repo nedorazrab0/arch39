@@ -56,17 +56,18 @@ arch-chroot /mnt bash /var/njk/inchroot.sh "$name" "$password" "$zone"
 # post configuration
 echo 'permit persist :wheel as root' > /mnt/etc/doas.conf
 chmod 400 /mnt/etc/doas.conf
-cp $path/bin/fin.sh /mnt/usr/bin
-chmod +x /mnt/usr/bin/fin.sh
 echo 'nedocomp' > /mnt/etc/hostname
 sed -i 's/#DefaultTimeoutStopSec=.*/DefaultTimeoutStopSec=5s/' /mnt/etc/systemd/system.conf
 
 uuid="$(blkid -s UUID -o value /dev/$disk*2)"
 sed -i "s/uuidv/$uuid/" $path/sys-configs/arch.conf
 cat $path/sys-configs/arch.conf | sed -e 's/sortkeyv/1/' -e 's/Arch Linux/& ZEN/' > /mnt/boot/loader/entries/arch-zen.conf
-cat $path/sys-configs/arch.conf | sed -e 's/sortkeyv/3/' -e 's/zen/&-fallback/g' -e 's/Arch Linux/& ZEN (fallback initramfs)/' > /mnt/boot/loader/entries/arch-zen-fb.conf
+cat $path/sys-configs/arch.conf | sed -e 's/sortkeyv/3/' -e 's/zen/&-fallback/g' -e 's/Arch Linux/& ZEN (fallback initramfs)/' > /mnt/boot/loader/entries/arch-zen-fallback.conf
 cat $path/sys-configs/arch.conf | sed -e 's/sortkeyv/2/' -e 's/zen/lts/g' -e 's/Arch Linux/& LTS/' > /mnt/boot/loader/entries/arch-lts.conf
-cat $path/sys-configs/arch.conf | sed -e 's/sortkeyv/4/' -e 's/zen/lts-fallback/g' -e 's/Arch Linux/& LTS (fallback initramfs)/' > /mnt/boot/loader/entries/arch-lts-fb.conf
+cat $path/sys-configs/arch.conf | sed -e 's/sortkeyv/4/' -e 's/zen/lts-fallback/g' -e 's/Arch Linux/& LTS (fallback initramfs)/' > /mnt/boot/loader/entries/arch-lts-fallback.conf
+
+cp $path/bin/{atp,wlc,fin.sh} /mnt/usr/bin
+chmod +x /mnt/usr/bin/{atp,wlc,fin.sh}
 
 cp $path/sys-configs/60-ioschedulers.rules /mnt/etc/udev/rules.d
 cp $path/sys-configs/99-sysctl.conf /mnt/etc/sysctl.d
