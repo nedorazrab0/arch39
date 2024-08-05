@@ -27,13 +27,13 @@ cd /
 umount /dev/$disk*
 echo -e 'label:gpt\n,1G,U,-,\n,+,\n' | sfdisk -w always -W always /dev/$disk
 
-mkfs.fat -F32 -vn 'ESP' /dev/$disk*1
-mkfs.f2fs -fil 'arch' -O extra_attr,inode_checksum,sb_checksum,compression /dev/$disk*2
+mkfs.fat -vF32 -n 'ESP' --codepage=437 /dev/$disk*1
+mkfs.f2fs -fil 'arch' -O 'extra_attr,inode_checksum,sb_checksum,compression' /dev/$disk*2
 
 umount -R /mnt
 mount -t f2fs -o 'compress_algorithm=zstd:6,compress_chksum' /dev/$disk*2 /mnt
 mkdir -p /mnt/boot
-mount -t vfat -o 'fmask=0177,dmask=0077,codepage=850,iocharset=utf8,utf8' /dev/$disk*1 /mnt/boot
+mount -t vfat -o 'umask=0177,shortname=winnt,utf8=false' /dev/$disk*1 /mnt/boot
 
 # pacman configuration
 sed -i -e 's/#ParallelDownloads = 5/ParallelDownloads = 15/' -e 's/#Colors/Colors/' -e 's/#VerbosePkgLists/VerbosePkgLists/' /etc/pacman.conf
