@@ -31,9 +31,9 @@ mkfs.fat -F32 -vn 'ESP' /dev/$disk*1
 mkfs.f2fs -fil 'arch' -O extra_attr,inode_checksum,sb_checksum,compression /dev/$disk*2
 
 umount -R /mnt
-mount -o 'compress_algorithm=zstd:6,compress_chksum' /dev/$disk*2 /mnt
+mount -t f2fs -o 'compress_algorithm=zstd:6,compress_chksum' /dev/$disk*2 /mnt
 mkdir -p /mnt/boot
-mount -o 'fmask=0177,dmask=0077,codepage=850,iocharset=utf8,utf8' /dev/$disk*1 /mnt/boot
+mount -t vfat -o 'fmask=0177,dmask=0077,codepage=850,iocharset=utf8,utf8' /dev/$disk*1 /mnt/boot
 
 # pacman configuration
 sed -i -e 's/#ParallelDownloads = 5/ParallelDownloads = 15/' -e 's/#Colors/Colors/' -e 's/#VerbosePkgLists/VerbosePkgLists/' /etc/pacman.conf
