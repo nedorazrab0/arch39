@@ -32,7 +32,7 @@ mkfs.f2fs -fil 'arch' -O 'extra_attr,inode_checksum,sb_checksum,compression' /de
 
 umount -R /mnt
 mount -t f2fs -o 'compress_algorithm=zstd:6,compress_cache,compress_chksum' /dev/$disk*2 /mnt
-mount --mkdir=600 -t vfat -o 'umask=0177,shortname=winnt,utf8=false,discard' /dev/$disk*1 /mnt/boot
+mount -t vfat --mkdir=600 -o 'umask=0177,shortname=winnt,utf8=false,discard' /dev/$disk*1 /mnt/boot
 
 # pacman configuration
 sed -i -e 's/#ParallelDownloads = 5/ParallelDownloads = 15/' -e 's/#Colors/Colors/' -e 's/#VerbosePkgLists/VerbosePkgLists/' /etc/pacman.conf
@@ -43,7 +43,7 @@ curl "https://archlinux.org/mirrorlist/?country=${loc}&protocol=https&use_mirror
 # installing
 pacstrap -KP /mnt base linux-zen linux-lts linux-firmware amd-ucode \
                   android-tools android-udev git bash-completion flatpak zram-generator nano \
-                  opendoas dhclient wpa_supplicant vulkan-radeon libva-mesa-driver gnome ntp f2fs-tools \
+                  opendoas dhclient wpa_supplicant vulkan-radeon libva-mesa-driver gnome ntp f2fs-tools dosfstools e2fsprogs \
                   pipewire pipewire-alsa pipewire-pulse pipewire-jack --ignore totem --ignore gnome-tour
 sed -i -e 's/#en_US.UTF-8/en_US.UTF-8/' -e "s/#$kbl.UTF-8/$kbl.UTF-8/" /mnt/etc/locale.gen
 genfstab -U /mnt > /mnt/etc/fstab
