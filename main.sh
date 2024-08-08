@@ -1,18 +1,13 @@
 #!/usr/bin/env bash
-
-if [[ -z "$1" ]]; then
-    echo '! Enter the target disk name!'
-    exit 1
-fi
-disk="$1"
 path='/tmp/njk'
 
 # install configurating
 read -p '- Username: ' name
 read -ps '- Password: ' password
-read -p '- Timezone (Europe/Moscow):' zone
+read -p '- Timezone (Europe/Moscow): ' zone
 read -p '- Country ISO code (for mirrors): ' loc
-read -p '- Locale (ru_RU)' kbl
+read -p '- Locale (ru_RU): ' kbl
+read -p '- Target disk name: ' disk
 read -p '- Do you want to destroy your own disk? (y/n): ' agreement
 
 case "$agreement" in
@@ -43,7 +38,7 @@ curl "https://archlinux.org/mirrorlist/?country=${loc}&protocol=https&use_mirror
 # installing
 pacstrap -KP /mnt base linux-zen linux-lts linux-firmware amd-ucode \
                   android-tools android-udev git bash-completion flatpak zram-generator nano \
-                  opendoas dhclient wpa_supplicant vulkan-radeon libva-mesa-driver gnome ntp f2fs-tools dosfstools e2fsprogs \
+                  opendoas dhclient wpa_supplicant vulkan-radeon libva-mesa-driver gnome ntp f2fs-tools dosfstools e2fsprogs exfatprogs \
                   pipewire pipewire-alsa pipewire-pulse pipewire-jack --ignore totem --ignore gnome-tour
 sed -i -e 's/#en_US.UTF-8/en_US.UTF-8/' -e "s/#$kbl.UTF-8/$kbl.UTF-8/" /mnt/etc/locale.gen
 genfstab -U /mnt > /mnt/etc/fstab
