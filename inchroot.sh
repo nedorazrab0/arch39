@@ -4,7 +4,7 @@ echo '- CHROOT'
 locale-gen
 hwclock --systohc
 timedatectl set-timezone "$3"
-sed -i -e 's/#NTP=/NTP=/' -e 's/#FallbackNTP/FallbackNTP=time.google.com/'
+sed -i -e 's/#NTP=/NTP=/' -e 's/#FallbackNTP/FallbackNTP=time.google.com/' /etc/systemd/timesync.conf
 timedatectl set-ntp true
 
 useradd -mg users -G wheel "$1"
