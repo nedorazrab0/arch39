@@ -10,7 +10,7 @@ timedatectl set-ntp true
 useradd -mg users -G wheel "$1"
 echo "$1:$2" | chpasswd
 
-systemctl enable systemd-networkd wpa_supplicant gdm systemd-timesyncd
+systemctl enable systemd-networkd wpa_supplicant gdm systemd-timesyncd fstrim fstrim.timer
 systemctl disable avahi-daemon
 systemctl mask avahi-daemon
 
