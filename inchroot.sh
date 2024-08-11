@@ -2,10 +2,11 @@
 echo '- CHROOT'
 
 locale-gen
-hwclock --systohc
 timedatectl set-timezone "$3"
 sed -i -e 's/#NTP=/NTP=/' -e 's/#FallbackNTP/FallbackNTP=time.google.com/' /etc/systemd/timesync.conf
 timedatectl set-ntp true
+systemctl restart systemd-timesyncd
+hwclock -w
 
 useradd -mg users -G wheel "$1"
 echo "$1:$2" | chpasswd
