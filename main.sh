@@ -39,9 +39,9 @@ curl "https://archlinux.org/mirrorlist/?country=${loc}&protocol=https&use_mirror
 mkdir -p /mnt/etc
 echo 'compression: lz4' > /mnt/etc/booster.yaml
 pacstrap -KP /mnt base linux-zen linux-lts linux-firmware amd-ucode \
-                  android-tools android-udev git bash-completion flatpak zram-generator nano gnome booster \
-                  opendoas dhclient wpa_supplicant vulkan-radeon libva-mesa-driver \
+                  opendoas vulkan-radeon libva-mesa-driver \
                   f2fs-tools dosfstools e2fsprogs exfatprogs \
+                  android-tools android-udev git bash-completion flatpak zram-generator nano gnome booster NetworkManager \
                   pipewire pipewire-alsa pipewire-pulse pipewire-jack --ignore totem --ignore gnome-tour
 sed -i -e 's/#en_US.UTF-8/en_US.UTF-8/' -e "s/#$kbl.UTF-8/$kbl.UTF-8/" /mnt/etc/locale.gen
 genfstab -U /mnt > /mnt/etc/fstab
