@@ -3,7 +3,7 @@ path='/tmp/njk'
 
 # install configurating
 read -p '- Username: ' name
-read -ps '- Password: ' password
+read -sp '- Password: ' password
 read -p '- Timezone (Europe/Moscow): ' zone
 read -p '- Country ISO code (for mirrors): ' loc
 read -p '- Locale (ru_RU): ' kbl
