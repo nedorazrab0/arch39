@@ -29,6 +29,10 @@ umount -R /mnt
 mount -t f2fs -o 'compress_algorithm=zstd,compress_cache,compress_chksum,noatime' /dev/$disk*2 /mnt
 mount -t vfat --mkdir=600 -o 'umask=0177,noexec,noatime,shortname=winnt,utf8=false,discard' /dev/$disk*1 /mnt/boot
 
+# ntp
+sed -i -e 's/#NTP=/NTP=/' -e 's/#FallbackNTP/FallbackNTP=time.google.com/' /etc/systemd/timesyncd.conf
+systemctl restart systemd-timesyncd
+
 # pacman configuration
 sed -i -e 's/#ParallelDownloads = 5/ParallelDownloads = 15/' -e 's/#Colors/Colors/' -e 's/#VerbosePkgLists/VerbosePkgLists/' /etc/pacman.conf
 pacman -Sy archlinux-keyring --noconfirm
@@ -54,6 +58,7 @@ echo 'permit persist :wheel as root' > /mnt/etc/doas.conf
 chmod 400 /mnt/etc/doas.conf
 echo 'nedocomp' > /mnt/etc/hostname
 sed -i 's/#DefaultTimeoutStopSec=.*/DefaultTimeoutStopSec=5s/' /mnt/etc/systemd/system.conf
+cat /etc/systemd/timesyncd.conf > /mnt/etc/systemd/timesyncd.conf
 
 uuid="$(blkid -s UUID -o value /dev/$disk*2)"
 cat $path/sys-configs/arch-zen.conf | sed "s/uuidv/$uuid/" > /mnt/boot/loader/entries/arch-zen.conf
