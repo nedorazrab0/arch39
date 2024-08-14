@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 path='/tmp/njk'
 
+rm -rf "$path"
 mkdir -p "$path"
 curl -o $path/setup.txz 'https://raw.githubusercontent.com/nedorazrab0/arch-install-test/main/setup.txz'
 tar -xJf $path/setup.txz -C "$path"
