@@ -38,10 +38,10 @@ curl "https://archlinux.org/mirrorlist/?country=${loc}&protocol=https&use_mirror
 # installing
 mkdir -p /mnt/etc
 echo 'compression: lz4' > /mnt/etc/booster.yaml
-pacstrap -KP /mnt base linux-zen linux-lts linux-firmware amd-ucode \
+pacstrap -KP /mnt base linux-zen booster linux-firmware amd-ucode \
                   opendoas vulkan-radeon libva-mesa-driver \
                   f2fs-tools dosfstools e2fsprogs exfatprogs \
-                  android-tools android-udev git bash-completion flatpak zram-generator nano gnome booster NetworkManager \
+                  android-tools android-udev git bash-completion flatpak zram-generator nano gnome NetworkManager \
                   pipewire pipewire-alsa pipewire-pulse pipewire-jack --ignore totem --ignore gnome-tour
 sed -i -e 's/#en_US.UTF-8/en_US.UTF-8/' -e "s/#$kbl.UTF-8/$kbl.UTF-8/" /mnt/etc/locale.gen
 genfstab -U /mnt > /mnt/etc/fstab
@@ -56,9 +56,7 @@ echo 'nedocomp' > /mnt/etc/hostname
 sed -i 's/#DefaultTimeoutStopSec=.*/DefaultTimeoutStopSec=5s/' /mnt/etc/systemd/system.conf
 
 uuid="$(blkid -s UUID -o value /dev/$disk*2)"
-sed -i "s/uuidv/$uuid/" $path/sys-configs/arch.conf
-cat $path/sys-configs/arch.conf | sed -e 's/sortkeyv/1/' -e 's/Arch Linux/& ZEN/' > /mnt/boot/loader/entries/arch-zen.conf
-cat $path/sys-configs/arch.conf | sed -e 's/sortkeyv/2/' -e 's/zen/lts/g' -e 's/Arch Linux/& LTS/' > /mnt/boot/loader/entries/arch-lts.conf
+cat $path/sys-configs/arch-zen.conf | sed "s/uuidv/$uuid/" > /mnt/boot/loader/entries/arch-zen.conf
 
 cp $path/bin/{atp,wlc,fin.sh} /mnt/usr/bin
 chmod +x /mnt/usr/bin/{atp,wlc,fin.sh}
