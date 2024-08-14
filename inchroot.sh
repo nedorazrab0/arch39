@@ -2,10 +2,7 @@
 echo '- CHROOT'
 
 locale-gen
-timedatectl set-timezone "$3"
-sed -i -e 's/#NTP=/NTP=/' -e 's/#FallbackNTP/FallbackNTP=time.google.com/' /etc/systemd/timesync.conf
-timedatectl set-ntp true
-systemctl restart systemd-timesyncd
+ln -sf "/usr/share/zoneinfo/$3" /etc/localtime
 hwclock -uw
 
 useradd -mg users -G wheel "$1"
