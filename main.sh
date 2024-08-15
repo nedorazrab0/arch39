@@ -3,7 +3,7 @@ path='/tmp/njk'
 
 # install configurating
 read -p '- Username: ' name
-read -sp '- Password: ' password
+read -sp '- Password: ' password; echo
 read -p '- Timezone (Europe/Moscow): ' zone
 read -p '- Country ISO code (for mirrors): ' loc
 read -p '- Locale (ru_RU): ' kbl
@@ -46,7 +46,7 @@ pacstrap -KP /mnt base linux-zen booster linux-firmware amd-ucode \
                   opendoas vulkan-radeon libva-mesa-driver \
                   f2fs-tools dosfstools e2fsprogs exfatprogs \
                   android-tools android-udev git bash-completion flatpak zram-generator nano gnome networkmanager \
-                  pipewire pipewire-alsa pipewire-pulse pipewire-jack --ignore totem --ignore gnome-tour
+                  pipewire{,-alsa,-pulse,-jack} --ignore totem --ignore gnome-tour
 sed -i -e 's/#en_US.UTF-8/en_US.UTF-8/' -e "s/#$kbl.UTF-8/$kbl.UTF-8/" /mnt/etc/locale.gen
 genfstab -U /mnt > /mnt/etc/fstab
 
