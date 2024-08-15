@@ -20,7 +20,7 @@ esac
 sleep 2
 cd /
 umount /dev/$disk*
-echo -e 'label:gpt\n,1G,U,-\n+' | sfdisk -w always -W always /dev/$disk
+echo -e 'label:gpt\n,512M,U,-\n+' | sfdisk -w always -W always /dev/$disk
 
 mkfs.fat -vF32 -n 'ESP' --codepage=437 /dev/$disk*1
 mkfs.f2fs -fil 'arch' -O 'extra_attr,inode_checksum,sb_checksum,compression' /dev/$disk*2
@@ -45,7 +45,7 @@ echo 'compression: lz4' > /mnt/etc/booster.yaml
 pacstrap -KP /mnt base linux-zen booster linux-firmware amd-ucode \
                   opendoas vulkan-radeon libva-mesa-driver \
                   f2fs-tools dosfstools e2fsprogs exfatprogs \
-                  android-tools android-udev git bash-completion flatpak zram-generator nano gnome networkmanager \
+                  android-tools android-udev git bash-completion zip flatpak zram-generator nano gnome networkmanager \
                   pipewire{,-alsa,-pulse,-jack} --ignore totem --ignore gnome-tour
 sed -i -e 's/#en_US.UTF-8/en_US.UTF-8/' -e "s/#$kbl.UTF-8/$kbl.UTF-8/" /mnt/etc/locale.gen
 genfstab -U /mnt > /mnt/etc/fstab
