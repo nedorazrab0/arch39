@@ -23,7 +23,7 @@ umount /dev/$disk*
 echo -e 'label:gpt\n,512M,U,-\n+' | sfdisk -w always -W always /dev/$disk
 
 mkfs.fat -vF32 -n 'ESP' --codepage=437 /dev/$disk*1
-mkfs.f2fs -fil 'arch' -O 'extra_attr,inode_checksum,sb_checksum,compression' /dev/$disk*2
+mkfs.f2fs -fil 'archlinux' -O 'extra_attr,inode_checksum,sb_checksum,compression' /dev/$disk*2
 
 umount -R /mnt
 mount -t f2fs -o 'compress_algorithm=zstd,compress_cache,compress_chksum,noatime' /dev/$disk*2 /mnt
@@ -37,6 +37,7 @@ systemctl restart systemd-timesyncd
 sed -i -e 's/#ParallelDownloads = 5/ParallelDownloads = 15/' -e 's/#Colors/Colors/' -e 's/#VerbosePkgLists/VerbosePkgLists/' /etc/pacman.conf
 pacman -Sy archlinux-keyring --noconfirm
 pacman -S pacman-contrib --noconfirm
+echo '- Configuring mirrors...'
 curl "https://archlinux.org/mirrorlist/?country=${loc}&protocol=https&use_mirror_status=on" | sed -e 's/^#Server/Server/' -e '/^#/d' | rankmirrors -wn 2 - > /etc/pacman.d/mirrorlist
 
 # installing
