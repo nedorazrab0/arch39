@@ -71,7 +71,7 @@ cp $path/sys-configs/60-ioschedulers.rules /mnt/etc/udev/rules.d
 cp $path/sys-configs/99-sysctl.conf /mnt/etc/sysctl.d
 cat $path/sys-configs/loader.conf > /mnt/boot/loader/loader.conf
 cat $path/sys-configs/nanorc > /mnt/etc/nanorc
-cp $path/sys-configs/zram-generator.conf /usr/lib/systemd
+cp $path/sys-configs/zram-generator.conf /etc/systemd
 
 echo '- Goodbye ;)'
 sleep 2
