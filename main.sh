@@ -30,11 +30,11 @@ mount -t f2fs -o 'compress_algorithm=zstd,compress_cache,compress_chksum,noatime
 mount -t vfat --mkdir=600 -o 'umask=0177,noexec,noatime,shortname=winnt,utf8=false,discard' /dev/$disk*1 /mnt/boot
 
 # ntp
-sed -i -e 's/#NTP=/NTP=/' -e 's/#FallbackNTP/FallbackNTP=time.google.com/' /etc/systemd/timesyncd.conf
+sed -i -e 's/#NTP=/NTP=/' -e 's/#FallbackNTP=.*/FallbackNTP=time.google.com/' /etc/systemd/timesyncd.conf
 systemctl restart systemd-timesyncd
 
 # pacman configuration
-sed -i -e 's/#ParallelDownloads = 5/ParallelDownloads = 15/' -e 's/#Colors/Colors/' -e 's/#VerbosePkgLists/VerbosePkgLists/' /etc/pacman.conf
+sed -i -e 's/#ParallelDownloads = 5/ParallelDownloads = 15/' -e 's/#Color/Color/' -e 's/#VerbosePkgLists/VerbosePkgLists/' /etc/pacman.conf
 pacman -Sy archlinux-keyring --noconfirm
 pacman -S pacman-contrib --noconfirm
 echo '- Configuring mirrors...'
