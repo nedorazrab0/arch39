@@ -5,7 +5,7 @@ mkdir -p $HOME/{trash,atp}
 gsettings set org.gnome.desktop.interface clock-show-seconds true
 gsettings set org.gnome.desktop.interface clock-show-date false
 gsettings set org.gnome.desktop.interface show-battery-percentage true
-gsettings set org.gnome.shell favorite-apps "['com.google.Chrome.desktop', 'org.mozilla.firefox.desktop', 'com.discordapp.Discord.desktop', 'org.gnome.Nautilus.desktop', 'org.gnome.Console.desktop']"
+gsettings set org.gnome.shell favorite-apps "['org.mozilla.firefox.desktop', 'com.discordapp.Discord.desktop', 'org.gnome.Nautilus.desktop', 'org.gnome.Console.desktop']"
 gsettings set org.gnome.desktop.interface color-scheme prefer-dark
 
 gsettings set org.gnome.desktop.privacy remove-old-temp-files true
