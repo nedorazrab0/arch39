@@ -26,7 +26,7 @@ mkfs.fat -vF32 -n 'ESP' --codepage=437 /dev/$disk*1
 mkfs.f2fs -fil 'archlinux' -O 'extra_attr,inode_checksum,sb_checksum,compression' /dev/$disk*2
 
 umount -R /mnt
-mount -t f2fs -o 'compress_algorithm=zstd,compress_cache,compress_chksum,noatime' /dev/$disk*2 /mnt
+mount -t f2fs -o 'noatime,compress_algorithm=zstd:3,compress_cache,compress_chksum' /dev/$disk*2 /mnt
 mount -t vfat --mkdir=600 -o 'umask=0177,noexec,noatime,shortname=winnt,utf8=false,discard' /dev/$disk*1 /mnt/boot
 
 # ntp
