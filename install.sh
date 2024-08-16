@@ -3,8 +3,8 @@ path='/tmp/njk'
 
 rm -rf "$path"
 mkdir -p "$path"
-curl -o $path/setup.txz 'https://raw.githubusercontent.com/nedorazrab0/arch-install-test/main/setup.txz'
-tar -xJf $path/setup.txz -C "$path"
-rm -f $path/setup.txz
+curl -o $path/setup.tar.xz 'https://raw.githubusercontent.com/nedorazrab0/arch-install/main/setup.tar.xz'
+tar -xJf $path/setup.tar.xz -C "$path"
+rm -f $path/setup.tar.xz
 
 bash "$path/main.sh"
