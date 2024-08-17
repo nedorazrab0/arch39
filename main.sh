@@ -18,11 +18,11 @@ esac
 # disk partition
 sleep 2
 cd /
+umount -R /mnt
 umount /dev/$disk*
 wipefs -a /dev/$disk
 echo -e 'label:gpt\n,512M,U,-\n+' | sfdisk -w always -W always /dev/$disk
 
-umount -R /mnt
 mkfs.fat -vF32 -n 'ESP' --codepage=437 /dev/$disk*1
 mkfs.f2fs -fil 'archlinux' -O 'extra_attr,inode_checksum,sb_checksum,compression' /dev/$disk*2
 
