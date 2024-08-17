@@ -1,10 +1,12 @@
 #!/usr/bin/env bash
-path='/tmp/njk'
+read -p '- Coutry (for mirrors): ' loc
 
-rm -rf "$path"
-mkdir -p "$path"
-curl -o $path/setup.tar.xz 'https://raw.githubusercontent.com/nedorazrab0/arch-install/main/setup.tar.xz'
-tar -xJf $path/setup.tar.xz -C "$path"
-rm -f $path/setup.tar.xz
+# pacman configuration
+sed -i -e 's/#ParallelDownloads = 5/ParallelDownloads = 15/' -e 's/#Color/Color/' -e 's/#VerbosePkgLists/VerbosePkgLists/' /etc/pacman.conf
+pacman -Sy archlinux-keyring --noconfirm
+echo '- Configuring mirrors...'
+reflector --country "$loc" --protocol https --last 2 --sort rate --save /etc/pacman.d/mirrorlist
+pacman -Syy git --noconfirm
+git clone https://github.com/nedorazrab0/arch-install /tmp/njk
 
-bash "$path/main.sh"
+bash /tmp/njk/main.sh
