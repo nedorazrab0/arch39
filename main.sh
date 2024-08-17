@@ -51,8 +51,8 @@ pacstrap -KP /mnt base linux-zen booster linux-firmware amd-ucode \
 sed -i -e 's/#en_US.UTF-8/en_US.UTF-8/' -e "s/#$kbl.UTF-8/$kbl.UTF-8/" /mnt/etc/locale.gen
 genfstab -U /mnt > /mnt/etc/fstab
 
-mount -m --bind "$path" /mnt/var/njk
-arch-chroot /mnt bash /var/njk/inchroot.sh "$name" "$password" "$zone"
+mount --bind "$path" /mnt/mnt
+arch-chroot /mnt bash /mnt/inchroot.sh "$name" "$password" "$zone"
 
 # post configuration
 echo 'permit persist :wheel as root' > /mnt/etc/doas.conf
