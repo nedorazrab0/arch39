@@ -15,4 +15,5 @@ gsettings set org.gnome.nautilus.preferences recursive-search always
 gsettings set org.gnome.nautilus.preferences show-image-thumbnails always
 gsettings set org.gnome.nautilus.preferences show-directory-item-counts always
 
+doas pacman -R totem epiphany gnome-tour --noconfirm
 doas rm -f "$(realpath "$0")"
