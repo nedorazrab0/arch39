@@ -5,7 +5,6 @@ path='/tmp/njk'
 read -p '- Username: ' name
 read -sp '- Password: ' password; echo
 read -p '- Timezone (Europe/Moscow): ' zone
-read -p '- Country ISO code (for mirrors): ' loc
 read -p '- Locale (ru_RU): ' kbl
 read -p '- Target disk name: ' disk
 read -p '- Do you want to destroy your own disk? (y/n): ' agreement
@@ -33,17 +32,10 @@ mount -t vfat --mkdir=600 -o 'umask=0177,noexec,noatime,shortname=winnt,utf8=fal
 sed -i -e 's/#NTP=/NTP=/' -e 's/#FallbackNTP=.*/FallbackNTP=time.google.com/' /etc/systemd/timesyncd.conf
 systemctl restart systemd-timesyncd
 
-# pacman configuration
-sed -i -e 's/#ParallelDownloads = 5/ParallelDownloads = 15/' -e 's/#Color/Color/' -e 's/#VerbosePkgLists/VerbosePkgLists/' /etc/pacman.conf
-pacman -Sy archlinux-keyring --noconfirm
-pacman -S pacman-contrib --noconfirm
-echo '- Configuring mirrors...'
-curl "https://archlinux.org/mirrorlist/?country=${loc}&protocol=https&use_mirror_status=on" | sed -e 's/^#Server/Server/' -e '/^#/d' | rankmirrors -wn 2 - > /etc/pacman.d/mirrorlist
-
 # installing
 mkdir -p /mnt/etc
 echo 'compression: lz4' > /mnt/etc/booster.yaml
-pacstrap -KP /mnt base linux-zen booster linux-firmware amd-ucode \
+pacstrap -cKP /mnt base linux-zen booster linux-firmware amd-ucode \
                   opendoas vulkan-radeon libva-mesa-driver \
                   f2fs-tools dosfstools e2fsprogs exfatprogs \
                   android-tools android-udev git bash-completion zip flatpak zram-generator nano gnome networkmanager \
