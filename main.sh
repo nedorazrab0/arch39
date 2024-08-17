@@ -20,7 +20,6 @@ sleep 2
 cd /
 umount -R /mnt
 umount /dev/$disk*
-wipefs -a /dev/$disk
 echo -e 'label:gpt\n,512M,U,-\n+' | sfdisk -w always -W always /dev/$disk
 
 mkfs.fat -vF32 -n 'ESP' --codepage=437 /dev/$disk*1
