@@ -36,7 +36,7 @@ systemctl restart systemd-timesyncd
 # installing
 mkdir -p /mnt/etc
 echo 'compression: lz4' > /mnt/etc/booster.yaml
-pacstrap -cKP /mnt base linux-zen booster linux-firmware amd-ucode \
+pacstrap -KP /mnt base linux-zen booster linux-firmware amd-ucode \
                   opendoas vulkan-radeon libva-mesa-driver \
                   f2fs-tools dosfstools e2fsprogs exfatprogs \
                   android-tools android-udev git bash-completion zip flatpak zram-generator nano gnome networkmanager \
