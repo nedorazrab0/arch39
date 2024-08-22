@@ -5,7 +5,7 @@ locale-gen
 ln -sf "/usr/share/zoneinfo/$3" /etc/localtime
 hwclock -uw
 
-useradd -mg users -G wheel "$1"
+useradd -mG wheel "$1"
 echo "$1:$2" | chpasswd
 
 systemctl enable NetworkManager gdm systemd-timesyncd bluetooth fstrim fstrim.timer
