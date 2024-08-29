@@ -23,10 +23,10 @@ umount /dev/$disk*
 echo -e 'label:gpt\n,512M,U,-\n+' | sfdisk -w always -W always /dev/$disk
 
 mkfs.fat -vF32 -n 'ESP' --codepage=437 /dev/$disk*1
-mkfs.f2fs -fil 'archlinux' -O 'extra_attr,inode_checksum,sb_checksum,compression' /dev/$disk*2
+mkfs.btrfs -fL 'archlinux' /dev/$disk*2
 
-mount -t f2fs -o 'noatime,compress_algorithm=zstd:3,compress_cache,compress_chksum' /dev/$disk*2 /mnt
-mount -t vfat --mkdir=600 -o 'umask=0177,noexec,noatime,shortname=winnt,utf8=false,discard' /dev/$disk*1 /mnt/boot
+mount -t btrfs -o 'noatime,lazytime,nodiscard,ssd,compress=zstd:3' /dev/$disk*2 /mnt
+mount -t vfat --mkdir=600 -o 'umask=0177,noexec,noatime,lazytime,shortname=winnt,utf8=false' /dev/$disk*1 /mnt/boot
 
 # ntp
 sed -i -e 's/#NTP=/NTP=/' -e 's/#FallbackNTP=.*/FallbackNTP=time.google.com/' /etc/systemd/timesyncd.conf
@@ -37,7 +37,7 @@ mkdir -p /mnt/etc
 echo 'compression: lz4' > /mnt/etc/booster.yaml
 pacstrap -KP /mnt base linux-zen booster linux-firmware amd-ucode \
                   opendoas vulkan-radeon libva-mesa-driver \
-                  btrfs-progs f2fs-tools xfsprogs exfatprogs dosfstools \
+                  btrfs-progs exfatprogs dosfstools \
                   android-tools android-udev git bash-completion zip flatpak zram-generator nano gnome networkmanager \
                   pipewire{,-alsa,-pulse,-jack} --ignore totem --ignore gnome-tour --ignore epiphany
 sed -i -e 's/#en_US.UTF-8/en_US.UTF-8/' -e "s/#$kbl.UTF-8/$kbl.UTF-8/" /mnt/etc/locale.gen
@@ -47,7 +47,7 @@ mount --bind "$path" /mnt/mnt
 arch-chroot /mnt bash /mnt/inchroot.sh "$name" "$password" "$zone"
 
 # post configuration
-echo 'permit persist :wheel as root' > /mnt/etc/doas.conf
+echo 'permit persist :wheel' > /mnt/etc/doas.conf
 chmod 400 /mnt/etc/doas.conf
 echo 'nedocomp' > /mnt/etc/hostname
 sed -i 's/#DefaultTimeoutStopSec=.*/DefaultTimeoutStopSec=5s/' /mnt/etc/systemd/system.conf
