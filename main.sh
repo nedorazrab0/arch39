@@ -60,6 +60,7 @@ cp $path/bin/{atp,wlc,fin.sh} /mnt/usr/bin
 chmod +x /mnt/usr/bin/{atp,wlc,fin.sh}
 
 cp $path/sys-configs/60-ioschedulers.rules /mnt/etc/udev/rules.d
+cp $path/sys-configs/99-yaebal.rules /mnt/etc/udev/rules.d
 cp $path/sys-configs/99-sysctl.conf /mnt/etc/sysctl.d
 cat $path/sys-configs/loader.conf > /mnt/boot/loader/loader.conf
 cat $path/sys-configs/nanorc > /mnt/etc/nanorc
