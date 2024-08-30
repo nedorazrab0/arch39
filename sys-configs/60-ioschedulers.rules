@@ -1,6 +1,6 @@
 # HDD
-ACTION=="add|change", KERNEL=="sd[a-z]*", ATTR{removable}=="0", ATTR{queue/rotational}=="1", ATTR{queue/scheduler}="bfq", ATTR{queue/read_ahead_kb}="512", ATTR{queue/rq_affinity}="2"
-# Removable flash
-ACTION=="add|change", KERNEL=="sd[a-z]*|mmcblk[0-9]*", ATTR{removable}=="1", ATTR{queue/rotational}="0", ATTR{queue/scheduler}="none", ATTR{queue/nr_requests}="128", ATTR{queue/read_ahead_kb}="512", ATTR{queue/rq_affinity}="2"
+ACTION=="add", KERNEL=="sd[a-z]*", ATTR{removable}==0, ATTR{queue/rotational}=="1", ATTR{queue/scheduler}="bfq", ATTR{queue/read_ahead_kb}="512", ATTR{queue/rq_affinity}="2"
+# USB flash
+ACTION=="add|change", KERNEL=="sd[a-z]*", ATTR{removable}=="1", ATTR{queue/rotational}="0", ATTR{queue/scheduler}="none", ATTR{queue/read_ahead_kb}="512", ATTR{queue/rq_affinity}="2"
 # SSD and zram
-ACTION=="add|change", KERNEL=="nvme[0-9]*|sd[a-z]*|mmcblk[0-9]*|zram[0-9]*", ATTR{queue/scheduler}="none", ATTR{queue/nr_requests}="128", ATTR{queue/read_ahead_kb}="512", ATTR{queue/rq_affinity}="2"
+ACTION=="add", KERNEL=="nvme[0-9]*|sd[a-z]*|mmcblk[0-9]*|zram[0-9]*", ATTR{removable}==0, ATTR{queue/rotational}=="0", ATTR{queue/scheduler}="none", ATTR{queue/nr_requests}="128", ATTR{queue/read_ahead_kb}="512", ATTR{queue/rq_affinity}="2"

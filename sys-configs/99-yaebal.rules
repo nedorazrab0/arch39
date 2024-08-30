@@ -1,0 +1,15 @@
+ENV{SUBSYSTEM}!="block", GOTO="skip_mnt"
+ENV{DM_MULTIPATH_DEVICE_PATH}=="1", GOTO="skip_mnt"
+ENV{DM_UDEV_DISABLE_OTHER_RULES_FLAG}=="?*", GOTO="skip_mnt"
+
+# HDD
+ENV{ID_DRIVE_THUMB}!="1", ATTR{queue/rotational}=="1", ENV{UDISKS_MOUNT_OPTIONS_BTRFS_DEFAULTS}="nossd,autodefrag,nodiscard,compress=zstd:6"
+# USB flash
+ENV{ID_DRIVE_THUMB}=="1", ENV{UDISKS_MOUNT_OPTIONS_BTRFS_DEFAULTS}="ssd_spread,nodiscard,compress=zstd:3"
+# SSD
+ENV{ID_DRIVE_THUMB}!="1", ATTR{queue/rotational}=="0", ENV{UDISKS_MOUNT_OPTIONS_BTRFS_DEFAULTS}="ssd,nodiscard,compress=zstd:3"
+
+ENV{UDISKS_MOUNT_OPTIONS_F2FS_DEFAULTS}="nodiscard,compress_chksum"
+ENV{UDISKS_MOUNT_OPTIONS_DEFAULTS}="noatime,lazytime"
+ENV{UDISKS_MOUNT_OPTIONS_ALLOW}="compress_chksum,nossd,noatime,lazytime,ssd_spread,nodiscard,autodefrag"
+LABEL="skip_mnt"
