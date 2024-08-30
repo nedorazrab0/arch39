@@ -37,7 +37,7 @@ mkdir -p /mnt/etc
 echo 'compression: lz4' > /mnt/etc/booster.yaml
 pacstrap -KP /mnt base linux-zen booster linux-firmware amd-ucode \
                   opendoas vulkan-radeon libva-mesa-driver \
-                  btrfs-progs exfatprogs dosfstools \
+                  btrfs-progs f2fs-tools xfsprogs exfatprogs dosfstools \
                   android-tools android-udev git bash-completion zip flatpak zram-generator nano gnome networkmanager \
                   pipewire{,-alsa,-pulse,-jack} --ignore totem --ignore gnome-tour --ignore epiphany
 sed -i -e 's/#en_US.UTF-8/en_US.UTF-8/' -e "s/#$kbl.UTF-8/$kbl.UTF-8/" /mnt/etc/locale.gen
