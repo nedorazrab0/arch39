@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 read -p '- Coutry (for mirrors): ' loc
 
+# ntp
+sed -i -e 's/#NTP=/NTP=/' -e 's/#FallbackNTP=.*/FallbackNTP=time.google.com/' /etc/systemd/timesyncd.conf
+systemctl restart systemd-timesyncd
+
 path='/tmp/njk'
 # pacman configuration
 sed -i -e 's/#ParallelDownloads = 5/ParallelDownloads = 15/' -e 's/#Color/Color/' -e 's/#VerbosePkgLists/VerbosePkgLists/' /etc/pacman.conf
