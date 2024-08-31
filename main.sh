@@ -28,10 +28,6 @@ mkfs.btrfs -fL 'archlinux' /dev/$disk*2
 mount -t btrfs -o 'noatime,lazytime,nodiscard,ssd,compress=zstd:3' /dev/$disk*2 /mnt
 mount -t vfat --mkdir=600 -o 'umask=0177,noexec,noatime,lazytime,shortname=winnt,utf8=false' /dev/$disk*1 /mnt/boot
 
-# ntp
-sed -i -e 's/#NTP=/NTP=/' -e 's/#FallbackNTP=.*/FallbackNTP=time.google.com/' /etc/systemd/timesyncd.conf
-systemctl restart systemd-timesyncd
-
 # installing
 mkdir -p /mnt/etc
 echo 'compression: lz4' > /mnt/etc/booster.yaml
