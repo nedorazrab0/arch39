@@ -3,7 +3,7 @@ ENV{DM_MULTIPATH_DEVICE_PATH}=="1", GOTO="skip_mnt"
 ENV{DM_UDEV_DISABLE_OTHER_RULES_FLAG}=="?*", GOTO="skip_mnt"
 
 # HDD
-ENV{ID_DRIVE_THUMB}!="1", ATTR{queue/rotational}=="1", ENV{UDISKS_MOUNT_OPTIONS_BTRFS_DEFAULTS}="nossd,autodefrag,nodiscard,compress=zstd:6"
+ENV{ID_DRIVE_THUMB}!="1", ATTR{queue/rotational}=="1", ENV{UDISKS_MOUNT_OPTIONS_BTRFS_DEFAULTS}="nossd,autodefrag,nodiscard,compress=zstd:6", ENV{UDISKS_MOUNT_OPTIONS_XFS_DEFAULTS}="lazytime"
 # USB flash
 ENV{ID_DRIVE_THUMB}=="1", ENV{UDISKS_MOUNT_OPTIONS_BTRFS_DEFAULTS}="ssd_spread,nodiscard,compress=zstd:3"
 # SSD
