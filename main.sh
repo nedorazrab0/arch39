@@ -25,8 +25,8 @@ echo -e 'label:gpt\n,512M,U,-\n+' | sfdisk -w always -W always /dev/$disk
 mkfs.fat -vF32 -n 'ESP' --codepage=437 /dev/$disk*1
 mkfs.btrfs -fL 'archlinux' /dev/$disk*2
 
-mount -t btrfs -o 'noatime,lazytime,nodiscard,ssd,compress=zstd:3' /dev/$disk*2 /mnt
-mount -t vfat --mkdir=600 -o 'umask=0177,noexec,noatime,lazytime,shortname=winnt,utf8=false' /dev/$disk*1 /mnt/boot
+mount -t btrfs -o 'noatime,nodiscard,ssd,compress=zstd:3' /dev/$disk*2 /mnt
+mount -t vfat --mkdir=600 -o 'umask=0177,noexec,noatime,shortname=winnt,utf8=false' /dev/$disk*1 /mnt/boot
 
 # installing
 pacstrap -KP /mnt base linux-zen booster linux-firmware amd-ucode \
