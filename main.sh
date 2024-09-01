@@ -33,7 +33,7 @@ pacstrap -KP /mnt base linux-zen booster linux-firmware amd-ucode \
                   opendoas vulkan-radeon libva-mesa-driver \
                   btrfs-progs f2fs-tools xfsprogs exfatprogs dosfstools \
                   android-tools android-udev git bash-completion zip flatpak zram-generator nano gnome networkmanager \
-                  pipewire{,-alsa,-pulse,-jack} --ignore totem --ignore gnome-tour --ignore epiphany
+                  pipewire{,-alsa,-pulse,-jack} --ignore totem,gnome-tour,epiphany || exit 1
 sed -i -e 's/#en_US.UTF-8/en_US.UTF-8/' -e "s/#$kbl.UTF-8/$kbl.UTF-8/" /mnt/etc/locale.gen
 genfstab -U /mnt > /mnt/etc/fstab
 
