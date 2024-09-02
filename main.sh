@@ -32,7 +32,7 @@ mount -t vfat --mkdir=600 -o 'umask=0177,noexec,noatime,shortname=winnt,utf8=fal
 pacstrap -KP /mnt base linux-zen booster linux-firmware amd-ucode \
                   opendoas vulkan-radeon libva-mesa-driver \
                   btrfs-progs f2fs-tools xfsprogs exfatprogs dosfstools \
-                  android-tools android-udev git bash-completion zip flatpak zram-generator nano gnome networkmanager \
+                  android-tools android-udev git bash-completion zip flatpak zram-generator nano gnome networkmanager reflector \
                   pipewire{,-alsa,-pulse,-jack} --ignore totem,gnome-tour,epiphany || exit 1
 sed -i -e 's/#en_US.UTF-8/en_US.UTF-8/' -e "s/#$kbl.UTF-8/$kbl.UTF-8/" /mnt/etc/locale.gen
 genfstab -U /mnt > /mnt/etc/fstab
