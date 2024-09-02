@@ -36,6 +36,7 @@ pacstrap -KP /mnt base linux-zen booster linux-firmware amd-ucode \
                   pipewire{,-alsa,-pulse,-jack} --ignore totem,gnome-tour,epiphany || exit 1
 sed -i -e 's/#en_US.UTF-8/en_US.UTF-8/' -e "s/#$kbl.UTF-8/$kbl.UTF-8/" /mnt/etc/locale.gen
 genfstab -U /mnt > /mnt/etc/fstab
+cat /etc/xdg/reflector/reflector.conf > /mnt/etc/xdg/reflector/reflector.conf
 
 mount --bind "$path" /mnt/mnt
 arch-chroot /mnt bash /mnt/inchroot.sh "$name" "$password" "$zone"
