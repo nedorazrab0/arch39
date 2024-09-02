@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-read -p '- Coutry (for mirrors): ' loc
+read -p '- Press [Enter] '
 
 # net tweaks
 sysctl -w 'net.ipv4.tcp_fastopen = 3'
@@ -17,7 +17,8 @@ path='/tmp/njk'
 sed -i -e 's/#ParallelDownloads = 5/ParallelDownloads = 15/' -e 's/#Color/Color/' -e 's/#VerbosePkgLists/VerbosePkgLists/' /etc/pacman.conf
 pacman -Sy archlinux-keyring --needed --noconfirm
 echo '- Configuring mirrors...'
-reflector -c "$loc" -p https -l 6 --sort rate --save /etc/pacman.d/mirrorlist || exit 1
+systemctl disable --now reflector
+systemctl restart reflector
 pacman -Syy git --noconfirm
 rm -rf "$path"
 git clone https://github.com/nedorazrab0/arch-install "$path"
