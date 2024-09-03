@@ -63,5 +63,6 @@ cat $path/sys-configs/nanorc > /mnt/etc/nanorc
 
 echo '- Goodbye ;)'
 sleep 2
+fstrim -v /mnt
 umount -R /mnt
 systemctl poweroff
