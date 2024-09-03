@@ -13,6 +13,5 @@ systemctl disable avahi-daemon
 systemctl mask avahi-daemon
 
 bootctl install --esp-path=/boot
-systemctl start fstrim
 echo '- Exiting chroot'
 exit
