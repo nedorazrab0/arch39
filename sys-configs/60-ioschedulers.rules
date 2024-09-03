@@ -1,5 +1,5 @@
 # HDD
-ACTION=="add", KERNEL=="sd[a-z]*", ATTR{removable}==0, ATTR{queue/rotational}=="1", ATTR{queue/scheduler}="mq-deadline", ATTR{queue/read_ahead_kb}="512", ATTR{queue/rq_affinity}="2"
+ACTION=="add", KERNEL=="sd[a-z]*", ATTR{removable}=="0", ATTR{queue/rotational}=="1", ATTR{queue/scheduler}="mq-deadline", ATTR{queue/read_ahead_kb}="512", ATTR{queue/rq_affinity}="2"
 # USB flash
 ACTION=="add|change", KERNEL=="sd[a-z]*", ATTR{removable}=="1", ATTR{queue/rotational}="0", ATTR{queue/scheduler}="none", ATTR{queue/read_ahead_kb}="512", ATTR{queue/rq_affinity}="2"
 # SSD and zram
