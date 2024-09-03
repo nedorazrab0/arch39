@@ -11,5 +11,5 @@ ENV{ID_DRIVE_THUMB}!="1", ATTR{queue/rotational}=="0", ENV{UDISKS_MOUNT_OPTIONS_
 
 ENV{UDISKS_MOUNT_OPTIONS_F2FS_DEFAULTS}="nodiscard,compress_chksum"
 ENV{UDISKS_MOUNT_OPTIONS_DEFAULTS}="noatime"
-ENV{UDISKS_MOUNT_OPTIONS_ALLOW}="compress_chksum,nossd,noatime,ssd_spread,nodiscard,autodefrag"
+ENV{UDISKS_MOUNT_OPTIONS_ALLOW}="compress_chksum,nossd,noatime,ssd_spread,nodiscard,autodefrag,lazytime"
 LABEL="skip_mnt"
