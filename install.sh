@@ -15,11 +15,9 @@ systemctl restart systemd-timesyncd
 path='/tmp/njk'
 # pacman configuration
 sed -i -e 's/#ParallelDownloads = 5/ParallelDownloads = 15/' -e 's/#Color/Color/' -e 's/#VerbosePkgLists/VerbosePkgLists/' /etc/pacman.conf
-pacman -Sy archlinux-keyring --needed --noconfirm
+systemctl restart reflector
+pacman -Syy archlinux-keyring git --needed --noconfirm
 echo '- Configuring mirrors...'
-systemctl stop reflector
-systemctl start reflector
-pacman -Syy git --noconfirm
 rm -rf "$path"
 git clone https://github.com/nedorazrab0/arch-install "$path"
 
