@@ -17,8 +17,8 @@ path='/tmp/njk'
 sed -i -e 's/#ParallelDownloads = 5/ParallelDownloads = 15/' -e 's/#Color/Color/' -e 's/#VerbosePkgLists/VerbosePkgLists/' /etc/pacman.conf
 pacman -Sy archlinux-keyring --needed --noconfirm
 echo '- Configuring mirrors...'
-systemctl disable --now reflector
-systemctl restart reflector
+systemctl stop reflector
+systemctl start reflector
 pacman -Syy git --noconfirm
 rm -rf "$path"
 git clone https://github.com/nedorazrab0/arch-install "$path"
