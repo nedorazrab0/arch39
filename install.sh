@@ -16,7 +16,7 @@ path='/tmp/njk'
 # pacman configuration
 sed -i -e 's/#ParallelDownloads = 5/ParallelDownloads = 15/' -e 's/#Color/Color/' -e 's/#VerbosePkgLists/VerbosePkgLists/' /etc/pacman.conf
 echo '- Waiting for reflector...'
-until grep -qi 'reflector' /etc/xdg/reflector/reflector.conf; do
+until grep -qi 'reflector' /etc/pacman.d/mirrorlist; do
     sleep 1
 done
 pacman -Syy archlinux-keyring git --needed --noconfirm
