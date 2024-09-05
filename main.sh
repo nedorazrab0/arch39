@@ -20,7 +20,7 @@ sleep 2
 cd /
 umount -R /mnt
 umount /dev/$disk*
-echo -e 'label:gpt\n,32M,U,-\n+' | sfdisk -w always -W always /dev/$disk
+echo -e 'label:gpt\n,64M,U,-\n+' | sfdisk -w always -W always /dev/$disk
 
 mkfs.fat -vF32 -n 'ESP' --codepage=437 /dev/$disk*1
 mkfs.btrfs -fKL 'archlinux' -n65536 -m single /dev/$disk*2
