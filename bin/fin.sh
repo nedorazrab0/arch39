@@ -15,6 +15,6 @@ gsettings set org.gnome.nautilus.preferences recursive-search always
 gsettings set org.gnome.nautilus.preferences show-image-thumbnails always
 gsettings set org.gnome.nautilus.preferences show-directory-item-counts always
 
-flatpak install flathub org.mozilla.firefox com.discordapp.Discord io.mpv.Mpv org.gnome.Boxes org.telegram.desktop org.onlyoffice.desktopeditors com.transmissionbt.Transmission --noninteractive -y
+flatpak install flathub org.mozilla.firefox com.discordapp.Discord io.mpv.Mpv org.gnome.Boxes org.telegram.desktop org.onlyoffice.desktopeditors com.transmissionbt.Transmission org.kde.krita --noninteractive -y
 doas pacman -R totem epiphany gnome-tour --noconfirm
 doas rm -f /usr/share/applications/{qv4l2,qvidcap,bvc,bssh,avahi-discover}.desktop "$(realpath "$0")"
