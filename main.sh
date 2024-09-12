@@ -1,6 +1,3 @@
-#!/usr/bin/env bash
-path='/tmp/njk'
-
 # install configurating
 read -p '- Username: ' name
 read -sp '- Password: ' password; echo
