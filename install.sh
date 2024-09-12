@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -e
 read -p '- Press [Enter] '
 
 # net tweaks
@@ -21,4 +22,4 @@ pacman -Syy archlinux-keyring git --needed --noconfirm
 rm -rf "$path"
 git clone https://github.com/nedorazrab0/arch-install "$path"
 
-bash "$path/main.sh"
+source "$path/main.sh"
