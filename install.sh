@@ -15,7 +15,7 @@ systemctl restart systemd-timesyncd
 
 path='/tmp/njk'
 # pacman configuration
-sed -i -e 's/#ParallelDownloads = 5/ParallelDownloads = 15/' -e 's/#Color/Color/' -e 's/#VerbosePkgLists/VerbosePkgLists/' /etc/pacman.conf
+sed -i -e 's/#ParallelDownloads/ParallelDownloads/' -e 's/#Color/Color/' -e 's/#VerbosePkgLists/VerbosePkgLists/' /etc/pacman.conf
 echo '- Configurating mirrors...'
 systemctl restart reflector
 pacman -Syy archlinux-keyring git --needed --noconfirm
