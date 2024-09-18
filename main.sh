@@ -27,8 +27,8 @@ echo '2' > /sys/block/$disk/queue/rq_affinity
 # disk partition
 sleep 2
 cd /
-umount /dev/$disk*
-umount -R /mnt
+umount -v "$(mount | grep $disk | cut -d' ' -f2)"
+umount -vR /mnt
 echo -e 'label:gpt\n,64M,U,-\n+' | sfdisk -w always -W always /dev/$disk
 
 mkfs.fat -vF32 -S512 -n 'ESP' --codepage=437 /dev/$disk*1
