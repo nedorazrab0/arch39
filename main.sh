@@ -18,11 +18,17 @@ sysctl -w 'vm.dirty_bytes = 268435456'
 sysctl -w 'vm.dirty_background_bytes = 134217728'
 sysctl -w 'vm.dirty_writeback_centisecs = 1500'
 
+echo 'none' > /sys/block/$disk/queue/scheduler
+echo '128' > /sys/block/$disk/queue/nr_requests
+echo '512' > /sys/block/$disk/queue/read_ahead_kb
+echo '2' > /sys/block/$disk/queue/rq_affinity
+
+
 # disk partition
 sleep 2
 cd /
-umount -R /mnt
 umount /dev/$disk*
+umount -R /mnt
 echo -e 'label:gpt\n,64M,U,-\n+' | sfdisk -w always -W always /dev/$disk
 
 mkfs.fat -vF32 -n 'ESP' --codepage=437 /dev/$disk*1
