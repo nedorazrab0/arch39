@@ -31,7 +31,7 @@ umount /dev/$disk*
 umount -R /mnt
 echo -e 'label:gpt\n,64M,U,-\n+' | sfdisk -w always -W always /dev/$disk
 
-mkfs.fat -vF32 -n 'ESP' --codepage=437 /dev/$disk*1
+mkfs.fat -vF32 -S512 -n 'ESP' --codepage=437 /dev/$disk*1
 mkfs.btrfs -fKL 'archlinux' -n65536 -m single /dev/$disk*2
 
 mount -t btrfs -o 'noatime,nodiscard,ssd,compress=zstd:3' /dev/$disk*2 /mnt
