@@ -12,6 +12,12 @@ case "$agreement" in
     *) exit 1;;
 esac
 
+# disk tuning
+sysctl -w 'vm.vfs_cache_pressure = 150'
+sysctl -w 'vm.dirty_bytes = 268435456'
+sysctl -w 'vm.dirty_background_bytes = 134217728'
+sysctl -w 'vm.dirty_writeback_centisecs = 1500'
+
 # disk partition
 sleep 2
 cd /
