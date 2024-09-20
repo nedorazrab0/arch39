@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # install configurating
 read -p '- Username: ' name
 read -sp '- Password: ' password; echo
