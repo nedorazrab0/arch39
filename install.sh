@@ -20,6 +20,6 @@ echo '- Configurating mirrors...'
 systemctl restart reflector
 pacman -Syy archlinux-keyring git --needed --noconfirm
 rm -rf "$path"
-git clone https://github.com/nedorazrab0/arch-install "$path"
+git clone https://github.com/nedorazrab0/arch-install.git "$path"
 
 source "$path/main.sh"
