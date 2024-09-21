@@ -26,7 +26,6 @@ echo '128' > /sys/block/$disk/queue/nr_requests
 echo '512' > /sys/block/$disk/queue/read_ahead_kb
 echo '2' > /sys/block/$disk/queue/rq_affinity
 
-
 # disk partition
 echo '- You have 2 seconds to save your disk!'
 sleep 2
