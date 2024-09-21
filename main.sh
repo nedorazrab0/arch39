@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-path=/tmp/njk
+path='/tmp/njk'
 
 # install configurating
 read -p '- Username: ' name
@@ -28,6 +28,7 @@ echo '2' > /sys/block/$disk/queue/rq_affinity
 
 
 # disk partition
+echo '- You have 2 seconds to save your disk!'
 sleep 2
 cd /
 umount -v /dev/$disk* || true
