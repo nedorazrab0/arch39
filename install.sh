@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -e
-read -p '- Press [Enter] '
+read -p '- Don't do that :) '
 
 # net tweaks
 sysctl -w 'net.ipv4.tcp_fastopen = 3'
@@ -20,6 +20,6 @@ echo '- Configurating mirrors...'
 systemctl restart reflector
 pacman -Syy archlinux-keyring git --needed --noconfirm
 rm -rf "$path"
-git clone https://github.com/nedorazrab0/arch-install.git "$path"
+git clone https://github.com/nedorazrab0/hqe.git "$path"
 
-source "$path/main.sh"
+bash "$path/main.sh"
