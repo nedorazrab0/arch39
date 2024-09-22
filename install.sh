@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -e
-read -p '- Don't do that :) '
+read -p '- Do not do that :) '
 
 # net tweaks
 sysctl -w 'net.ipv4.tcp_fastopen = 3'
