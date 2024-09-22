@@ -23,7 +23,6 @@ sysctl -w 'vm.dirty_writeback_centisecs = 1500'
 
 echo 'none' > /sys/block/$disk/queue/scheduler
 echo '128' > /sys/block/$disk/queue/nr_requests
-echo '512' > /sys/block/$disk/queue/read_ahead_kb
 echo '2' > /sys/block/$disk/queue/rq_affinity
 
 # disk partition
