@@ -9,7 +9,7 @@ hwclock -uw
 useradd -mG wheel "$1"
 echo "$1:$2" | chpasswd
 
-systemctl enable NetworkManager gdm systemd-timesyncd bluetooth fstrim.timer reflector.timer reflector
+systemctl enable NetworkManager gdm systemd-timesyncd bluetooth fstrim.timer reflector.timer
 systemctl disable avahi-daemon
 systemctl mask avahi-daemon
 
