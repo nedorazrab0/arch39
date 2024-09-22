@@ -44,7 +44,7 @@ pacstrap -KP /mnt base linux-zen booster linux-firmware amd-ucode \
                   opendoas vulkan-radeon libva-mesa-driver \
                   btrfs-progs f2fs-tools xfsprogs exfatprogs dosfstools \
                   android-tools android-udev git bash-completion zip flatpak zram-generator nano reflector \
-                  hyprland polkit xdg-deskop-portal-hyprland mako alacritty noto-fonts waybar otf-font-awesome brightnessctl grim slurp pipewire{,-alsa,-pulse,-jack} || exit 1
+                  hyprland polkit xdg-deskop-portal-hyprland mako kitty noto-fonts waybar otf-font-awesome brightnessctl grim slurp pipewire{,-alsa,-pulse,-jack} || exit 1
 sed -i -e 's/#en_US.UTF-8/en_US.UTF-8/' -e "s/#$kbl.UTF-8/$kbl.UTF-8/" /mnt/etc/locale.gen
 genfstab -U /mnt > /mnt/etc/fstab
 cat /etc/xdg/reflector/reflector.conf > /mnt/etc/xdg/reflector/reflector.conf
