@@ -9,7 +9,6 @@ hwclock -uw
 useradd -mG wheel "$1"
 echo "$1:$2" | chpasswd
 
-systemctl enable systemd-timesyncd bluetooth fstrim.timer reflector.timer systemd-resolved
+systemctl enable systemd-networkd systemd-resolved systemd-timesyncd bluetooth fstrim.timer reflector.timer
 bootctl install --esp-path=/boot
 echo '- Exiting chroot'
-exit
