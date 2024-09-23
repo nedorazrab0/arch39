@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+if [[ "$1" == '--help' ]]; then
+    echo '- Use it to connect to WIFI'
+    exit 0
+fi
+
+if (( "$(id -u)" != 0 )); then
+    echo '! Run it as root'
+    exit 1
+fi
+
+read -p '- Interface name: ' iname
+read -p '- SSID: ' name
+read -sp '- Password: ' password; echo
+
+chmod 600 "/etc/wpa_supplicant/wpa_supplicant-${iname}.conf"
+echo 'ctrl_interface=/var/run/wpa_supplicant' > "/etc/wpa_supplicant/wpa_supplicant-${iname}.conf"
+wpa_passphrase "$name" "$password" | sed '/#/d' >> "/etc/wpa_supplicant/wpa_supplicant-${iname}.conf"
+systemctl enable --now "wpa_supplicant@${iname}"
+systemctl enable --now "dhcpcd@${iname}"
