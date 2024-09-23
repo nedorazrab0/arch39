@@ -4,7 +4,7 @@ echo '- CHROOT'
 
 locale-gen
 ln -sf "/usr/share/zoneinfo/$3" /etc/localtime
-hwclock -uw
+hwclock -uwv
 
 useradd -mG wheel "$1"
 echo "$1:$2" | chpasswd
