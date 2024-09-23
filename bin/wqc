@@ -16,5 +16,5 @@ read -sp '- Password: ' password; echo
 wsc="/etc/wpa_supplicant/wpa_supplicant-${iname}.conf"
 chmod 600 "$wsc"
 echo 'ctrl_interface=/run/wpa_supplicant' > "$wsc"
-wpa_passphrase "$name" "$password" | sed '/#psk=/d' >> "$wsc"
+wpa_passphrase "$name" "$password" | sed '/#psk=./d' >> "$wsc"
 systemctl enable --now "dhcpcd@${iname}"
