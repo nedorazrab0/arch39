@@ -44,10 +44,9 @@ pacstrap -KP /mnt base linux-zen booster linux-firmware amd-ucode \
                   opendoas vulkan-radeon libva-mesa-driver \
                   btrfs-progs f2fs-tools xfsprogs exfatprogs dosfstools \
                   android-tools android-udev git bash-completion zip flatpak zram-generator nano dhcpcd reflector \
-                  hyprland polkit xdg-deskop-portal-hyprland mako kitty noto-fonts waybar otf-font-awesome brightnessctl grim slurp gnome-boxes bluez{,-utils} pipewire{,-alsa,-pulse,-jack}
+                  hyprland polkit xdg-deskop-portal-hyprland mako kitty noto-fonts waybar otf-font-awesome brightnessctl \
+                  grim slurp gnome-boxes bluez{,-utils} pipewire{,-alsa,-pulse,-jack}
 sed -i -e 's/#en_US.UTF-8/en_US.UTF-8/' -e "s/#$kbl.UTF-8/$kbl.UTF-8/" /mnt/etc/locale.gen
-genfstab -U /mnt > /mnt/etc/fstab
-cat /etc/xdg/reflector/reflector.conf > /mnt/etc/xdg/reflector/reflector.conf
 
 mount --bind "$path" /mnt/mnt
 arch-chroot /mnt bash /mnt/inchroot.sh "$name" "$password" "$zone"
@@ -58,6 +57,8 @@ chmod 400 /mnt/etc/doas.conf
 echo 'nedocomp' > /mnt/etc/hostname
 sed -i 's/#DefaultTimeoutStopSec=.*/DefaultTimeoutStopSec=5s/' /mnt/etc/systemd/system.conf
 cat /etc/systemd/timesyncd.conf > /mnt/etc/systemd/timesyncd.conf
+cat /etc/xdg/reflector/reflector.conf > /mnt/etc/xdg/reflector/reflector.conf
+genfstab -U /mnt > /mnt/etc/fstab
 
 uuid="$(blkid -s UUID -o value /dev/$disk*2)"
 cat $path/sys-configs/arch-zen.conf | sed "s/uuidv/$uuid/" > /mnt/boot/loader/entries/arch-zen.conf
