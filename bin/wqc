@@ -13,8 +13,8 @@ read -p '- Interface name: ' iname
 read -p '- SSID: ' name
 read -sp '- Password: ' password; echo
 
-chmod 600 "/etc/wpa_supplicant/wpa_supplicant-${iname}.conf"
-echo 'ctrl_interface=/run/wpa_supplicant' > "/etc/wpa_supplicant/wpa_supplicant-${iname}.conf"
-wpa_passphrase "$name" "$password" | sed '/#psk=/d' >> "/etc/wpa_supplicant/wpa_supplicant-${iname}.conf"
-systemctl enable --now "wpa_supplicant@${iname}"
+wsc="/etc/wpa_supplicant/wpa_supplicant-${iname}.conf"
+chmod 600 "$wsc"
+echo 'ctrl_interface=/run/wpa_supplicant' > "$wsc"
+wpa_passphrase "$name" "$password" | sed '/#psk=/d' >> "$wsc"
 systemctl enable --now "dhcpcd@${iname}"
