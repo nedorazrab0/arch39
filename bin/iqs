@@ -20,7 +20,7 @@ echo -e "[Match]\nName=${iname}\n\n[Network]\nDHCP=yes" > "/etc/systemd/network/
 if [[ "$1" == 'b' ]]; then
     # wpa_supplicant
     chmod 600 "/etc/wpa_supplicant/wpa_supplicant-${iname}.conf"
-    echo -e 'ctrl_interface=/run/wpa_supplicant\nctrl_interface_group=wheel\nfast_reauth=1' > "/etc/wpa_supplicant/wpa_supplicant-${iname}.conf"
+    echo -e 'ctrl_interface=/run/wpa_supplicant\nctrl_interface_group=wheel' > "/etc/wpa_supplicant/wpa_supplicant-${iname}.conf"
     wpa_passphrase "$name" "$password" | sed '/#/d' >> "/etc/wpa_supplicant/wpa_supplicant-${iname}.conf"
     systemctl enable --now "wpa_supplicant@${iname}"
 fi
