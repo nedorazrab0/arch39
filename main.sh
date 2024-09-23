@@ -66,6 +66,7 @@ cat $path/sys-configs/arch-zen.conf | sed "s/uuidv/$uuid/" > /mnt/boot/loader/en
 cp $path/bin/{atp,wlc,fin.sh} /mnt/usr/bin
 chmod +x /mnt/usr/bin/{atp,wlc,fin.sh}
 
+cp $path/sys-configs/{20-wired,25-wireless}.network /mnt/etc/systemd/network
 cp $path/sys-configs/60-ioschedulers.rules /mnt/etc/udev/rules.d
 cp $path/sys-configs/99-yaebal.rules /mnt/etc/udev/rules.d
 cp $path/sys-configs/99-sysctl.conf /mnt/etc/sysctl.d
