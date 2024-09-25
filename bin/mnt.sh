@@ -29,3 +29,7 @@ for blk in $disk?*; do
             ;;
         'x') :;;
     esac
+
+    uuid="$(blkid -s UUID -o value $blk)"
+    mount -vo "notime,${amo}" "$blk" "/run/fs-${uuid}"
+done
