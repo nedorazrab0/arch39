@@ -27,10 +27,15 @@ for blk in /dev/$2?*; do
                 'exfat|vfat') amo='noexec,nosuid,dmask=0122,fmask=0133';;
             esac
             ;;
-        'x') :;;
+        'x') x='true';;
     esac
 
-    uuid="$(blkid -s UUID -o value $blk)"
-    mkdir -p "/run/mnt/$2/fs-${uuid}"
-    mount -vo "noatime,${amo}" "$blk" "/run/mnt/$2/fs-${uuid}"
+    if [[ -z "$x" ]]; then
+        mkdir -p "/run/$blk"
+        mount -vo "noatime,${amo}" "$blk" "/run/$blk"
+    else
+        umount -v "$blk"
+        echo '1' > "/sys/block/$2/device/delete"
+        rm -rf "/run/$blk"
+    fi
 done
