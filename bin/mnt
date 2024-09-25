@@ -32,5 +32,5 @@ for blk in /dev/$2?*; do
 
     uuid="$(blkid -s UUID -o value $blk)"
     mkdir -p "/run/mnt/$2/fs-${uuid}"
-    mount -vo "notime,${amo}" "$blk" "/run/mnt/$2/fs-${uuid}"
+    mount -vo "noatime,${amo}" "$blk" "/run/mnt/$2/fs-${uuid}"
 done
