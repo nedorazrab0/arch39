@@ -14,6 +14,7 @@ for blk in $disk?*; do
                 'btrfs') amo='ssd,nodiscard,compress=zstd:3';;
                 'f2fs') amo='nodiscard,compress_chksum';;
             esac
+            ;;
         'h')
             case "$fs" in
                 'btrfs') amo='nossd,autodefrag,nodiscard,compress=zstd:6';;
