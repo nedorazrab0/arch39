@@ -24,7 +24,7 @@ for blk in /dev/$2?*; do
             case "$fs" in
                 'btrfs') amo='ssd_spread,nodiscard,compress=zstd:3';;
                 'f2fs') amo='nodiscard,compress_chksum';;
-                'exfat|vfat') amo='noexec,nosuid,dmask=0122,fmask=0133';;
+                exfat|vfat) amo='noexec,nosuid,dmask=0122,fmask=0133';;
             esac
             ;;
         'x') x='true';;
