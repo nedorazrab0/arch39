@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-if ( "$(id -u)" != 0 ); then
+if (( "$(id -u)" != 0 )); then
     echo '! Run it as root'
     exit 1
 fi
