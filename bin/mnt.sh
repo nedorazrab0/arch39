@@ -5,8 +5,7 @@ if (( "$(id -u)" != 0 )); then
     exit 1
 fi
 
-disk="$2"
-for blk in $disk?*; do
+for blk in /dev/$2?*; do
     fs="$(blkid -s TYPE -o value $blk)"
     case "$1" in
         's')
