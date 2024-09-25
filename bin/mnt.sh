@@ -32,5 +32,6 @@ for blk in $disk?*; do
     esac
 
     uuid="$(blkid -s UUID -o value $blk)"
-    mount -vo "notime,${amo}" "$blk" "/run/fs-${uuid}"
+    mkdir -p "/run/mnt/$2/fs-${uuid}"
+    mount -vo "notime,${amo}" "$blk" "/run/mnt/$2/fs-${uuid}"
 done
