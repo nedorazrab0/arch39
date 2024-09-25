@@ -31,8 +31,8 @@ for blk in /dev/$2?*; do
     esac
 
     if [[ -z "$x" ]]; then
-        mkdir -p "/run/$blk"
-        mount -vo "noatime,${amo}" "$blk" "/run/$blk"
+        mkdir -p "/run$blk"
+        mount -vo "noatime,${amo}" "$blk" "/run$blk"
     else
         umount -v "$blk"
         echo '1' > "/sys/block/$2/device/delete"
