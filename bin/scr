@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+if [[ "$1" == 'f' ]]; then
+    grim -l9
+else
+    grim -g "$(slurp)" -l9
+fi
