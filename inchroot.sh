@@ -9,7 +9,7 @@ hwclock -uwv
 useradd -mG wheel "$1"
 echo "$1:$2" | chpasswd
 
-systemctl enable systemd-networkd systemd-resolved systemd-networkd-persistent-storage systemd-timesyncd fstrim.timer reflector.timer
-systemctl disable systemd-networkd-wait-online
+systemctl enable systemd-networkd systemd-resolved systemd-networkd-persistent-storage \
+                 systemd-timesyncd fstrim.timer reflector.timer
 bootctl install --esp-path=/boot
 echo '- Exiting chroot'
