@@ -6,7 +6,7 @@ locale-gen
 ln -sf "/usr/share/zoneinfo/$3" /etc/localtime
 hwclock -uwv
 
-useradd -mG 'wheel,input,video' "$1"
+useradd -mG 'wheel,video' "$1"
 echo "$1:$2" | chpasswd
 
 systemctl enable systemd-networkd systemd-resolved systemd-networkd-persistent-storage \
