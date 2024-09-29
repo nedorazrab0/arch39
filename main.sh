@@ -76,7 +76,6 @@ echo 'nedocomp' > /mnt/etc/hostname
 sed -i 's/#DefaultTimeoutStopSec=.*/DefaultTimeoutStopSec=5s/' /mnt/etc/systemd/system.conf
 cat /etc/systemd/timesyncd.conf > /mnt/etc/systemd/timesyncd.conf
 cat /etc/xdg/reflector/reflector.conf > /mnt/etc/xdg/reflector/reflector.conf
-genfstab -U /mnt > /mnt/etc/fstab
 
 uuid="$(blkid -s UUID -o value /dev/$disk*2)"
 cat $path/sys-configs/arch-zen.conf | sed "s/uuidv/$uuid/" > /mnt/boot/loader/entries/arch-zen.conf
