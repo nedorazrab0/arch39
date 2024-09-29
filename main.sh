@@ -79,12 +79,10 @@ sed -i 's/#DefaultTimeoutStopSec=.*/DefaultTimeoutStopSec=5s/' /mnt/etc/systemd/
 cat /etc/systemd/timesyncd.conf > /mnt/etc/systemd/timesyncd.conf
 cat /etc/xdg/reflector/reflector.conf > /mnt/etc/xdg/reflector/reflector.conf
 
-uuid="$(blkid -s UUID -o value /dev/$disk*2)"
-cat $path/sys-configs/arch-zen.conf | sed "s/uuidv/$uuid/" > /mnt/boot/loader/entries/arch-zen.conf
-
 cp $path/bin/{atp,wlc,wqc,mnt,scr,fin.sh} /mnt/usr/bin
 chmod +x /mnt/usr/bin/{atp,wlc,wqc,mnt,scr,fin.sh}
 
+cp $path/sys-configs/arch-zen.conf /mnt/boot/loader/entries/arch-zen.conf
 cp $path/sys-configs/{20-wired,25-wireless}.network /mnt/etc/systemd/network
 cp $path/sys-configs/60-ioschedulers.rules /mnt/etc/udev/rules.d
 cp $path/sys-configs/99-sysctl.conf /mnt/etc/sysctl.d
