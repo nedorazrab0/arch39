@@ -31,7 +31,9 @@ sleep 2
 cd /
 umount -v /dev/$disk* || true
 umount -vR /mnt || true
-echo -e 'label:gpt\n,64M,U,-\n+' | sfdisk -w always -W always /dev/$disk
+wipefs -a /dev/$disk
+echo -e 'label:gpt\n,64M,U,-\n,+,4F68BCE3-E8CD-4DB1-96E7-FBCAF984B709' | sfdisk -w always -W always /dev/$disk
+sync
 
 mkfs.fat -vF32 -S512 -n 'ESP' --codepage=437 /dev/$disk*1
 mkfs.btrfs -fKL 'archlinux' -n65536 -m single /dev/$disk*2
