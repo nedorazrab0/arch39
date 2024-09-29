@@ -43,7 +43,7 @@ mount -t vfat --mkdir=600 -o 'noexec,nosuid,noatime,umask=0177' /dev/$disk*1 /mn
 pacstrap -KP /mnt base linux-zen booster linux-firmware amd-ucode \
                   btrfs-progs f2fs-tools xfsprogs exfatprogs dosfstools \
                   android-tools android-udev opendoas git bash-completion {un,}zip gnome-boxes flatpak zram-generator nano reflector \
-                  hyprland polkit xdg-deskop-portal-hyprland mako kitty noto-fonts waybar otf-font-awesome brightnessctl \
+                  hyprland polkit xdg-destkop-portal-hyprland mako kitty noto-fonts waybar otf-font-awesome brightnessctl \
                   grim slurp vulkan-radeon libva-mesa-driver bluez{,-utils} pipewire{,-alsa,-pulse,-jack}
 sed -i -e 's/#en_US.UTF-8/en_US.UTF-8/' -e "s/#$kbl.UTF-8/$kbl.UTF-8/" /mnt/etc/locale.gen
 
