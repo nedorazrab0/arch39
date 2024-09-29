@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+Hyprland -c /etc/hyprland.conf
