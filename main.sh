@@ -54,7 +54,7 @@ arch-chroot /mnt bash /mnt/inchroot.sh "$name" "$password" "$zone"
 
 # post configuration
 cat $path/sys-configs/config.jsonc > /mnt/etc/xdg/waybar/config.jsonc
-cp $path/sys-configs/hyprland.conf /etc/hyprland.conf
+cp $path/sys-configs/hyprland.conf /mnt/etc/hyprland.conf
 
 sed -i -e 's/font-size.*/font-size: 12px;/' -e 's/background-color: rgba.*/background-color: #000000;/' -e 's/border-bottom.*/border-bottom: 0px;/' \
        -e 's/button.focused/button.active/' -e 's/animation-iteration-count:.*/animation-iteration-count: 6;/' /mnt/etc/xdg/waybar/style.css
