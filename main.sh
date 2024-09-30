@@ -33,7 +33,7 @@ umount -v /dev/$disk* || true
 umount -vR /mnt || true
 echo '- Disk partitioning...'
 sgdisk -Zo -n1::+64M -t1:ef00 -c1:'EFI System Partition' \
-           -n2::+ -t2:8304 -c2:'ArchLinux Root' -p /dev/$disk
+           -n2::+ -t2:8304 -c2:'Arch Linux Root' -p /dev/$disk
 
 mkfs.fat -vF32 -S512 -n 'ESP' --codepage=437 /dev/$disk*1
 mkfs.btrfs -fKL 'archlinux' -n65536 -m single /dev/$disk*2
