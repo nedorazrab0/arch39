@@ -31,9 +31,9 @@ sleep 2
 cd /
 umount -v /dev/$disk* || true
 umount -vR /mnt || true
-wipefs -a /dev/$disk
-echo -e 'label:gpt\n,64M,U,-\n,+,4F68BCE3-E8CD-4DB1-96E7-FBCAF984B709' | sfdisk -w always -W always /dev/$disk
-sync
+echo '- Disk partitioning...'
+sgdisk -Zo -n1::+64M -t1:ef00 -c1:'EFI System Partition' \
+           -n2::+ -t2:8304 -c2:'ArchLinux Root' -p /dev/$disk
 
 mkfs.fat -vF32 -S512 -n 'ESP' --codepage=437 /dev/$disk*1
 mkfs.btrfs -fKL 'archlinux' -n65536 -m single /dev/$disk*2
@@ -43,7 +43,7 @@ mount -t vfat --mkdir=600 -o 'noexec,nosuid,noatime,umask=0177' /dev/$disk*1 /mn
 
 # installing
 pacstrap -KP /mnt base linux-zen booster linux-firmware amd-ucode \
-                  btrfs-progs f2fs-tools xfsprogs exfatprogs dosfstools \
+                  btrfs-progs f2fs-tools xfsprogs exfatprogs dosfstools gptfdisk \
                   android-tools opendoas git bash-completion {un,}zip gnome-boxes flatpak zram-generator nano reflector \
                   hyprland polkit xdg-desktop-portal-hyprland mako kitty noto-fonts waybar brightnessctl \
                   grim slurp vulkan-radeon libva-mesa-driver bluez{,-utils} pipewire{,-alsa,-pulse,-jack}
