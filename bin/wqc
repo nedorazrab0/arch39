@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-if [[ "$1" =~ '--help' ]]; then
+if [[ "$@" =~ '--help' ]]; then
     echo '- Use it to connect to WIFI'
     exit 0
 fi
