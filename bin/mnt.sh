@@ -1,5 +1,17 @@
 #!/usr/bin/env bash
 
+if [[ "$@" =~ '--help' ]]; then
+    echo '- Use it to mount your disks'
+    echo "  Usage: $0 [option] [disk]"
+    echo "         $0 s sdd"
+    echo '- Options:'
+    echo '  s    Mount a SSD'
+    echo '  h    Mount a HDD'
+    echo '  u    Mount a thumb drive'
+    echo '  x    Detach a disk'
+    echo '- Mount path: "/run/dev/[disk]"'
+fi
+
 if (( "$(id -u)" != 0 )); then
     echo '! Run it as root'
     exit 1
