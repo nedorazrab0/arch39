@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+if [[ "$@" =~ --help ]]; then
+    echo '- Use it to format your disks'
+    echo "  Usage: $0 [option] [disk]"
+    echo "         $0 fu /dev/sdd2"
+    echo '- Options:'
+    echo '  f     Format a flash device (only for your tweaked pc)'
+    echo '  fu    Format an universal flash device (for all linux machines)'
+    echo '  h     Format a hard drive'
+    echo '  hu    Format an universal hard drive'
+    echo '  u     Format a disk for all platforms (e.g. win)'
+    echo '  uu    Format a disk for your archaic school pc'
+    exit 0
+fi
+
+if (( "$(id -u)" != 0 )); then
+    echo '! Run it as root'
+    exit 1
+fi
+
+case "$1" in
+    'f') mkfs.btrfs -fL "$3" -n65536 -m single "/dev/$2"
+    'fu') mkfs.f2fs -fil "$3" -O 'extra_attr,inode_checksum,sb_checksum,compression' "/dev/$2";;
+    'u') mkfs.exfat -L "$3" "/dev/$2";;
+    'uu') mkfs.fat -vn "$3" --codepage=437 "/dev/$disk";;
+    'h') mkfs.btrfs -fKL "$3" -n65536 "/dev/$2";;
+    'hu') mkfs.xfs -fKL "$3" -i 'size=2048' "/dev/$2";;
+esac
