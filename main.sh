@@ -17,6 +17,7 @@ case "$agreement" in
 esac
 
 # disk tuning
+sysctl -w 'vm.vfs_cache_pressure = 150'
 sysctl -w 'vm.dirty_bytes = 268435456'
 sysctl -w 'vm.dirty_background_bytes = 134217728'
 sysctl -w 'vm.dirty_writeback_centisecs = 1500'
@@ -64,7 +65,7 @@ echo '[Service]\nExecStart=\nExecStart=/usr/lib/systemd/systemd-networkd-wait-on
 echo 'permit persist :wheel' > /mnt/etc/doas.conf
 chmod 400 /mnt/etc/doas.conf
 echo 'nedocomp' > /mnt/etc/hostname
-sed -i 's/#DefaultTimeoutStopSec=.*/DefaultTimeoutStopSec=5s/' /mnt/etc/systemd/system.conf
+echo 'DefaultTimeoutStopSec=5s' >> /mnt/etc/systemd/system.conf
 cat /etc/systemd/timesyncd.conf > /mnt/etc/systemd/timesyncd.conf
 cat /etc/xdg/reflector/reflector.conf > /mnt/etc/xdg/reflector/reflector.conf
 
