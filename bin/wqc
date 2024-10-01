@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-if [[ "$1" == '--help' ]]; then
+
+if [[ "$1" =~ '--help' ]]; then
     echo '- Use it to connect to WIFI'
     exit 0
 fi
@@ -17,4 +18,5 @@ wsc="/etc/wpa_supplicant/wpa_supplicant-${iname}.conf"
 chmod 600 "$wsc"
 echo 'ctrl_interface=/run/wpa_supplicant' > "$wsc"
 wpa_passphrase "$name" "$password" | sed '/#psk=./d' >> "$wsc"
-# systemctl restart systemd-networkd
+systemctl enable --now "wpa_supplicant@${iname}"
+systemctl restart systemd-networkd
