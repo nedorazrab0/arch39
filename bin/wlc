@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-if [[ "$1" == '--help' ]]; then
+
+if [[ "$1" =~ '--help' ]]; then
     echo '- Use it to create wireless adb connect'
     exit 0
 fi
