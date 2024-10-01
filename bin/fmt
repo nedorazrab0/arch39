@@ -6,5 +6,5 @@ case "$1" in
     'u') mkfs.exfat -L "$3" "/dev/$2";;
     'uu') mkfs.fat -vn "$3" --codepage=437 "/dev/$disk";;
     'h') mkfs.btrfs -fKL "$3" -n65536 "/dev/$2";;
-    'hu') mkfs.xfs -fKL "$3" "/dev/$2";;
+    'hu') mkfs.xfs -fKL "$3" -i 'size=2048' "/dev/$2";;
 esac
