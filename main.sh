@@ -55,7 +55,7 @@ mount --bind "$path" /mnt/mnt
 arch-chroot /mnt bash /mnt/inchroot.sh "$name" "$password" "$zone"
 
 # post configuration
-cat $path/sys-configs/config.jsonc > /mnt/etc/xdg/waybar/style.css
+cat $path/sys-configs/style.css > /mnt/etc/xdg/waybar/style.css
 cat $path/sys-configs/config.jsonc > /mnt/etc/xdg/waybar/config.jsonc
 cp $path/sys-configs/hyprland.conf /mnt/etc/hyprland.conf
 
