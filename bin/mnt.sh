@@ -34,8 +34,11 @@ for blk in /dev/$2*[0-9]*; do
         mkdir -p "/run$blk"
         mount -vo "noatime,${amo}" "$blk" "/run$blk"
     else
-        umount -v "$blk"
-        echo '1' > "/sys/block/$2/device/delete"
-        rm -rf "/run/$blk"
+        umount -v --onlyonce "$blk"
     fi
 done
+
+if [[ -n "$x" ]]; then
+    echo '1' > "/sys/block/$2/device/delete"
+    rm -rf "/run/$blk"
+fi
