@@ -53,15 +53,9 @@ mount --bind "$path" /mnt/mnt
 arch-chroot /mnt bash /mnt/inchroot.sh "$name" "$password" "$zone"
 
 # post configuration
+cat $path/sys-configs/config.jsonc > /mnt/etc/xdg/waybar/style.css
 cat $path/sys-configs/config.jsonc > /mnt/etc/xdg/waybar/config.jsonc
 cp $path/sys-configs/hyprland.conf /mnt/etc/hyprland.conf
-
-sed -i -e 's/font-size.*/font-size: 12px;/' -e 's/background-color: rgba.*/background-color: #000000;/' -e 's/border-bottom.*/border-bottom: 0px;/' \
-       -e 's/button.focused/button.active/' -e 's/animation-iteration-count:.*/animation-iteration-count: 6;/' /mnt/etc/xdg/waybar/style.css
-
-for ebanaya_stroka in $(grep -nA5 language /mnt/etc/xdg/waybar/style.css | cut -d '-' -f1 | tail -n2); do
-    sed -i "${ebanaya_stroka}d" /mnt/etc/xdg/waybar/style.css
-done
 
 mkdir -p /etc/systemd/system/systemd-networkd-wait-online.service.d
 echo '[Service]\nExecStart=\nExecStart=/usr/lib/systemd/systemd-networkd-wait-online --any' \
