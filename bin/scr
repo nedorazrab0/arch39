@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+# make a screenshot
 if [[ "$1" == 'f' ]]; then
     grim -l9
 else
