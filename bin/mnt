@@ -11,7 +11,7 @@ for blk in /dev/$2*[0-9]*; do
         's')
             case "$fs" in
                 'btrfs') amo='ssd,nodiscard,compress=zstd:3';;
-                'f2fs') amo='nodiscard,compress_chksum';;
+                'f2fs') amo='nodiscard,compress_algorithm=zstd:3,compress_chksum';;
             esac
             ;;
         'h')
