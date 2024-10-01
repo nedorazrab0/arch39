@@ -3,6 +3,7 @@ set -e
 path='/tmp/njk'
 
 # install configurating
+kbl='#'
 read -p '- Username: ' name
 read -sp '- Password: ' password; echo
 read -p '- Locale (en_US is preinstalled): ' kbl
