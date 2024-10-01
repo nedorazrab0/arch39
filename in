@@ -16,10 +16,8 @@ systemctl restart systemd-timesyncd
 path='/tmp/njk'
 # pacman configuration
 sed -i -e 's/#ParallelDownloads/ParallelDownloads/' -e 's/#Color/Color/' -e 's/#VerbosePkgLists/VerbosePkgLists/' /etc/pacman.conf
-systemctl stop reflector
-systemctl start reflector
 echo '- Configurating mirrors...'
-systemctl restart reflector
+systemctl stop reflector
 pacman -Syy archlinux-keyring git --needed --noconfirm
 rm -rf "$path"
 git clone https://github.com/nedorazrab0/hqe.git "$path"
