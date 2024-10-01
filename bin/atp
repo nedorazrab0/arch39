@@ -1,6 +1,13 @@
 #!/usr/bin/env bash
 # adb() { '/usr/bin/adb' "$@"; }
 
+if [[ "$@" =~ '--help' ]]; then
+    echo '- Use it to transfer files beetwen $HOME/atp and /storage/emulated/0/atp via adb'
+    echo '  to      push file to /storage/emulated/0/atp'
+    echo '  from    pull file from /storage/emulated/0/atp'
+    echo '  cp      create symlink $2 -> $HOME/atp/...'
+fi
+
 files_echo() {
     case "$1" in
          'list') echo "$files" | awk '{print NR,$0}';;
@@ -34,12 +41,6 @@ case "$1" in
         file="$(files sp graw)"
         mkdir -p "$HOME/atp"
         adb pull "/storage/emulated/0/atp/$file" "$HOME/atp" -z brotli
-        ;;
-     --help)
-        echo '- Transfering files beetwen $HOME/atp and /storage/emulated/0/atp via adb'
-        echo '  to      push file to /storage/emulated/0/atp'
-        echo '  from    pull file from /storage/emulated/0/atp'
-        echo '  cp      create symlink $2 -> $HOME/atp/...'
         ;;
     cp) ln -sf "$2" "$HOME/atp";;
     *) exit 1;;
