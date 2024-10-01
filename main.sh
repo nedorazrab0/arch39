@@ -41,7 +41,7 @@ mkfs.fat -vF32 -S512 -n 'ESP' --codepage=437 /dev/$disk*1
 mkfs.btrfs -fKL 'archlinux' -n65536 -m single /dev/$disk*2
 
 mount -t btrfs -o 'noatime,nodiscard,ssd,compress=zstd:3' /dev/$disk*2 /mnt
-mount -t vfat --mkdir=600 -o 'noexec,nosuid,noatime,umask=0177' /dev/$disk*1 /mnt/boot
+mount -t vfat -o 'noexec,nodev,nosuid,noatime,umask=0077,X-mount.mkdir' /dev/$disk*1 /mnt/boot
 
 # installing
 pacstrap -KP /mnt base linux-zen booster linux-firmware amd-ucode \
@@ -67,11 +67,12 @@ echo 'permit persist :wheel' > /mnt/etc/doas.conf
 chmod 400 /mnt/etc/doas.conf
 echo 'nedocomp' > /mnt/etc/hostname
 echo 'DefaultTimeoutStopSec=5s' >> /mnt/etc/systemd/system.conf
+echo 'SleepOperation=suspend' >> /mnt/etc/systemd/logind.conf
 cat /etc/systemd/timesyncd.conf > /mnt/etc/systemd/timesyncd.conf
 cat /etc/xdg/reflector/reflector.conf > /mnt/etc/xdg/reflector/reflector.conf
 
 cp $path/bin/{atp,wlc,wqc,mnt,scr,fin.sh,h} /mnt/usr/bin
-chmod +x /mnt/usr/bin/{atp,wlc,wqc,mnt,scr,fin.sh,h}
+chmod 755 /mnt/usr/bin/{atp,wlc,wqc,mnt,scr,fin.sh,h}
 
 cp $path/sys-configs/arch-zen.conf /mnt/boot/loader/entries/arch-zen.conf
 cp $path/sys-configs/{20-wired,25-wireless}.network /mnt/etc/systemd/network
