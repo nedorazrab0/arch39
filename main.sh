@@ -48,7 +48,7 @@ pacstrap -KP /mnt base linux-zen booster linux-firmware amd-ucode \
                   android-tools opendoas git bash-completion {un,}zip gnome-boxes flatpak zram-generator nano reflector \
                   hyprland polkit xdg-desktop-portal-hyprland mako kitty noto-fonts waybar brightnessctl \
                   grim slurp vulkan-radeon libva-mesa-driver bluez{,-utils} pipewire{,-alsa,-pulse,-jack}
-sed -i -e 's/#en_US.UTF-8/en_US.UTF-8/' -e "s/#$kbl.UTF-8/$kbl.UTF-8/" /mnt/etc/locale.gen
+echo "en_US.UTF-8 UTF-8\n${kbl}.UTF-8 UTF-8" /mnt/etc/locale.gen
 
 mount --bind "$path" /mnt/mnt
 arch-chroot /mnt bash /mnt/inchroot.sh "$name" "$password" "$zone"
