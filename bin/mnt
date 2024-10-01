@@ -23,8 +23,8 @@ for blk in /dev/$2*[0-9]*; do
         'u')
             case "$fs" in
                 'btrfs') amo='ssd_spread,nodiscard,compress=zstd:3';;
-                'f2fs') amo='nodiscard,compress_chksum';;
-                exfat|vfat) amo='noexec,nosuid,dmask=0122,fmask=0133';;
+                'f2fs') amo='nodiscard,compress_algorithm=zstd:3,compress_chksum';;
+                exfat|vfat) amo='noexec,nodev,nosuid,umask=0022';;
             esac
             ;;
         'x') x='true';;
