@@ -2,7 +2,7 @@
 
 if [[ "$@" =~ --help ]]; then
     echo '- Use it to format your disks'
-    echo "  Usage: $0 [option] [disk]"
+    echo "  Usage: $0 [option] [partition]"
     echo "         $0 fu /dev/sdd2"
     echo '- Options:'
     echo '  f     Format a flash device (only for your tweaked pc)'
