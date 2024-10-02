@@ -2,8 +2,8 @@
 
 if [[ "$@" =~ --help ]]; then
     echo '- Use it to format your disks'
-    echo "  Usage: $0 [option] [partition]"
-    echo "         $0 fu /dev/sdd2"
+    echo "  Usage: $0 [option] [partition] [label]"
+    echo "         $0 fu /dev/sdd2 'my flash'"
     echo '- Options:'
     echo '  f     Format a flash device (only for your tweaked pc)'
     echo '  fu    Format an universal flash device (for all linux machines)'
@@ -26,4 +26,5 @@ case "$1" in
     'uu') mkfs.fat -vn "$3" --codepage=437 "/dev/$disk";;
     'h') mkfs.btrfs -fKL "$3" -n65536 "/dev/$2";;
     'hu') mkfs.xfs -fKL "$3" -i 'size=2048' "/dev/$2";;
+    *) exit 1
 esac
