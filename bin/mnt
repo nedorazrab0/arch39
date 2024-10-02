@@ -40,6 +40,7 @@ for blk in /dev/$2*[0-9]*; do
             esac
             ;;
         'x') x='true';;
+        *) exit 1
     esac
 
     if [[ -z "$x" ]]; then
