@@ -66,6 +66,7 @@ echo '[Service]\nExecStart=\nExecStart=/usr/lib/systemd/systemd-networkd-wait-on
 echo 'permit persist :wheel' > /mnt/etc/doas.conf
 chmod 400 /mnt/etc/doas.conf
 echo 'nedocomp' > /mnt/etc/hostname
+cat $path/sys-configs/bash.bashrc > /etc/bash.basbrc
 echo 'DefaultTimeoutStopSec=5s' >> /mnt/etc/systemd/system.conf
 echo 'SleepOperation=suspend' >> /mnt/etc/systemd/logind.conf
 cat /etc/systemd/timesyncd.conf > /mnt/etc/systemd/timesyncd.conf
