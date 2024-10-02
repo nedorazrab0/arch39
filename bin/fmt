@@ -23,7 +23,7 @@ case "$1" in
     'f') mkfs.btrfs -fL "$3" -n65536 -m single "/dev/$2"
     'fu') mkfs.f2fs -fil "$3" -O 'extra_attr,inode_checksum,sb_checksum,compression' "/dev/$2";;
     'u') mkfs.exfat -L "$3" "/dev/$2";;
-    'uu') mkfs.fat -vn "$3" --codepage=437 "/dev/$disk";;
+    'uu') mkfs.fat -vn "$3" --codepage=437 "/dev/$2";;
     'h') mkfs.btrfs -fKL "$3" -n65536 "/dev/$2";;
     'hu') mkfs.xfs -fKL "$3" -i 'size=2048' "/dev/$2";;
     *) exit 1
