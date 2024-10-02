@@ -5,4 +5,4 @@ from secrets import choice
 
 for a in range(6):
     length = range(int(choice(range(96, 102))))
-    print("- " + ''.join(choice(ascii_letters + digits + punctuation) for b in length))
+    print("- " + "".join(choice(ascii_letters + digits + punctuation) for b in length))
