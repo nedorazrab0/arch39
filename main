@@ -53,7 +53,7 @@ pacstrap -KP /mnt base linux-zen booster linux-firmware amd-ucode \
 echo -e "en_US.UTF-8 UTF-8\n${kbl}.UTF-8 UTF-8" >> /mnt/etc/locale.gen
 
 mount --bind /tmp/njk /mnt/mnt
-arch-chroot /mnt bash /mnt/inchroot.sh "$name" "$password" "$zone"
+arch-chroot /mnt bash /mnt/inchroot "$name" "$password" "$zone"
 
 # post configuration
 cfg='/tmp/njk/cfg'
