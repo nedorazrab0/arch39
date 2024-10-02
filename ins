@@ -3,11 +3,11 @@ set -e
 read -p '- Do not do that :) '
 
 # net tweaks
-sysctl -w 'net.ipv4.tcp_fastopen = 3'
-sysctl -w 'net.core.somaxconn = 8192'
-sysctl -w 'net.ipv4.tcp_timestamps = 0'
-sysctl -w 'net.ipv4.tcp_ecn = 1'
-sysctl -w 'net.ipv4.tcp_congestion_control = bbr'
+sysctl -w net.ipv4.tcp_fastopen=3
+sysctl -w net.core.somaxconn=8192
+sysctl -w net.ipv4.tcp_timestamps=0
+sysctl -w net.ipv4.tcp_ecn=1
+sysctl -w net.ipv4.tcp_congestion_control=bbr
 
 # ntp
 sed -i -e 's/#NTP=/NTP=/' -e 's/#FallbackNTP=.*/FallbackNTP=time.google.com/' /etc/systemd/timesyncd.conf
@@ -20,6 +20,6 @@ echo '- Configurating mirrors...'
 systemctl stop reflector
 pacman -Syy archlinux-keyring git --needed --noconfirm
 rm -rf "$path"
-git clone https://github.com/nedorazrab0/hqe.git "$path"
+git clone https://github.com/nedorazrab0/arch-install.git "$path"
 
-bash "$path/main.sh"
+bash "$path/main"
