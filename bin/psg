@@ -3,6 +3,10 @@
 from string import ascii_letters, digits, punctuation
 from secrets import choice
 
-for a in range(6):
-    length = range(int(choice(range(96, 102))))
-    print("- " + "".join(choice(ascii_letters + digits + punctuation) for b in length))
+def gen(l = 128):
+    return "".join(choice(ascii_letters + digits + punctuation) for i in l)
+
+if __name__ == "__main__":
+    for i in range(6):
+        length = range(int(choice(range(96, 102))))
+        print("- " + gen(lenhth))
