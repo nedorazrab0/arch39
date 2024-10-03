@@ -7,5 +7,5 @@ def gen(length):
     return "".join(choice(ascii_letters + digits + punctuation) for i in range(length))
 
 if __name__ == "__main__":
-    for i in range(6):
-        print("- " + gen(128))
+    for i in range(16):
+        print("- " + gen(16))
