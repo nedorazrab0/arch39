@@ -3,8 +3,8 @@
 from string import ascii_letters, digits, punctuation
 from secrets import choice
 
-def gen(l = 128):
-    return "".join(choice(ascii_letters + digits + punctuation) for i in l)
+def gen(length):
+    return "".join(choice(ascii_letters + digits + punctuation) for i in range(length))
 
 if __name__ == "__main__":
     for i in range(6):
