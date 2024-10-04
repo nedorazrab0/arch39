@@ -76,13 +76,12 @@ echo -e '[Service]\nExecStart=\nExecStart=/usr/lib/systemd/systemd-networkd-wait
 echo 'nedocomp' > /mnt/etc/hostname
 echo 'permit persist :wheel' > /mnt/etc/doas.conf
 chmod 400 /mnt/etc/doas.conf
-cat $cfg/bash.bashrc > /etc/bash.basbrc
 cp $cfg/60-ioschedulers.rules /mnt/etc/udev/rules.d
 cp $cfg/99-sysctl.conf /mnt/etc/sysctl.d
 cat /etc/xdg/reflector/reflector.conf > /mnt/etc/xdg/reflector/reflector.conf
 cat $cfg/nanorc > /mnt/etc/nanorc
 
-for scr in atp wlc wqc mnt scr fin h psg; do
+for scr in atp wlc wqc mnt scr fin h pwg; do
     cp "/mnt/usr/bin/$scr"
     chmod 755 "/mnt/usr/bin/$scr"
 done
