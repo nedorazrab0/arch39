@@ -1,8 +1,0 @@
-[Match]
-Type=wlan
-WLANInterfaceType=station
-SSID=*
-
-[Network]
-DHCP=yes
-IgnoreCarrierLoss=3s
