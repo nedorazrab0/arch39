@@ -82,7 +82,7 @@ cat /etc/xdg/reflector/reflector.conf > /mnt/etc/xdg/reflector/reflector.conf
 cat $cfg/nanorc > /mnt/etc/nanorc
 
 for scr in atp wlc wqc mnt scr fin h pwg; do
-    cp "/mnt/usr/bin/$scr"
+    cp "/tmp/njk/bin/$scr" "/mnt/usr/bin/$scr"
     chmod 755 "/mnt/usr/bin/$scr"
 done
 
