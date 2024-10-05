@@ -22,7 +22,7 @@ sysctl -w vm.dirty_bytes=268435456
 sysctl -w vm.dirty_background_bytes=134217728
 sysctl -w vm.dirty_writeback_centisecs=1500
 
-sbd="/dev/$disk"
+sbd="/sys/block/$disk"
 echo 'none' > $sbd/queue/scheduler
 echo '128' > $sbd/queue/nr_requests
 echo '2' > $sbd/queue/rq_affinity
