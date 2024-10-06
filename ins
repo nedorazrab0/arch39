@@ -18,7 +18,7 @@ path='/tmp/njk'
 # configuring pacman
 sed -i -e 's/#ParallelDownloads/ParallelDownloads/' -e 's/#Color/Color/' \
        -e 's/#VerbosePkgLists/VerbosePkgLists/' /etc/pacman.conf
-echo '- Configurating mirrors...'
+echo '- Configuring mirrors...'
 systemctl restart reflector
 pacman -Syy archlinux-keyring git --needed --noconfirm
 rm -rf "$path"
