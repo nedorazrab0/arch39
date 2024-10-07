@@ -48,7 +48,7 @@ mount -t vfat -o 'noexec,nodev,nosuid,noatime,umask=0077,X-mount.mkdir' $blk*1 /
 pacstrap -KP /mnt base linux-zen booster linux-firmware amd-ucode \
                   btrfs-progs f2fs-tools xfsprogs exfatprogs dosfstools gptfdisk \
                   android-tools opendoas git bash-completion {un,}zip gnome-boxes flatpak zram-generator nano reflector \
-                  hyprland polkit xdg-desktop-portal-hyprland mako kitty noto-fonts waybar brightnessctl \
+                  hyprland polkit xdg-desktop-portal-hyprland mako wofi kitty noto-fonts waybar brightnessctl \
                   grim slurp vulkan-radeon libva-mesa-driver bluez{,-utils} pipewire{,-alsa,-pulse,-jack}
 echo -e "en_US.UTF-8 UTF-8\n${kbl}.UTF-8 UTF-8" >> /mnt/etc/locale.gen
 
