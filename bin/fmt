@@ -6,11 +6,11 @@ if [[ "$@" =~ --help ]]; then
     echo "         $0 fu /dev/sdd2 'my flash'"
     echo '- Options:'
     echo '  f     Format a flash device (only for your tweaked pc)'
-    echo '  fu    Format an universal flash device (for all linux machines)'
+    echo '  fu    Format an universal thumb drive device (for all linux machines)'
     echo '  h     Format a hard drive'
     echo '  hu    Format an universal hard drive'
     echo '  u     Format a disk for all platforms (e.g. win)'
-    echo '  uu    Format a disk for your archaic school pc'
+    echo '  uu    Format a disk for your archaic school pc (dosfs)'
     exit 0
 fi
 
