@@ -5,7 +5,6 @@ set minibar
 set multibuffer
 set nohelp
 set quickblank
-set smarthome
 set stateflags
 set tabsize 4
 set tabstospaces
