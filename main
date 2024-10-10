@@ -9,7 +9,6 @@ read -p '- Locale (en_US is preinstalled): ' kbl
 read -p '- Timezone (e.g. Europe/Moscow): ' zone
 read -p '- Target disk name: ' disk
 read -p '- Do you want to destroy your own disk? (y/n): ' agreement
-[[ -n "$kbl" ]] && kbl=",${kbl}"
 
 case "$agreement" in
     y) true;;
@@ -62,7 +61,7 @@ cfg='/tmp/njk/cfg'
 
 cat $cfg/style.css > /mnt/etc/xdg/waybar/style.css
 cat $cfg/config.jsonc > /mnt/etc/xdg/waybar/config.jsonc
-cat $cfg/hyprland.conf | sed "s/kb_layout = us/&${kbl::3}/" > /mnt/etc/hyprland.conf
+cat $cfg/hyprland.conf | sed "s/kb_layout = us/&${kbl::2}/" > /mnt/etc/hyprland.conf
 rm -f /usr/share/applications/{qv4l2,qvidcap,bvnc,bssh,avahi-discover}.desktop
 
 echo 'DefaultTimeoutStopSec=5s' >> /mnt/etc/systemd/system.conf
