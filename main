@@ -59,9 +59,14 @@ arch-chroot /mnt bash /mnt/inchroot "$name" "$password" "$zone"
 # tuning new installed system
 cfg='/tmp/njk/cfg'
 
+if [[ -z "$kbl" ]]; then
+    cat $cfg/hyprland.conf > /mnt/etc/hyprland.conf
+else
+    cat $cfg/hyprland.conf | sed "s/kb_layout = us/&,${kbl::2}/" > /mnt/etc/hyprland.conf
+fi
+
 cat $cfg/style.css > /mnt/etc/xdg/waybar/style.css
 cat $cfg/config.jsonc > /mnt/etc/xdg/waybar/config.jsonc
-cat $cfg/hyprland.conf | sed "s/kb_layout = us/&${kbl::2}/" > /mnt/etc/hyprland.conf
 rm -f /usr/share/applications/{qv4l2,qvidcap,bvnc,bssh,avahi-discover}.desktop
 
 echo 'DefaultTimeoutStopSec=5s' >> /mnt/etc/systemd/system.conf
