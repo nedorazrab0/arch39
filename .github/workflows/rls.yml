@@ -1,0 +1,20 @@
+on: workflow_dispatch
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compressing
+        run: |
+          tar -cf ./njk.tar ./*
+          zstd -T0 --ultra -20 ./njk.tar
+      - name: Releasing
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create rolling || true
+          gh release upload rolling './njk.tar.zst' --clobber
+          
