@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 
-flatpak install flathub org.mozilla.firefox com.discordapp.Discord io.mpv.Mpv org.telegram.desktop \
+flatpak install flathub org.mozilla.firefox io.github.spacingbat3.webcord io.mpv.Mpv org.telegram.desktop \
                         org.onlyoffice.desktopeditors com.transmissionbt.Transmission org.kde.krita --noninteractive -y
 doas rm -f "$(realpath "$0")"
