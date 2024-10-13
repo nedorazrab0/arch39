@@ -15,5 +15,5 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           sha="$(sha256sum ./njk.tar.lz4 | cut -d ' ' -f1)"
-          gh release create rolling || true
-          gh release upload rolling "./njk.tar.lz4#${sha}.sha256" --clobber
+          gh release delete rolling --cleanup-tag -y || true
+          gh release create rolling "./njk.tar.lz4#${sha}.sha256" --generate-notes
