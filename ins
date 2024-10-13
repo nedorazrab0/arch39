@@ -14,12 +14,13 @@ sed -i -e 's/#FallbackNTP=.*/FallbackNTP=time.google.com/' \
 systemctl restart systemd-timesyncd
 
 path='/tmp/njk'
-curl -fLo /tmp/njk.tar.lz4 'https://github.com/nedorazrab0/arch-install/releases/download/rolling/njk.tar.lz4'
+curl -fLo "$path.tar.lz4" 'https://github.com/nedorazrab0/arch-install/releases/download/rolling/njk.tar.lz4'
 echo
-sha256sum --tag /tmp/njk.tar.lz4
+sha256sum --tag "$path.tar.lz4"
 read -p '- Press [Enter] to continue '
 
 [[ -d "$path" ]] && rm -rf "$path"
 mkdir -p "$path"
-lz4 -dcf /tmp/njk.tar.lz4 | tar -xf - -C "$path"
+lz4 -dcf "$path.tar.lz4" | tar -xf - -C "$path"
+rm -f "$path.tar.lz4"
 bash "$path/main"
