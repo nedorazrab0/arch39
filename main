@@ -16,6 +16,13 @@ case "$agreement" in
     *) exit 1;;
 esac
 
+# configuring pacman
+sed -i -e 's/#ParallelDownloads/ParallelDownloads/' -e 's/#Color/Color/' \
+       -e 's/#VerbosePkgLists/VerbosePkgLists/' /etc/pacman.conf
+echo '- Configuring mirrors...'
+systemctl restart reflector
+pacman -Syy archlinux-keyring --noconfirm
+
 # disk tuning
 sysctl -w vm.vfs_cache_pressure=150
 sysctl -w vm.dirty_bytes=268435456
@@ -27,7 +34,7 @@ echo 'none' > $sbd/queue/scheduler
 echo '128' > $sbd/queue/nr_requests
 echo '2' > $sbd/queue/rq_affinity
 
-# disk partition
+# disk partitioning
 echo '- You have 2 seconds to save your disk!'
 sleep 2
 cd /
@@ -57,7 +64,7 @@ echo -e "en_US.UTF-8 UTF-8\n${kbl}.UTF-8 UTF-8" >> /mnt/etc/locale.gen
 mount -o bind /tmp/njk /mnt/mnt
 arch-chroot /mnt bash /mnt/inchroot "$name" "$password" "$zone"
 
-# tuning new installed system
+# tuning the system
 cfg='/tmp/njk/cfg'
 
 if [[ -z "$kbl" ]]; then
