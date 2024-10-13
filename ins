@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 set -e
-read -p '- Press [Enter] to continue '
 
 # net tweaks
 sysctl -w net.ipv4.tcp_fastopen=3
@@ -15,13 +14,12 @@ sed -i -e 's/#FallbackNTP=.*/FallbackNTP=time.google.com/' \
 systemctl restart systemd-timesyncd
 
 path='/tmp/njk'
-# configuring pacman
-sed -i -e 's/#ParallelDownloads/ParallelDownloads/' -e 's/#Color/Color/' \
-       -e 's/#VerbosePkgLists/VerbosePkgLists/' /etc/pacman.conf
-echo '- Configuring mirrors...'
-systemctl restart reflector
-pacman -Syy archlinux-keyring git --needed --noconfirm
-rm -rf "$path"
-git clone https://github.com/nedorazrab0/arch-install "$path"
+curl -fLo /tmp/njk.tar.lz4 'https://github.com/nedorazrab0/arch-install/releases/download/rolling/njk.tar.lz4'
+echo
+sha256sum --tag /tmp/njk.tar.lz4
+read -p '- Press [Enter] to continue '
 
+[[ -d "$path" ]] && rm -rf "$path"
+mkdir -p "$path"
+lz4 -cd /tmp/njk.tar.lz4 | tar -xf - -C "$path"
 bash "$path/main"
