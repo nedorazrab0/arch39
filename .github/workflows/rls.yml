@@ -9,7 +9,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Compressing
-        run: tar -cvf - ./* | lz4 -c -6 > ./njk.tar.lz4
+        run: |
+          rm -f ./README.md
+          tar -cvf - ./* | lz4 -c -6 > ./njk.tar.lz4
       - name: Releasing
         env:
           GH_TOKEN: ${{ github.token }}
