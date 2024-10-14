@@ -2,7 +2,7 @@
 
 list='org.mozilla.firefox io.github.spacingbat3.webcord io.mpv.Mpv org.telegram.desktop
       org.onlyoffice.desktopeditors com.transmissionbt.Transmission org.kde.krita'
-flatpak install flathub "$list" --noninteractive
+flatpak install flathub $list --noninteractive
 for pkg in $list; do
     flatpak override "$pkg" --filesystem=home -u
 done
