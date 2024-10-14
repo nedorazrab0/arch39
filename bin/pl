@@ -9,6 +9,6 @@ case "$1" in
     s) flatpak search "$2" --columns=name,application;;
     sq) flatpak search "$2" --columns=application;;
     sd) flatpak search "$2" --columns=application,description;;
-    ha) flatpak override "$2" --filesystem=home:ro
+    ha) flatpak override "$2" --filesystem=home:ro -u
     *) flatpak "$@"
 esac
