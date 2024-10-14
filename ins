@@ -21,6 +21,5 @@ read -p '- Press [Enter] to continue '
 
 [[ -d "$path" ]] && rm -rf "$path"
 mkdir -p "$path"
-lz4 -dcf "$path.tar.lz4" | tar -xf - -C "$path"
-rm -f "$path.tar.lz4"
+lz4 -dc --rm "$path.tar.lz4" | tar -xf - -C "$path"
 bash "$path/main"
