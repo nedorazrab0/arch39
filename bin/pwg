@@ -7,7 +7,7 @@ from secrets import choice
 def pwg(len):
     return "".join(choice(ascii_letters + digits + punctuation) for i in range(len))
 
-def main(n):
+def main(n = 16):
     """
     Format: 20 + 2-3-3 + 2-3-3
     First for security, second + third for better memorization 
