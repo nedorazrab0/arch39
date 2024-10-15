@@ -16,7 +16,7 @@ systemctl restart systemd-timesyncd
 path='/tmp/njk'
 curl -fLo "$path.tar.lz4" 'https://github.com/nedorazrab0/arch-install/releases/download/rolling/njk.tar.lz4'
 echo
-sha256sum --tag "$path.tar.lz4"
+openssl sha256 "$path.tar.zst"
 read -p '- Press [Enter] to continue '
 
 [[ -d "$path" ]] && rm -rf "$path"
