@@ -3,12 +3,12 @@
 # flatpak aliases
 case "$1" in
     i) flatpak install flathub "$2" --noninteractive;;
-    r) flatpak uninstall "$2";;
+    r) flatpak uninstall "$2" --delete-data;;
     u) flatpak update;;
-    l) flatpak list;;
+    l) flatpak list --columns=application,version;;
     s) flatpak search "$2" --columns=name,application;;
     sq) flatpak search "$2" --columns=application;;
     sd) flatpak search "$2" --columns=application,description;;
-    ha) flatpak override "$2" --filesystem=home:ro -u
-    *) flatpak "$@"
+    ha) flatpak override "$2" --filesystem=home -u;;    # home dir access
+    *) flatpak "$@";;
 esac
