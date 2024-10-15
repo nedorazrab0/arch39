@@ -11,11 +11,11 @@ jobs:
       - name: Compressing
         run: |
           rm -f ./README.md
-          tar -cvf - ./* | lz4 -12zvc --favor-decSpeed - > ./njk.tar.lz4
+          tar -cvf - ./* | zstd -T0 --ultra -20zvc - > ./njk.tar.zst
       - name: Releasing
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          sha="$(sha256sum ./njk.tar.lz4 | cut -d ' ' -f1)"
+          sha="$(sha256sum ./njk.tar.zst | cut -d ' ' -f1)"
           gh release delete rolling --cleanup-tag -y || true
-          gh release create rolling "./njk.tar.lz4#${sha}.sha256" --generate-notes
+          gh release create rolling "./njk.tar.zst#${sha}.sha256" --generate-notes
