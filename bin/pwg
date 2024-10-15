@@ -7,11 +7,14 @@ from secrets import choice
 def pwg(len):
     return "".join(choice(ascii_letters + digits + punctuation) for i in range(len))
 
-if __name__ == "__main__":
+def main(n):
     """
     Format: 20 + 2-3-3 + 2-3-3
     First for security, second + third for better memorization 
     20 random ASCII chars = 131 (> 128) entropy bits
     """
-    for i in range(16):
+    for i in range(n):
         print("- " + pwg(20) + "  " + "".join("  "  + pwg(2) + " " + pwg(3) + " " + pwg(3) for i in range(2)))
+
+if __name__ == "__main__":
+    main(16)
