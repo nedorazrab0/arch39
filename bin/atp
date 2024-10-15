@@ -14,7 +14,7 @@ fi
 
 files_echo() {
     case "$1" in
-         list) echo "$files" | cat -n';;
+         list) echo "$files" | cat -n;;
          graw) echo "$files" | sed -n "${file_number}p";;
     esac
 }
