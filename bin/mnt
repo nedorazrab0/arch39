@@ -20,26 +20,26 @@ fi
 for blk in /dev/$2*[0-9]*; do
     fs="$(blkid -s TYPE -o value $blk)"
     case "$1" in
-        's')
+        s)
             case "$fs" in
-                'btrfs') amo='ssd,nodiscard,compress=zstd:3';;
-                'f2fs') amo='nodiscard,compress_algorithm=zstd:3,compress_chksum';;
+                btrfs) amo='nodiscard,ssd,compress=zstd:3';;
+                f2fs) amo='nodiscard,compress_algorithm=zstd:3,compress_chksum';;
             esac
             ;;
-        'h')
+        h)
             case "$fs" in
-                'btrfs') amo='nossd,autodefrag,nodiscard,compress=zstd:6';;
+                btrfs) amo='nossd,nodiscard,autodefrag,compress=zstd:6';;
                 *) amo='lazytime';;
             esac
             ;;
-        'u')
+        u)
             case "$fs" in
-                'btrfs') amo='ssd_spread,nodiscard,compress=zstd:3';;
-                'f2fs') amo='nodiscard,compress_algorithm=zstd:3,compress_chksum';;
+                btrfs) amo='nodiscard,ssd_spread,compress=zstd:3';;
+                f2fs) amo='nodiscard,compress_algorithm=zstd:3,compress_chksum';;
                 exfat|vfat) amo='noexec,nodev,nosuid,umask=0022';;
             esac
             ;;
-        'x') x='true';;
+        x) x='true';;
         *) exit 1;;
     esac
 
