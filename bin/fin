@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -e
 
 list='org.mozilla.firefox io.github.spacingbat3.webcord io.mpv.Mpv org.telegram.desktop
       org.onlyoffice.desktopeditors com.transmissionbt.Transmission org.kde.krita'
