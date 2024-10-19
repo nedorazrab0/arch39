@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 set -e
+ghp() { echo "$sha" | cut -c "$1" ; }
 
 # net tweaks
 sysctl -w net.ipv4.tcp_fastopen=3
@@ -16,7 +17,9 @@ systemctl restart systemd-timesyncd
 path='/tmp/njk'
 curl -fLo "$path.tar.zst" 'https://github.com/nedorazrab0/arch-install/releases/download/rolling/njk.tar.zst'
 echo
-openssl sha256 "$path.tar.zst"
+sha="$(openssl sha256 $path.tar.zst | cut -d ' ' -f2)"
+shap="$(echo $(ghp 1-2)-$(ghp 3-5)-$(ghp 6-8)--$(ghp 9-10)-$(ghp 11-13)-$(ghp 14-16))"
+echo "- SHA256 Part:  $shap"
 read -p '- Press [Enter] to continue '
 
 [[ -d "$path" ]] && rm -rf "$path"
