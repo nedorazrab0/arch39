@@ -15,14 +15,15 @@ sed -i -e 's/#FallbackNTP=.*/FallbackNTP=time.google.com/' \
 systemctl restart systemd-timesyncd
 
 path='/tmp/njk'
-curl -fLo "$path.tar.zst" 'https://github.com/nedorazrab0/arch-install/releases/download/rolling/njk.tar.zst'
+curl -fLo "${path}i" 'https://github.com/nedorazrab0/arch-install/releases/download/rolling/njki'
 echo
-sha="$(openssl sha256 $path.tar.zst | cut -d ' ' -f2)"
+sha="$(openssl sha256 ${path}i | cut -d ' ' -f2)"
 shap="$(echo $(ghp 1-2)-$(ghp 3-5)-$(ghp 6-8)--$(ghp 9-10)-$(ghp 11-13)-$(ghp 14-16))"
-echo "- SHA256 Part:  $shap"
+echo "- SHA256 Part:\n  $shap"
 read -p '- Press [Enter] to continue '
 
 [[ -d "$path" ]] && rm -rf "$path"
 mkdir -p "$path"
-zstd -dc --rm "$path.tar.zst" | tar -xf - -C "$path"
+zstd -dc "${path}i" | tar -xf - -C "$path"
+rm -f "${path}i"
 bash "$path/main"
