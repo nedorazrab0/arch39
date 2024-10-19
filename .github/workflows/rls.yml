@@ -9,13 +9,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Compressing
-        run: tar -H pax --exclude=./README.md -cvf - ./* | zstd -T0 --ultra -20zvc - > ./njk.tar.zst
+        run: tar -H pax --exclude=./README.md -cvf - ./* | zstd -T0 --ultra -20zvc - > ./njki
       - name: Releasing
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           ghp() { echo "$sha" | cut -c "$1"; }
-          sha="$(openssl sha256 ./njk.tar.zst | cut -d ' ' -f2)"
+          sha="$(openssl sha256 ./njki | cut -d ' ' -f2)"
           shap="$(echo $(ghp 1-2)-$(ghp 3-5)-$(ghp 6-8)--$(ghp 9-10)-$(ghp 11-13)-$(ghp 14-16))"
           gh release delete rolling --cleanup-tag -y || true
-          gh release create rolling "./njk.tar.zst#${shap}.sha256p" --generate-notes
+          echo -e "#### SHA256 Part:\n\`\`\`\n${shap}\n\`\`\`\n> $(date)" |\
+          gh release create rolling ./njki -F-
