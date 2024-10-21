@@ -49,7 +49,7 @@ mkfs.fat -vF32 -S512 -n 'ESP' --codepage=437 $blk*1
 mkfs.btrfs -fKL 'archlinux' -n65536 -m single $blk*2
 
 mount -t btrfs -o 'noatime,nodiscard,ssd,compress=zstd:3' $blk*2 /mnt
-mount -t vfat -o 'noexec,nodev,nosuid,noatime,umask=0077,X-mount.mkdir' $blk*1 /mnt/boot
+mount -t vfat -o 'noexec,nodev,nosuid,noatime,utf=0,fmask=0177,dmask=0077,X-mount.mkdir=600' $blk*1 /mnt/boot
 fstrim -v /mnt
 
 # installing
@@ -83,9 +83,11 @@ cp $cfg/zram-generator.conf /mnt/etc/systemd
 cat $cfg/loader.conf > /mnt/boot/loader/loader.conf
 cp $cfg/arch-zen.conf /mnt/boot/loader/entries/arch-zen.conf
 cp $cfg/{20-wired,25-wireless}.network /mnt/etc/systemd/network
-mkdir -p /etc/systemd/system/systemd-networkd-wait-online.service.d
+mkdir -p /etc/systemd/system/{systemd-networkd-wait-online.service,boot.mount}.d
 echo -e '[Service]\nExecStart=\nExecStart=/usr/lib/systemd/systemd-networkd-wait-online --any' \
         > /etc/systemd/system/systemd-networkd-wait-online.service.d/wait-for-only-one-interface.conf
+echo -e '[Mount]\nOptions=\nOptions=noexec,nosuid,nodev,nosymfollow,noatime,utf8=0,fmask=0177,dmask=0077,rw' \
+        > /etc/systemd/system/boot.mount.d/mount-options.conf
 
 echo 'nedocomp' > /mnt/etc/hostname
 echo 'permit persist :wheel' > /mnt/etc/doas.conf
