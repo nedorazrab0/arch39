@@ -97,7 +97,7 @@ cp $cfg/99-sysctl.conf /mnt/etc/sysctl.d
 cat /etc/xdg/reflector/reflector.conf > /mnt/etc/xdg/reflector/reflector.conf
 cat $cfg/nanorc > /mnt/etc/nanorc
 
-for scr in atp wlc wqc mnt scr fin h pwg pl fls pm; do
+for scr in atp wlc wqc mnt scr fin h pwg pl fls pm dc; do
     cp "/tmp/njk/bin/$scr" "/mnt/usr/bin/$scr"
     chmod 755 "/mnt/usr/bin/$scr"
 done
