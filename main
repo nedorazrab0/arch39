@@ -48,8 +48,8 @@ sgdisk -Zo -n1::+64M -t1:ef00 -c1:'EFI System Partition' \
 mkfs.fat -vF32 -S512 -n 'ESP' --codepage=437 $blk*1
 mkfs.btrfs -fKL 'archlinux' -n65536 -m single $blk*2
 
-mount -t btrfs -o 'noatime,nodiscard,ssd,compress=zstd:3' $blk*2 /mnt
-mount -t vfat -o 'noexec,nodev,nosuid,noatime,utf=0,fmask=0177,dmask=0077,X-mount.mkdir=600' $blk*1 /mnt/boot
+mount -t btrfs -o 'noatime,nodiscard,nobarrier,commit=300,lazytime,ssd,compress=zstd:3' $blk*2 /mnt
+mount -t vfat -o 'noexec,nodev,nosuid,noatime,utf=0,fmask=0177,dmask=0077,X-mount.mkdir=600,lazytime' $blk*1 /mnt/boot
 fstrim -v /mnt
 
 # installing
@@ -86,7 +86,7 @@ cp $cfg/{20-wired,25-wireless}.network /mnt/etc/systemd/network
 mkdir -p /etc/systemd/system/{systemd-networkd-wait-online.service,boot.mount}.d
 echo -e '[Service]\nExecStart=\nExecStart=/usr/lib/systemd/systemd-networkd-wait-online --any' \
         > /etc/systemd/system/systemd-networkd-wait-online.service.d/wait-for-only-one-interface.conf
-echo -e '[Mount]\nOptions=\nOptions=noexec,nosuid,nodev,nosymfollow,noatime,utf8=0,fmask=0177,dmask=0077,rw' \
+echo -e '[Mount]\nOptions=\nOptions=noexec,nosuid,nodev,nosymfollow,noatime,utf8=0,fmask=0177,dmask=0077,lazytime,rw' \
         > /etc/systemd/system/boot.mount.d/mount-options.conf
 
 echo 'nedocomp' > /mnt/etc/hostname
