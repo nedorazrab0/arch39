@@ -30,27 +30,31 @@ sysctl -w vm.dirty_background_bytes=134217728
 sysctl -w vm.dirty_writeback_centisecs=1500
 
 sbd="/sys/block/$disk"
-echo 'none' > $sbd/queue/scheduler
-echo '128' > $sbd/queue/nr_requests
-echo '2' > $sbd/queue/rq_affinity
+echo 'none' > "$sbd/queue/scheduler"
+echo '128' > "$sbd/queue/nr_requests"
+echo '2' > "$sbd/queue/rq_affinity"
 
 # disk partitioning
 echo '- You have 2 seconds to save your disk!'
 sleep 2
 cd /
 blk="/dev/$disk"
-umount -v $blk* || true
-umount -vR /mnt || true
-echo '- Disk partitioning...'
-sgdisk -Zo -n1::+64M -t1:ef00 -c1:'EFI System Partition' \
-           -n2::+ -t2:8304 -c2:'Arch Linux Root' -p $blk
+####
+set +e
+umount -vR /mnt
+umount -v $blk*
+blkdiscard -vf "$blk"
+set -e
+####
+wipefs -a "$blk"
+sgdisk -o -n1::+64M -t1:ef00 -c1:'EFI System Partition' \
+          -n2::+ -t2:8304 -c2:'Arch Linux Root' -p "$blk"
 
 mkfs.fat -vF32 -S512 -n 'ESP' --codepage=437 $blk*1
 mkfs.btrfs -fKL 'archlinux' -n65536 -m single $blk*2
 
-mount -t btrfs -o 'noatime,nodiscard,nobarrier,commit=300,lazytime,ssd,compress=zstd:3' $blk*2 /mnt
-mount -t vfat -o 'noexec,nodev,nosuid,noatime,utf=0,fmask=0177,dmask=0077,X-mount.mkdir=600,lazytime' $blk*1 /mnt/boot
-fstrim -v /mnt
+mount -vt btrfs -o 'noatime,nodiscard,nobarrier,commit=300,lazytime,ssd,compress=zstd:3' $blk*2 /mnt
+mount -vt vfat -o 'noexec,nodev,nosuid,noatime,utf8=false,fmask=0177,dmask=0077,X-mount.mkdir=600,lazytime' $blk*1 /mnt/boot
 
 # installing
 pacstrap -KP /mnt base linux-zen booster linux-firmware amd-ucode \
@@ -61,7 +65,7 @@ pacstrap -KP /mnt base linux-zen booster linux-firmware amd-ucode \
                   grim slurp vulkan-radeon libva-mesa-driver bluez{,-utils} pipewire{,-alsa,-pulse,-jack}
 echo -e "en_US.UTF-8 UTF-8\n${kbl}.UTF-8 UTF-8" >> /mnt/etc/locale.gen
 
-mount -o bind /tmp/njk /mnt/mnt
+mount -vo bind /tmp/njk /mnt/mnt
 arch-chroot /mnt bash /mnt/inchroot "$name" "$password" "$zone"
 
 # tuning the system
@@ -86,7 +90,7 @@ cp $cfg/{20-wired,25-wireless}.network /mnt/etc/systemd/network
 mkdir -p /etc/systemd/system/{systemd-networkd-wait-online.service,boot.mount}.d
 echo -e '[Service]\nExecStart=\nExecStart=/usr/lib/systemd/systemd-networkd-wait-online --any' \
         > /etc/systemd/system/systemd-networkd-wait-online.service.d/wait-for-only-one-interface.conf
-echo -e '[Mount]\nOptions=\nOptions=noexec,nosuid,nodev,nosymfollow,noatime,utf8=0,fmask=0177,dmask=0077,lazytime,rw' \
+echo -e '[Mount]\nOptions=\nOptions=noexec,nosuid,nodev,nosymfollow,noatime,utf8=false,fmask=0177,dmask=0077,lazytime,rw' \
         > /etc/systemd/system/boot.mount.d/mount-options.conf
 
 echo 'nedocomp' > /mnt/etc/hostname
