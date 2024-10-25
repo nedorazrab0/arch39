@@ -8,4 +8,4 @@ fi
 
 blk="/dev/$2"
 umount "$blk"*
-dd if="$1" of="$blk"* iflag=fullblock oflag=noatime ibs=4M obs=256K conv=fsync
+dd if="$1" of="$blk" iflag=fullblock oflag=noatime ibs=4M obs=256K conv=fsync
