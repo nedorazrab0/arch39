@@ -17,7 +17,7 @@ case "$agreement" in
 esac
 
 # configuring pacman
-sed -i -e 's/#ParallelDownloads/ParallelDownloads/' -e 's/#Color/Color/' \
+sed -i -e 's/#ParallelDownloads.*/ParallelDownloads = 12/' -e 's/#Color/Color/' \
        -e 's/#VerbosePkgLists/VerbosePkgLists/' /etc/pacman.conf
 echo '- Configuring mirrors...'
 systemctl restart reflector
