@@ -1,0 +1,8 @@
+autoload -Uz compinit
+compinit
+
+zstyle ':completion:*' menu select
+zstyle ':completion:*' rehash true
+
+n=$'\n'
+PROMPT="%F{magenta}%#%? %F{green}%d%F{nocolor}${n}"
