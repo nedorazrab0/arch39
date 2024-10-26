@@ -60,7 +60,7 @@ mount -vt vfat -o 'noexec,nodev,nosuid,noatime,utf8=false,fmask=0177,dmask=0077,
 pacstrap -KP /mnt base linux-zen booster linux-firmware amd-ucode \
                   btrfs-progs f2fs-tools xfsprogs exfatprogs dosfstools gptfdisk \
                   android-tools opendoas git bash-completion {un,}zip gnome-boxes flatpak zram-generator \
-                  nano reflector nano-syntax-highlighting gamescope \
+                  micro zsh reflector gamescope \
                   hyprland polkit xdg-desktop-portal-hyprland mako wofi alacritty noto-fonts waybar brightnessctl \
                   grim slurp vulkan-radeon libva-mesa-driver bluez{,-utils} pipewire{,-alsa,-pulse,-jack}
 echo -e "en_US.UTF-8 UTF-8\n${kbl}.UTF-8 UTF-8" >> /mnt/etc/locale.gen
