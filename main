@@ -39,13 +39,13 @@ echo '- You have 2 seconds to save your disk!'
 sleep 2
 cd /
 blk="/dev/$disk"
-####
+
 set +e
 umount -vR /mnt
 umount -v $blk*
 blkdiscard -vf "$blk"
 set -e
-####
+
 wipefs -a "$blk"
 sgdisk -o -n1::+64M -t1:ef00 -c1:'EFI System Partition' \
           -n2::+ -t2:8304 -c2:'Arch Linux Root' -p "$blk"
