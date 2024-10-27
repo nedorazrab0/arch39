@@ -94,14 +94,17 @@ echo -e '[Mount]\nOptions=\nOptions=noexec,nosuid,nodev,nosymfollow,noatime,utf8
         > /etc/systemd/system/boot.mount.d/mount-options.conf
 
 echo 'nedocomp' > /mnt/etc/hostname
+mkdir -p /etc/micro
+cp $cfg/settings.json /etc/micro
+cp $cfg/zshrc /etc/zsh/zshrc
 echo 'permit persist :wheel' > /mnt/etc/doas.conf
 chmod 400 /mnt/etc/doas.conf
 cp $cfg/60-ioschedulers.rules /mnt/etc/udev/rules.d
 cp $cfg/99-sysctl.conf /mnt/etc/sysctl.d
 cat /etc/xdg/reflector/reflector.conf > /mnt/etc/xdg/reflector/reflector.conf
-cat $cfg/nanorc > /mnt/etc/nanorc
 
-for scr in atp wlc wqc mnt scr fin h pwg pl fls pm dc; do
+
+for scr in atp wlc wqc mnt scr fin h pwg pl fls pm dc mk; do
     cp "/tmp/njk/bin/$scr" "/mnt/usr/bin/$scr"
     chmod 755 "/mnt/usr/bin/$scr"
 done
