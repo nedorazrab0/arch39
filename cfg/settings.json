@@ -3,7 +3,6 @@
 	"infobar": false,
     "parsecursor": true,
     "mouse": false,
-	"savecursor": true,
 	"scrollbar": true,
 	"statusformatl": ">>> $(filename) $(modified)[$(line),$(col)] $(status.paste)| $(opt:fileformat)/$(opt:encoding)/$(opt:filetype)",
 	"statusformatr": "micro ",
