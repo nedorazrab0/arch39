@@ -7,7 +7,7 @@ read -p '- Username: ' name
 read -sp '- Password: ' password; echo
 read -p '- Locale (en_US is preinstalled): ' kbl
 read -p '- Timezone (e.g. Europe/Moscow): ' zone
-echo '- Do you want Secure Boot? Make sure you are in the "setup mode"
+echo '- Do you want Secure Boot? Make sure you are in the "setup mode"'
 read -p '  or cleared your Secure Boot keys! (y/N) ' sba
 read -p '- Target disk name: ' disk
 read -p '- Do you want to destroy your own disk? (y/n): ' agreement
