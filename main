@@ -111,5 +111,6 @@ done
 
 echo '- Goodbye ;)'
 sleep 2
+sync
 umount -vR /mnt
 systemctl poweroff
