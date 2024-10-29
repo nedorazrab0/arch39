@@ -11,5 +11,12 @@ echo "$1:$2" | chpasswd
 
 systemctl enable systemd-networkd systemd-resolved systemd-networkd-persistent-storage \
                  systemd-timesyncd fstrim.timer reflector.timer
+
+if [[ "$4" == 'y' ]]; then
+    sbctl create-keys
+    sbctl enroll-keys -m
+    sbctl sign -s -o /usr/lib/systemd/boot/efi/systemd-bootx64.efi.signed /usr/lib/systemd/boot/efi/systemd-bootx64.efi
+fi
 bootctl install --esp-path=/boot
+
 echo '- Exiting chroot'
