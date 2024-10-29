@@ -7,6 +7,8 @@ read -p '- Username: ' name
 read -sp '- Password: ' password; echo
 read -p '- Locale (en_US is preinstalled): ' kbl
 read -p '- Timezone (e.g. Europe/Moscow): ' zone
+echo '- Do you want Secure Boot? Make sure you are in the "setup mode"
+read -p '  or cleared your Secure Boot keys! (y/N) ' sba
 read -p '- Target disk name: ' disk
 read -p '- Do you want to destroy your own disk? (y/n): ' agreement
 
@@ -15,6 +17,7 @@ case "$agreement" in
     n) exit 0;;
     *) exit 1;;
 esac
+[[ "$sba" == 'y' ]] && spkg='sbctl'
 
 # configuring pacman
 sed -i -e 's/#ParallelDownloads.*/ParallelDownloads = 12/' -e 's/#Color/Color/' \
@@ -62,7 +65,7 @@ pacstrap -KP /mnt base linux-zen booster linux-firmware amd-ucode \
                   android-tools opendoas git bash-completion {un,}zip gnome-boxes flatpak zram-generator \
                   micro zsh reflector gamescope \
                   hyprland polkit xdg-desktop-portal-hyprland mako wofi alacritty noto-fonts waybar brightnessctl \
-                  grim slurp vulkan-radeon libva-mesa-driver bluez{,-utils} pipewire{,-alsa,-pulse,-jack}
+                  grim slurp vulkan-radeon libva-mesa-driver bluez{,-utils} pipewire{,-alsa,-pulse,-jack} "$spkg"
 echo -e "en_US.UTF-8 UTF-8\n${kbl}.UTF-8 UTF-8" >> /mnt/etc/locale.gen
 
 mount -vo bind /tmp/njk /mnt/mnt
@@ -94,7 +97,7 @@ echo -e '[Mount]\nOptions=\nOptions=noexec,nosuid,nodev,nosymfollow,noatime,utf8
         > /etc/systemd/system/boot.mount.d/mount-options.conf
 
 echo 'nedocomp' > /mnt/etc/hostname
-mkdir -p /etc/micro
+mkdir -p /etc/micro /home/$name/{atp,trash}
 cp $cfg/settings.json /etc/micro
 cp $cfg/zshrc /etc/zsh/zshrc
 echo 'permit persist :wheel' > /mnt/etc/doas.conf
@@ -103,11 +106,15 @@ cp $cfg/60-ioschedulers.rules /mnt/etc/udev/rules.d
 cp $cfg/99-sysctl.conf /mnt/etc/sysctl.d
 cat /etc/xdg/reflector/reflector.conf > /mnt/etc/xdg/reflector/reflector.conf
 
-
 for scr in atp wlc wqc mnt scr fin h pwg pl fls pm dc mk; do
     cp "/tmp/njk/bin/$scr" "/mnt/usr/bin/$scr"
     chmod 755 "/mnt/usr/bin/$scr"
 done
+
+if [[ -n "$spkg" ]]; then
+    cp /tmp/njk/bin/bootctl-update /usr/bin/bootctl-update
+    chmod 755 /usr/bin/bootctl-update
+fi
 
 echo '- Goodbye ;)'
 sleep 2
