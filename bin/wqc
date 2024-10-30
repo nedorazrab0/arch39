@@ -15,8 +15,8 @@ read -p '- SSID: ' name
 read -sp '- Password: ' password; echo
 
 wsc="/etc/wpa_supplicant/wpa_supplicant-${iname}.conf"
-chmod 600 "$wsc"
 echo 'ctrl_interface=/run/wpa_supplicant' > "$wsc"
+chmod 600 "$wsc"
 wpa_passphrase "$name" "$password" | sed '/#psk=./d' >> "$wsc"
 systemctl enable --now "wpa_supplicant@${iname}"
 systemctl restart systemd-networkd
