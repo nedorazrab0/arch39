@@ -68,7 +68,7 @@ pacstrap -KP /mnt base linux-zen booster linux-firmware amd-ucode \
                   grim slurp vulkan-radeon libva-mesa-driver bluez{,-utils} pipewire{,-alsa,-pulse,-jack} wpa_supplicant "$spkg"
 echo -e "en_US.UTF-8 UTF-8\n${kbl}.UTF-8 UTF-8" >> /mnt/etc/locale.gen
 
-mount -vo bind /tmp/njk /mnt/mnt
+mount -vo bind,ro /tmp/njk /mnt/mnt
 arch-chroot /mnt bash /mnt/inchroot "$name" "$password" "$zone" "$sba"
 
 # tuning the system
@@ -97,18 +97,21 @@ echo -e '[Mount]\nOptions=\nOptions=noexec,nosuid,nodev,nosymfollow,noatime,utf8
         > /mnt/etc/systemd/system/boot.mount.d/mount-options.conf
 
 echo 'nedocomp' > /mnt/etc/hostname
+echo 'permit :wheel' > /mnt/etc/doas.conf
+chmod 400 /mnt/etc/doas.conf
 mkdir -p /mnt/etc/micro /mnt/home/$name/{atp,trash}
 cp $cfg/settings.json /mnt/etc/micro
 cp $cfg/zshrc /mnt/etc/zsh/zshrc
-echo 'permit persist :wheel' > /mnt/etc/doas.conf
-chmod 400 /mnt/etc/doas.conf
 cp $cfg/60-ioschedulers.rules /mnt/etc/udev/rules.d
 cp $cfg/99-sysctl.conf /mnt/etc/sysctl.d
 cat /etc/xdg/reflector/reflector.conf > /mnt/etc/xdg/reflector/reflector.conf
 
-for scr in atp wlc wqc mnt scr fin h pwg pl fls pm dc mk; do
-    cp "/tmp/njk/bin/$scr" "/mnt/usr/bin/$scr"
-    chmod 755 "/mnt/usr/bin/$scr"
+bp='/tmp/njk/bin'
+cp $bp/fin "/mnt/home/$name"
+chmod 755 "/mnt/home/$name/fin"
+for scp in atp wlc wqc mnt scr h pwg pl fls pm dc mk; do
+    cp "/tmp/njk/bin/$scp" "/mnt/usr/bin/$scp"
+    chmod 755 "/mnt/usr/bin/$scp"
 done
 
 if [[ -n "$spkg" ]]; then
