@@ -100,7 +100,7 @@ echo -e '[Mount]\nOptions=\nOptions=noexec,nosuid,nodev,nosymfollow,noatime,utf8
 echo 'nedocomp' > /mnt/etc/hostname
 echo 'permit :wheel' > /mnt/etc/doas.conf
 chmod 400 /mnt/etc/doas.conf
-mkdir -p /mnt/etc/micro /mnt/home/$name/{atp,trash}
+mkdir -p /mnt/etc/micro
 cp $cfg/settings.json /mnt/etc/micro
 cp $cfg/zshrc /mnt/etc/zsh/zshrc
 cp $cfg/60-ioschedulers.rules /mnt/etc/udev/rules.d
