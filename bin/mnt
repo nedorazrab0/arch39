@@ -26,12 +26,6 @@ for blk in /dev/$2*[0-9]*; do
                 f2fs) amo='nodiscard,compress_algorithm=zstd:3,compress_chksum';;
             esac
             ;;
-        h)
-            case "$fs" in
-                btrfs) amo='nossd,nodiscard,autodefrag,compress=zstd:6';;
-                *) amo='lazytime';;
-            esac
-            ;;
         u)
             case "$fs" in
                 btrfs) amo='nodiscard,ssd_spread,compress=zstd:3';;
@@ -39,13 +33,14 @@ for blk in /dev/$2*[0-9]*; do
                 exfat|vfat) amo='noexec,nodev,nosuid,umask=0022';;
             esac
             ;;
+        h) [[ "$fs" == 'btrfs' ]] && amo='nossd,nodiscard,autodefrag,compress=zstd:6;;
         x) x='true';;
         *) exit 1;;
     esac
 
     if [[ -z "$x" ]]; then
         mkdir -p "/run$blk"
-        mount --onlyonce -vo "noatime,${amo}" "$blk" "/run$blk"
+        mount --onlyonce -vo "noatime,lazytime,${amo}" "$blk" "/run$blk"
     else
         umount -v "$blk"
     fi
