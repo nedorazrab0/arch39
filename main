@@ -11,7 +11,7 @@ echo '- Do you want Secure Boot?'
 echo '  Make sure you are in the "setup mode"'
 read -p '  or cleared your Secure Boot keys! (y/N) ' sba
 read -p '- Target disk name: ' disk
-read -p '- Do you want to destroy your own disk? (y/n): ' agreement
+read -p '- Do you want to destroy your own disk? (y/N): ' agreement
 
 case "$agreement" in
     y) true;;
