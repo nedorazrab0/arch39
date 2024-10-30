@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 if [[ "$@" =~ --help ]]; then
-    echo '- Use to update `bootctl` with Secure Boot'
+    echo '- Use it to update `bootctl` with Secure Boot'
     exit 0
 fi
 
