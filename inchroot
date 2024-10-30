@@ -4,7 +4,7 @@ echo '- CHROOT'
 
 locale-gen
 ln -sf "/usr/share/zoneinfo/$3" /etc/localtime
-hwclock -uwv
+hwclock -wu
 
 useradd -mG 'wheel,video' -s /usr/bin/zsh "$1"
 echo "$1:$2" | chpasswd
@@ -14,7 +14,7 @@ systemctl enable systemd-networkd systemd-resolved systemd-networkd-persistent-s
 
 if [[ "$4" == 'y' ]]; then
     sbctl create-keys
-    sbctl enroll-keys -m
+    sbctl enroll-keys --microsoft
     sbctl sign -s /boot/vmlinuz-linux-zen
     sbctl sign -s -o /usr/lib/systemd/boot/efi/systemd-bootx64.efi.signed /usr/lib/systemd/boot/efi/systemd-bootx64.efi
 fi
