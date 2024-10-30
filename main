@@ -110,6 +110,7 @@ cat /etc/xdg/reflector/reflector.conf > /mnt/etc/xdg/reflector/reflector.conf
 bp='/tmp/njk/bin'
 cp $bp/fin "/mnt/home/$name"
 chmod 755 "/mnt/home/$name/fin"
+touch "/home/$name/.zshrc"
 for scp in atp wlc wqc mnt scr h pwg pl fls pm dc mk; do
     cp "/tmp/njk/bin/$scp" "/mnt/usr/bin/$scp"
     chmod 755 "/mnt/usr/bin/$scp"
