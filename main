@@ -81,7 +81,7 @@ else
 fi
 cat $cfg/style.css > /mnt/etc/xdg/waybar/style.css
 cat $cfg/config.jsonc > /mnt/etc/xdg/waybar/config.jsonc
-rm -f /usr/share/applications/{qv4l2,qvidcap,bvnc,bssh,avahi-discover}.desktop
+rm -f /mnt/usr/share/applications/{qv4l2,qvidcap,bvnc,bssh,avahi-discover}.desktop
 
 echo 'DefaultTimeoutStopSec=5s' >> /mnt/etc/systemd/system.conf
 echo 'SleepOperation=suspend' >> /mnt/etc/systemd/logind.conf
@@ -90,16 +90,16 @@ cp $cfg/zram-generator.conf /mnt/etc/systemd
 cat $cfg/loader.conf > /mnt/boot/loader/loader.conf
 cp $cfg/arch-zen.conf /mnt/boot/loader/entries/arch-zen.conf
 cp $cfg/{20-wired,25-wireless}.network /mnt/etc/systemd/network
-mkdir -p /etc/systemd/system/{systemd-networkd-wait-online.service,boot.mount}.d
+mkdir -p /mnt/etc/systemd/system/{systemd-networkd-wait-online.service,boot.mount}.d
 echo -e '[Service]\nExecStart=\nExecStart=/usr/lib/systemd/systemd-networkd-wait-online --any' \
-        > /etc/systemd/system/systemd-networkd-wait-online.service.d/wait-for-only-one-interface.conf
+        > /mnt/etc/systemd/system/systemd-networkd-wait-online.service.d/wait-for-only-one-interface.conf
 echo -e '[Mount]\nOptions=\nOptions=noexec,nosuid,nodev,nosymfollow,noatime,utf8=false,fmask=0177,dmask=0077,lazytime,rw' \
-        > /etc/systemd/system/boot.mount.d/mount-options.conf
+        > /mnt/etc/systemd/system/boot.mount.d/mount-options.conf
 
 echo 'nedocomp' > /mnt/etc/hostname
-mkdir -p /etc/micro /home/$name/{atp,trash}
-cp $cfg/settings.json /etc/micro
-cp $cfg/zshrc /etc/zsh/zshrc
+mkdir -p /mnt/etc/micro /mnt/home/$name/{atp,trash}
+cp $cfg/settings.json /mnt/etc/micro
+cp $cfg/zshrc /mnt/etc/zsh/zshrc
 echo 'permit persist :wheel' > /mnt/etc/doas.conf
 chmod 400 /mnt/etc/doas.conf
 cp $cfg/60-ioschedulers.rules /mnt/etc/udev/rules.d
@@ -112,8 +112,8 @@ for scr in atp wlc wqc mnt scr fin h pwg pl fls pm dc mk; do
 done
 
 if [[ -n "$spkg" ]]; then
-    cp /tmp/njk/bin/bootctl-update /usr/bin/bootctl-update
-    chmod 755 /usr/bin/bootctl-update
+    cp /tmp/njk/bin/bootctl-update /mnt/usr/bin/bootctl-update
+    chmod 755 /mnt/usr/bin/bootctl-update
 fi
 
 echo '- Goodbye ;)'
