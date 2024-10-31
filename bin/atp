@@ -7,7 +7,7 @@ if [[ "$@" =~ '--help' ]]; then
     echo "         $0 from -z"
     echo '  to      Push file to /storage/emulated/0/atp'
     echo '  from    Pull file from /storage/emulated/0/atp'
-    echo '  cp      Create symlink $2 -> $HOME/atp/...'
+    echo '  mv      mv $2 -> $HOME/atp/...'
     echo '  -z      Disable compression, useful for trasnfer big binaries'
     exit 0
 fi
@@ -41,7 +41,7 @@ case "$1" in
         echo '- Waiting for device...'
         adb wait-for-device
         adb shell mkdir -p /storage/emulated/0/atp
-        adb push "$HOME/$file" /storage/emulated/0/atp -z "$cmp"
+        adb push "$HOME/atp/$file" /storage/emulated/0/atp -z "$cmp"
         ;;
     from)
         echo '- Waiting for device...'
@@ -52,6 +52,6 @@ case "$1" in
         mkdir -p "$HOME/atp"
         adb pull "/storage/emulated/0/atp/$file" "$HOME/atp" -z "$cmp"
         ;;
-    cp) ln -sf "$2" "$HOME/atp";;
+    mv) mv -f "$2" "$HOME/atp";;
     *) exit 1;;
 esac
