@@ -102,6 +102,8 @@ echo 'permit :wheel' > /mnt/etc/doas.conf
 chmod 400 /mnt/etc/doas.conf
 mkdir -p /mnt/etc/micro
 cp $cfg/settings.json /mnt/etc/micro
+cp $cfg/wofi.conf /etc
+cp $cfg/wofi.css /etc
 cp $cfg/zshrc /mnt/etc/zsh/zshrc
 cp $cfg/60-ioschedulers.rules /mnt/etc/udev/rules.d
 cp $cfg/99-sysctl.conf /mnt/etc/sysctl.d
