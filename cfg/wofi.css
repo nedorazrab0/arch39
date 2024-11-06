@@ -1,0 +1,58 @@
+window {
+  font-family: "NotoSans";
+  margin: 0px;
+  border: 0px;
+  background-color: rgb(55, 59, 65);
+  border-radius: 10px;
+}
+
+
+#input {
+  margin: 5px;
+  border: none;
+  color: #f8f8f2;
+  background-color: rgb(55, 59, 65);
+}
+
+#inner-box {
+  margin: 5px;
+  border: none;
+  background-color: rgb(55, 59, 65);
+}
+
+#outer-box {
+  margin: 5px;
+  border: none;
+  background-color: rgb(55, 59, 65);
+}
+
+#scroll {
+  margin: 0px;
+  border: none;
+}
+
+#text {
+  margin: 5px;
+  border: none;
+  color: #c5c8c6;
+}
+
+#text:selected {
+  margin: 5px;
+  border: none;
+  color: rgb(55, 59, 65);
+}
+
+#entry {
+  border: none;
+}
+
+#entry:focus {
+  border: none;
+}
+
+#entry:selected {
+  background-color: #33CCBB;
+  border-radius: 5px;
+  border: none;
+}
