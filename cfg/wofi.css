@@ -1,58 +1,63 @@
+* {
+    font-family: NotoSans;
+}
+
 window {
-  font-family: "NotoSans";
-  margin: 0px;
-  border: 0px;
-  background-color: rgb(55, 59, 65);
-  border-radius: 10px;
+    margin: 0px;
+    border: 0px;
+    background-color: #373b3e;
+    border-radius: 10px;
 }
 
 
 #input {
-  margin: 5px;
-  border: none;
-  color: #f8f8f2;
-  background-color: rgb(55, 59, 65);
+    margin: 5px;
+    border: none;
+    color: #f8f8f2;
+    background-color: #373b3e;
 }
 
 #inner-box {
-  margin: 5px;
-  border: none;
-  background-color: rgb(55, 59, 65);
+    margin: 5px;
+    border: none;
+    background-color: #373b3e;
 }
 
 #outer-box {
-  margin: 5px;
-  border: none;
-  background-color: rgb(55, 59, 65);
+    margin: 5px;
+    border: none;
+    background-color: #373b3e;
 }
 
 #scroll {
-  margin: 0px;
-  border: none;
+    margin: 0px;
+    border: none;
 }
 
 #text {
-  margin: 5px;
-  border: none;
-  color: #c5c8c6;
+    margin: 5px;
+    border: none;
+    color: #c8c4c1;
+
 }
 
 #text:selected {
-  margin: 5px;
-  border: none;
-  color: rgb(55, 59, 65);
+    margin: 5px;
+    border: none;
+    color: #373b3e;
 }
 
 #entry {
-  border: none;
+    margin: 5px;
+    border: none;
 }
 
 #entry:focus {
-  border: none;
+    border: none;
 }
 
 #entry:selected {
-  background-color: #33CCBB;
-  border-radius: 5px;
-  border: none;
+    background-color: #33CCBB;
+    border-radius: 5px;
+    border: none;
 }
