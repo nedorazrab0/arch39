@@ -9,7 +9,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Compressing
-        run: tar -H v7 --exclude=./README.md -cvf - ./* | zstd -T0 --ultra -20zvc - > ./njki
+        run: tar -H ustar --exclude=./README.md -cvf - ./* | zstd -T0 --ultra -20zvc > ./njki
       - name: Releasing
         env:
           GH_TOKEN: ${{ github.token }}
