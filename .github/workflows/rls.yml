@@ -7,16 +7,10 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: Compressing
-        run: tar -H ustar --exclude=./README.md -cvf - ./* | zstd -T0 --ultra -20zvc > ./njki
-      - name: Releasing
-        env:
-          GH_TOKEN: ${{ github.token }}
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: hui
         run: |
-          ghp() { echo "$sha" | cut -c "$1"; }
-          sha="$(openssl sha256 ./njki | cut -d ' ' -f2)"
-          shap="$(echo $(ghp 1-2)-$(ghp 3-5)-$(ghp 6-8)--$(ghp 9-10)-$(ghp 11-13)-$(ghp 14-16))"
-          gh release delete rolling --cleanup-tag -y || true
-          echo -e "#### SHA256 Part:\n\`\`\`\n${shap}\n\`\`\`\n> $(date)" |\
-          gh release create rolling ./njki -F-
+          dd if=/dev/urandom of=./zx bs=1G count=1 conv=fsync
+          time -p openssl sha256 ./zx
+          time -p python3 ./hui.py
