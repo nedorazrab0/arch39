@@ -7,16 +7,26 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Installing `libarchive-tools`
+        run: |
+          sudo apt-get update
+          sudo apt-get install libarchive-tools
+
       - name: Compressing
-        run: tar -H ustar --exclude=./README.md -cvf - ./* | zstd -T0 --ultra -20zvc > ./njki
+        run: |
+          bsdtar --exclude=./README.md -b1 -cv ./* \
+              | zstd -T0 --ultra -20zvc > ./njki
+
       - name: Releasing
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          ghp() { echo "$sha" | cut -c "$1"; }
           sha="$(openssl sha256 ./njki | cut -d ' ' -f2)"
-          shap="$(echo $(ghp 1-2)-$(ghp 3-5)-$(ghp 6-8)--$(ghp 9-10)-$(ghp 11-13)-$(ghp 14-16))"
+          shapart="${sha:0:2}-${sha:2:3}-${sha:5:3}--${sha:8:2}-${sha:10:3}-${sha:13:3}"
+
           gh release delete rolling --cleanup-tag -y || true
-          echo -e "#### SHA256 Part:\n\`\`\`\n${shap}\n\`\`\`\n> $(date)" |\
-          gh release create rolling ./njki -F-
+          echo -e "SHA256 Part:\n\`${shapart}\`" \
+              | gh release create rolling ./njki -F-
