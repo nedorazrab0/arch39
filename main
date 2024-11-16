@@ -1,130 +1,155 @@
-#!/usr/bin/env bash
-set -e
+#!/usr/bin/sh
+#
+# Arch install
 
-# configuring script
+set -e
+readonly cfg='/tmp/njk/cfg'
+readonly bpath='/tmp/njk/bin'
+sysblock="/sys/block/${disk}"
+blk="/dev/${disk}"
 kbl='#'
-read -p '- Username: ' name
-read -sp '- Password: ' password; echo
-read -p '- Locale (en_US is preinstalled): ' kbl
-read -p '- Timezone (e.g. Europe/Moscow): ' zone
+
+# Configure script
+echo '- Username:'
+read -r name
+echo '- Password:'
+stty -echo  # Do not expose a password
+read -r password
+stty echo
+echo '- Locale (en_US is preinstalled):'
+read -r kbl
+echo '- Timezone (e.g. Europe/Moscow):'
+read -r zone
 echo '- Do you want Secure Boot?'
 echo '  Make sure you are in the "setup mode"'
-read -p '  or cleared your Secure Boot keys! (y/N) ' sba
-read -p '- Target disk name: ' disk
-read -p '- Do you want to destroy your own disk? (y/N): ' agreement
+echo '  or cleared your Secure Boot keys! (y/N)'
+read -r sboot
+echo '- Target disk name:'
+read -r disk
+echo '- Do you want to destroy your own disk? (y/N):'
+read -r agreement
 
 case "$agreement" in
-    y) true;;
-    n) exit 0;;
-    *) exit 1;;
+  y) true;;
+  n) exit 0;;
+  *) exit 1;;
 esac
-[[ "$sba" == 'y' ]] && spkg='sbctl'
+[[ "${sboot}" == 'y' ]] && spkg='sbctl'
 
-# configuring pacman
-sed -i -e 's/#ParallelDownloads.*/ParallelDownloads = 12/' -e 's/#Color/Color/' \
-       -e 's/#VerbosePkgLists/VerbosePkgLists/' /etc/pacman.conf
+# Configure pacman
+sed -i \
+  -e 's/#Color/Color/' \ 
+  -e 's/#ParallelDownloads.*/ParallelDownloads = 12/' \
+  -e 's/#VerbosePkgLists/VerbosePkgLists/' /etc/pacman.conf
 echo '- Configuring mirrors...'
 systemctl restart reflector
 pacman -Syy archlinux-keyring --noconfirm
 
-# disk tuning
+# Disk tune
 sysctl -w vm.vfs_cache_pressure=150
 sysctl -w vm.dirty_bytes=268435456
 sysctl -w vm.dirty_background_bytes=134217728
 sysctl -w vm.dirty_writeback_centisecs=1500
 
-sbd="/sys/block/$disk"
-echo 'none' > "$sbd/queue/scheduler"
-echo '128' > "$sbd/queue/nr_requests"
-echo '2' > "$sbd/queue/rq_affinity"
+echo 'none' > "${sysblock}/queue/scheduler"
+echo '128' > "${sysblock}/queue/nr_requests"
+echo '2' > "${sysblock}/queue/rq_affinity"
 
-# disk partitioning
+# Disk partitioning
 echo '- You have 2 seconds to save your disk!'
 sleep 2
 cd /
-blk="/dev/$disk"
 
 set +e
 umount -vR /mnt
-umount -v $blk*
-blkdiscard -vf "$blk"
+umount -v "${blk}"*
+blkdiscard -vf "${blk}"
 set -e
 
-wipefs -a "$blk"
-sgdisk -o -n1::+64M -t1:ef00 -c1:'EFI System Partition' \
-          -n2::+ -t2:8304 -c2:'Arch Linux Root' -p "$blk"
+wipefs -a "${blk}"
+sgdisk -Zo \
+  -n1::+64M -t1:ef00 -c1:'EFI System Partition' \
+  -n2::+ -t2:8304 -c2:'Arch Linux Root' -p "${blk}"
 
-mkfs.fat -vF32 -S512 -n 'ESP' --codepage=437 $blk*1
-mkfs.btrfs -fKL 'archlinux' -n65536 -m single $blk*2
+mkfs.fat -F32 -n 'ESP' -v -S512 --codepage=437 "${blk}"*1
+mkfs.btrfs -fK -L 'archlinux' -n65536 -m single "${blk}"*2
 
-mount -vt btrfs -o 'noatime,nodiscard,nobarrier,commit=300,lazytime,ssd,compress=zstd:3' $blk*2 /mnt
-mount -vt vfat -o 'noexec,nodev,nosuid,noatime,utf8=false,fmask=0177,dmask=0077,X-mount.mkdir=600,lazytime' $blk*1 /mnt/boot
+mount -t btrfs -v -o 'noatime,nodiscard,nobarrier,commit=300,
+  lazytime,ssd,compress=zstd:3' "${blk}"*2 /mnt
+mount -t vfat -v -o 'noexec,nodev,nosuid,noatime,utf8=false,
+  fmask=0177,dmask=0077,X-mount.mkdir=600,lazytime' "${blk}"*1 /mnt/boot
 
-# installing
-pacstrap -KP /mnt base linux-zen booster linux-firmware amd-ucode \
-                  btrfs-progs f2fs-tools xfsprogs exfatprogs dosfstools gptfdisk \
-                  android-tools opendoas git {un,}zip gnome-boxes flatpak zram-generator \
-                  micro zsh reflector gamescope \
-                  hyprland polkit xdg-desktop-portal-{gtk,hyprland} mako wofi alacritty noto-fonts waybar brightnessctl \
-                  grim slurp vulkan-radeon libva-mesa-driver bluez{,-utils} pipewire{,-alsa,-pulse,-jack} wpa_supplicant "$spkg"
-echo -e "en_US.UTF-8 UTF-8\n${kbl}.UTF-8 UTF-8" >> /mnt/etc/locale.gen
+# Install
+pacstrap -KP /mnt \
+  base linux-zen booster linux-firmware amd-ucode \
+  btrfs-progs f2fs-tools xfsprogs exfatprogs dosfstools gptfdisk \
+  android-tools opendoas git {un,}zip gnome-boxes flatpak zram-generator \
+  micro zsh reflector gamescope \
+  hyprland polkit xdg-desktop-portal-{gtk,hyprland} mako wofi alacritty \
+  noto-fonts waybar brightnessctl \
+  grim slurp vulkan-radeon libva-mesa-driver bluez{,-utils} \
+  pipewire{,-alsa,-pulse,-jack} wpa_supplicant "${spkg}"
+echo "en_US.UTF-8 UTF-8
+${kbl}.UTF-8 UTF-8" >> /mnt/etc/locale.gen
 
-mount -vo bind,ro /tmp/njk /mnt/mnt
-arch-chroot /mnt bash /mnt/inchroot "$name" "$password" "$zone" "$sba"
+mount -o bind,ro -v /tmp/njk /mnt/mnt
+arch-chroot /mnt sh /mnt/inchroot "${name}" "${password}" "${zone}" "${sboot}"
 
-# tuning the system
-cfg='/tmp/njk/cfg'
+# Tune the system
+mkdir -p /mnt/etc/{micro,wofi}
+mkdir -p \
+  /mnt/etc/systemd/system/{systemd-networkd-wait-online.service,boot.mount}.d
 
-if [[ -z "$kbl" ]]; then
-    cat $cfg/hyprland.conf > /mnt/etc/hyprland.conf
-else
-    cat $cfg/hyprland.conf | sed "s/kb_layout = us/&,${kbl::2}/" > /mnt/etc/hyprland.conf
-fi
-cat $cfg/style.css > /mnt/etc/xdg/waybar/style.css
-cat $cfg/config.jsonc > /mnt/etc/xdg/waybar/config.jsonc
-rm -f /mnt/usr/share/applications/{qv4l2,qvidcap,bvnc,bssh,avahi-discover}.desktop
+cat "${cfg}/hyprland.conf" | sed "s/kb_layout = us/&,${kbl::2}/" \
+  > /mnt/etc/hyprland.conf
+cat "${cfg}/style.css" > /mnt/etc/xdg/waybar/style.css
+cat "${cfg}/config.jsonc" > /mnt/etc/xdg/waybar/config.jsonc
+cat /etc/systemd/timesyncd.conf > /mnt/etc/systemd/timesyncd.conf
+cat "${cfg}/loader.conf" > /mnt/boot/loader/loader.conf
+cat /etc/xdg/reflector/reflector.conf \
+  > /mnt/etc/xdg/reflector/reflector.conf
+
+cp "${cfg}/one-iface.conf" \
+  /mnt/etc/systemd/system/systemd-networkd-wait-online.service.d
+cp "${cfg}/mount-options.conf" \
+  /mnt/etc/systemd/system/boot.mount.d
+cp "${cfg}/zram-generator.conf" /mnt/etc/systemd
+cp "${cfg}/arch-zen.conf" /mnt/boot/loader/entries/arch-zen.conf
+cp "${cfg}/"{20-wired,25-wireless}.network /mnt/etc/systemd/network
+cp "${cfg}/settings.json" /mnt/etc/micro
+cp "${cfg}/wofi.cfg" /mnt/etc/wofi/cfg
+cp "${cfg}/wofi.css" /mnt/etc/wofi/css
+cp "${cfg}/zshrc" /mnt/etc/zsh/zshrc
+cp "${cfg}/alacritty.toml" /mnt/etc
+cp "${cfg}/60-ioschedulers.rules" /mnt/etc/udev/rules.d
+cp "${cfg}/99-sysctl.conf" /mnt/etc/sysctl.d
+cp "${bpath}/fin" "/mnt/home/${name}"
 
 echo 'DefaultTimeoutStopSec=5s' >> /mnt/etc/systemd/system.conf
 echo 'SleepOperation=suspend' >> /mnt/etc/systemd/logind.conf
-cat /etc/systemd/timesyncd.conf > /mnt/etc/systemd/timesyncd.conf
-cp $cfg/zram-generator.conf /mnt/etc/systemd
-cat $cfg/loader.conf > /mnt/boot/loader/loader.conf
-cp $cfg/arch-zen.conf /mnt/boot/loader/entries/arch-zen.conf
-cp $cfg/{20-wired,25-wireless}.network /mnt/etc/systemd/network
-mkdir -p /mnt/etc/systemd/system/{systemd-networkd-wait-online.service,boot.mount}.d
-echo -e '[Service]\nExecStart=\nExecStart=/usr/lib/systemd/systemd-networkd-wait-online --any' \
-        > /mnt/etc/systemd/system/systemd-networkd-wait-online.service.d/wait-for-only-one-interface.conf
-echo -e '[Mount]\nOptions=\nOptions=noexec,nosuid,nodev,nosymfollow,noatime,utf8=false,fmask=0177,dmask=0077,lazytime,rw' \
-        > /mnt/etc/systemd/system/boot.mount.d/mount-options.conf
-
 echo 'nedocomp' > /mnt/etc/hostname
 echo 'permit :wheel' > /mnt/etc/doas.conf
-chmod 400 /mnt/etc/doas.conf
-mkdir -p /mnt/etc/micro
-cp $cfg/settings.json /mnt/etc/micro
-cp $cfg/wofi.conf /etc
-cp $cfg/wofi.css /etc
-cp $cfg/zshrc /mnt/etc/zsh/zshrc
-cp $cfg/60-ioschedulers.rules /mnt/etc/udev/rules.d
-cp $cfg/99-sysctl.conf /mnt/etc/sysctl.d
-cat /etc/xdg/reflector/reflector.conf > /mnt/etc/xdg/reflector/reflector.conf
 
-bp='/tmp/njk/bin'
-cp $bp/fin "/mnt/home/$name"
-chmod 755 "/mnt/home/$name/fin"
-touch "/home/$name/.zshrc"
-for scp in atp wlc wqc mnt scr h pwg pl fls pm dc mk; do
-    cp "/tmp/njk/bin/$scp" "/mnt/usr/bin/$scp"
-    chmod 755 "/mnt/usr/bin/$scp"
+for script in atp wlc wqc mnt scr h pwg pl fls pm dc mk; do
+  cp "${bpath}/${script}" "/mnt/usr/bin/${script}"
+  chmod 755 "/mnt/usr/bin/${script}"
 done
 
-if [[ -n "$spkg" ]]; then
-    cp /tmp/njk/bin/bootctl-update /mnt/usr/bin/bootctl-update
-    chmod 755 /mnt/usr/bin/bootctl-update
+if [[ -n "${spkg}" ]]; then
+  cp ${bpath}/bootctl-update /mnt/usr/bin/bootctl-update
+  chmod 755 /mnt/usr/bin/bootctl-update
 fi
 
+touch "/mnt/home/${name}/.zshrc"
+
+chmod 400 /mnt/etc/doas.conf
+chmod 755 "/mnt/home/${name}/fin"
+
+rm -f \
+  /mnt/usr/share/applications/{qv4l2,qvidcap,bvnc,bssh,avahi-discover}.desktop
+
+# wonderhoy
 echo '- Goodbye ;)'
 sleep 2
-sync
 umount -vR /mnt
 systemctl poweroff

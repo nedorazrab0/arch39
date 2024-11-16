@@ -1,29 +1,38 @@
-#!/usr/bin/env bash
+#!/usr/bin/sh
+#
+# Download and run the main script
+
 set -e
-ghp() { echo "$sha" | cut -c "$1" ; }
+readonly path='/tmp/njk'
 
 # net tweaks
+sysctl -w net.ipv4.tcp_timestamps=0
 sysctl -w net.ipv4.tcp_fastopen=3
 sysctl -w net.core.somaxconn=8192
-sysctl -w net.ipv4.tcp_timestamps=0
 sysctl -w net.ipv4.tcp_ecn=1
-sysctl -w net.ipv4.tcp_congestion_control=bbr
+sysctl -w net.ipv4.tcp_congestion_control='bbr'
 
 # ntp
-sed -i -e 's/#FallbackNTP=.*/FallbackNTP=time.google.com/' \
-       -e 's/#NTP=/NTP=/' /etc/systemd/timesyncd.conf
+cat << 'EOF' > /etc/systemd/timesyncd.conf
+[Time]
+NTP=
+FallbackNTP=time.google.com
+EOF
+
 systemctl restart systemd-timesyncd
 
-path='/tmp/njk'
-curl -fLo "${path}i" 'https://github.com/nedorazrab0/arch-install/releases/download/rolling/njki'
+curl -fLo "${path}i" \
+  'https://github.com/nedorazrab0/arch-install/releases/download/rolling/njki'
 echo
 sha="$(openssl sha256 ${path}i | cut -d ' ' -f2)"
-shap="$(echo $(ghp 1-2)-$(ghp 3-5)-$(ghp 6-8)--$(ghp 9-10)-$(ghp 11-13)-$(ghp 14-16))"
-echo -e "- SHA256 Part:\n  $shap"
-read -p '- Press [Enter] to continue '
+shapart="${sha:0:2}-${sha:2:3}-${sha:5:3}--${sha:8:2}-${sha:10:3}-${sha:13:3}"
 
-[[ -d "$path" ]] && rm -rf "$path"
-mkdir -p "$path"
-zstd -dc "${path}i" | tar -xf - -C "$path"
+echo '- SHA256 Part:'
+echo "  ${shapart}"
+sleep 2
+
+[[ -d "${path}" ]] && rm -rf "${path}"
+mkdir -p "${path}"
+zstd -dvc "${path}i" | bsdtar -xvC "${path}"
 rm -f "${path}i"
-bash "$path/main"
+exec sh "${path}/main"

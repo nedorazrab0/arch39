@@ -1,22 +1,31 @@
-#!/usr/bin/env bash
+#!/usr/bin/sh
+#
+# System tune in chroot
+
 set -e
+name="${1}"
+password="${2}"
+zone="${3}"
+sboot="${4}"
+
 echo '- CHROOT'
 
 locale-gen
-ln -sf "/usr/share/zoneinfo/$3" /etc/localtime
+ln -sf "/usr/share/zoneinfo/${zone}" /etc/localtime
 hwclock -wu
 
-useradd -mG 'wheel,video' -s /usr/bin/zsh "$1"
-echo "$1:$2" | chpasswd
+useradd -m -G 'wheel,video' -s /usr/bin/zsh "${name}"
+echo "${name}:${password}" | chpasswd
 
-systemctl enable systemd-networkd systemd-resolved systemd-networkd-persistent-storage \
-                 systemd-timesyncd fstrim.timer reflector.timer
+systemctl enable \ 
+  systemd-networkd systemd-resolved systemd-networkd-persistent-storage \
+  systemd-timesyncd fstrim.timer reflector.timer
 
-if [[ "$4" == 'y' ]]; then
-    sbctl create-keys
-    sbctl enroll-keys --microsoft
-    sbctl sign -s /boot/vmlinuz-linux-zen
-    sbctl sign -s -o /usr/lib/systemd/boot/efi/systemd-bootx64.efi.signed /usr/lib/systemd/boot/efi/systemd-bootx64.efi
+if [[ "${sboot}" == 'y' ]]; then
+  sbctl create-keys
+  sbctl enroll-keys --microsoft
+  sbctl sign -s /boot/vmlinuz-linux-zen
+  sbctl sign -s -o /usr/lib/systemd/boot/efi/systemd-bootx64.efi{,.signed}
 fi
 bootctl install --esp-path=/boot
 
