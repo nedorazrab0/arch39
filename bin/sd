@@ -1,9 +1,14 @@
-#!/usr/bin/env bash
+#!/usr/bin/sh
 #
 # Systemctl aliases
 
 set -e
 unit="${3}"
+
+if [[ "${@}" =~ '--help' ]]; then
+  cat "${0}"
+  exit 0
+fi
 
 if [[ -z "${1}" ]]; then
     systemctl
