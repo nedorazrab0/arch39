@@ -1,10 +1,17 @@
-#!/usr/bin/env bash
+#!/usr/bin/sh
+#
+# Flash a drive
 
-if (( "$(id -u)" != 0 )); then
-    echo '! Run it as root'
-    exit 1
+set -e
+file="${1}"
+blk="/dev/$2"
+
+if (( $(id -u) != 0 )); then
+  echo '! Run it as root'
+  exit 1
 fi
 
-blk="/dev/$2"
-umount "$blk"*
-dd if="$1" of="$blk" iflag=fullblock oflag=noatime ibs=4M obs=256K conv=fsync
+umount "${blk}"* || true
+dd if="${file}" of="${blk}" \
+  iflag=fullblock oflag=noatime ibs=4M obs=256K conv=fsync
+  # Max speed in my tests

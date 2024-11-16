@@ -1,8 +1,12 @@
-#!/usr/bin/env bash
+#!/usr/bin/sh
+#
+# Wireless adb connect
 
-if [[ "$@" =~ '--help' ]]; then
-    echo '- Use it to create wireless adb connect'
-    exit 0
+set -e
+
+if [[ "${@}" =~ '--help' ]]; then
+  echo '- Use this script to create wireless adb connect'
+  exit 0
 fi
 
 adb kill-server
@@ -10,7 +14,8 @@ adb start-server
 
 echo '- Waititng for USB connected device...'
 adb wait-for-usb-device
-addr="$(adb shell ip a | grep 'inet.*wlan0' | cut -d ' ' -f6 | cut -d '/' -f2')"
+addr="$(adb shell ip a | grep 'inet.*wlan0' | cut -d ' ' -f6 | cut -d '/' -f1)"
 adb tcpip 5555
-read -p '- Disconect your device from USB and press [Enter]'
+echo '- Disconnect your device from USB'
+adb wait-for-usb-disconnect
 adb connect "$addr:5555"

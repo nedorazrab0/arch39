@@ -1,57 +1,62 @@
-#!/usr/bin/env bash
-# adb() { '/usr/bin/adb' "$@"; }
+#!/usr/bin/sh
+#
+# Transfer files via adb
 
-if [[ "$@" =~ '--help' ]]; then
-    echo '- Use it to transfer files beetwen $HOME/atp and /storage/emulated/0/atp via adb'
-    echo "- Usage: $0 [options]"
-    echo "         $0 from -z"
-    echo '  to      Push file to /storage/emulated/0/atp'
-    echo '  from    Pull file from /storage/emulated/0/atp'
-    echo '  mv      mv $2 -> $HOME/atp/...'
-    echo '  -z      Disable compression, useful for trasnfer big binaries'
-    exit 0
-fi
+set -e
+readonly apath='/storage/emulated/0/atp'
+# adb(){ /custom/path/adb; }
 
-files_echo() {
-    case "$1" in
-         list) echo "$files" | cat -n;;
-         graw) echo "$files" | sed -n "${file_number}p";;
-    esac
+usage() {
+  cat << EOF
+- Use this script to transport files via adb
+  Usage ${0##*/} [options]
+- Options:
+  push  Push '\$3' (file) to '/storage/emulated/0/atp' on your phone
+  pull  Pull '\$3' (number of file) from '/storage/emulated/0/atp' to '$HOME/atp'
+  ls    Show files and their numbers in 'storage/emulated/0/atp'
+  -z    Turn off the compression (useful for transfer big binaries)
+- Example:
+  ${0##*/} push ./hui/zzz.zip -z
+  ${0##*/} pull 7
+  ${0##*/} ls
+EOF
+
+  exit "${1}"
 }
 
-files() {
-    case "$1" in
-        pc) files="$(find $HOME/atp/* -maxdepth 0 -type f -exec basename -a '{}' \+)";;
-        sp) files="$(adb shell find /storage/emulated/0/atp/* -maxdepth 0 -type f -exec basename -a '{}' \+)";;
-    esac
-    files_echo "$2"
+afiles() {
+  afiles="$(adb shell find "${apath}/*" -prune -exec basename -a '{}' \+)"
 }
 
-if [[ "$@" =~ '-z' ]]; then
-    cmp='none'
+await(){
+  echo '- Waiting for device...'
+  adb wait-for-device
+}
+
+[[ "${@}" =~ '--help' ]] && usage 0
+
+if [[ "${@}" =~ '-z' ]]; then
+  comp='none'
 else
-    cmp='brotli'
+  comp='brotli'
 fi
 
-case "$1" in
-    to)
-        files pc list
-        read -p '- Select file number: ' file_number
-        file="$(files pc graw)"
-        echo '- Waiting for device...'
-        adb wait-for-device
-        adb shell mkdir -p /storage/emulated/0/atp
-        adb push "$HOME/atp/$file" /storage/emulated/0/atp -z "$cmp"
-        ;;
-    from)
-        echo '- Waiting for device...'
-        adb wait-for-device
-        files sp list
-        read -p '-  Select file number: ' file_number
-        file="$(files sp graw)"
-        mkdir -p "$HOME/atp"
-        adb pull "/storage/emulated/0/atp/$file" "$HOME/atp" -z "$cmp"
-        ;;
-    mv) mv -f "$2" "$HOME/atp";;
-    *) exit 1;;
+case "${1}" in
+  push)
+    await
+    adb shell mkdir -p "${apath}"
+    adb push "${2}" "${apath}" -z "${comp}";;
+  pull)
+    [[ -z "${2}" ]] && usage 1
+    await
+    afiles
+    afile="$(echo "${afiles}" | sed -n "${2}p")"
+    adb pull "${apath}/${afile}" "${HOME}/atp" -z "${comp}"
+    ;;
+  ls)
+    await
+    afiles
+    echo "${afiles}" | nl
+    ;;
+  *) usage 0
 esac

@@ -1,14 +1,18 @@
-#!/usr/bin/env bash
+#!/usr/bin/sh
+#
+# Update `systemd-boot` with Secure Boot enabled
 
-if [[ "$@" =~ --help ]]; then
-    echo '- Use it to update `bootctl` with Secure Boot'
-    exit 0
+set -e
+
+if [[ "${@}" =~ --help ]]; then
+  echo '- Use this script to update `systemd-boot` with Secure Boot enabled'
+  exit 0
 fi
 
-if (( "$(id -u)" != 0 )); then
-    echo '! Run it as root'
-    exit 1
+if (( $(id -u) != 0 )); then
+  echo '! Run this script as root'
+  exit 1
 fi
 
-sbctl sign -s -o /usr/lib/systemd/boot/efi/systemd-bootx64.efi.signed /usr/lib/systemd/boot/efi/systemd-bootx64.efi
+sbctl sign -s -o /usr/lib/systemd/boot/efi/systemd-bootx64.efi{,.signed}
 systemctl enable systemd-boot-update

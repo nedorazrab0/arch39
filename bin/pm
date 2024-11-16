@@ -1,3 +1,5 @@
-#!/usr/bin/env bash
-
-pacman "$@"
+#!/usr/bin/sh
+#
+# Short pacman
+set -e
+pacman "${@}"

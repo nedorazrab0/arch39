@@ -1,13 +1,16 @@
-#!/usr/bin/env bash
+#!/usr/bin/sh
+#
+# Finalize the install
+
 set -e
 
-mkdir $HOME/{atp,trash}
-
+mkdir "${HOME}/"{atp,trash}
 list='org.mozilla.firefox io.github.spacingbat3.webcord io.mpv.Mpv org.telegram.desktop
       org.onlyoffice.desktopeditors com.transmissionbt.Transmission org.kde.krita'
-flatpak install flathub $list --noninteractive
+
+flatpak install flathub ${list} --noninteractive
 for pkg in $list; do
-    flatpak override "$pkg" --filesystem=home -u
+    flatpak override "${pkg}" --filesystem=home -u
 done
 
-rm -f "$(realpath "$0")"
+rm -f "$(realpath "${0}")"
