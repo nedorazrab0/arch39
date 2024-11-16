@@ -5,4 +5,7 @@ zstyle ':completion:*' menu select
 zstyle ':completion:*' rehash true
 
 n=$'\n'
-PROMPT="%F{magenta}%#%? %F{green}%d%F{nocolor}${n}"
+PROMPT="%B%F{#F2074D}%#%? %F{#48D8DB}%d%F{nocolor}${n}%b"
+
+bindkey '^[[H' beginning-of-line
+bindkey '^[[F' end-of-line

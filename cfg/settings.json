@@ -1,11 +1,17 @@
+// Micro's config
+
 {
-	"diffgutter": true,
-	"infobar": false,
-    "parsecursor": true,
-    "mouse": false,
-	"scrollbar": true,
-	"statusformatl": ">>> $(filename) $(modified)[$(line),$(col)] $(status.paste)| $(opt:fileformat)/$(opt:encoding)/$(opt:filetype)",
-	"statusformatr": "micro ",
-	"sucmd": "doas",
-	"tabstospaces": true
+  "diffgutter": true,
+  "infobar": false,
+  "parsecursor": true,
+  "mouse": false,
+  "scrollbar": true,
+  "statusformatl": ">>> $(filename) $(modified)[$(line),$(col)] $(status.paste)| $(opt:fileformat)/$(opt:encoding)/$(opt:filetype)",
+  "statusformatr": "micro ",
+  "sucmd": "doas",
+  "tabsize": 2,
+  "tabstospaces": true,
+  "*.py": {
+    "tabsize": 4
+  }
 }

@@ -1,3 +1,6 @@
+// -*- mode: jsonc -*-
+// Waybar's config
+
 {
     "layer": "top",
     "position": "bottom",
@@ -6,13 +9,13 @@
     "modules-left": [ "hyprland/workspaces" ],
     "modules-right": [ "hyprland/window" ],
     "modules-center": [
-        "pulseaudio",
         "network",
         "hyprland/language",
+        "pulseaudio",
         "battery",
-     // "battery#bat2",
-        "clock",
-        "tray"
+        // "battery#bat2",
+        "clock"
+        //  "tray"
     ],
     // Modules configuration
      "hyprland/workspaces": {
@@ -32,7 +35,7 @@
     // },
     "battery": {
         "states": {
-            "critical": 25
+            "critical": 100
         },
         "format": "{capacity}%",
         "format-full": "{capacity}%",
@@ -48,13 +51,13 @@
         "format-ethernet": "eth",
         "tooltip-format": "{signaldBm}dBm",
         "format-linked": "{ifname}",
-        "format-disconnected": "!",
+        "format-disconnected": "D/C",
         "format-alt": "{ifname}/{ipaddr}"
     },
     "pulseaudio": {
         "format": "{volume}/100",
-        "format-bluetooth": "{volume}/100 bt",
-        "format-bluetooth-muted": "bt",
+        "format-bluetooth": "{volume}/100 Bt",
+        "format-bluetooth-muted": "Bt",
         "format-muted": "x",
         // "format-source": "{volume}% ",
         // "format-source-muted": ""
