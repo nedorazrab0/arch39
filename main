@@ -86,7 +86,7 @@ pacstrap -KP /mnt \
   android-tools opendoas git {un,}zip gnome-boxes flatpak zram-generator \
   micro zsh reflector gamescope \
   hyprland polkit xdg-desktop-portal-{gtk,hyprland} mako wofi alacritty \
-  noto-fonts waybar brightnessctl \
+  noto-fonts waybar brightnessctl xdg-user-dirs \
   grim slurp vulkan-radeon libva-mesa-driver bluez{,-utils} \
   pipewire{,-alsa,-pulse,-jack} wpa_supplicant "${spkg}"
 echo "en_US.UTF-8 UTF-8
@@ -104,8 +104,8 @@ cat "${cfg}/hyprland.conf" | sed "s/kb_layout = us/&,${kbl::2}/" \
   > /mnt/etc/hyprland.conf
 cat "${cfg}/style.css" > /mnt/etc/xdg/waybar/style.css
 cat "${cfg}/config.jsonc" > /mnt/etc/xdg/waybar/config.jsonc
-cat /etc/systemd/timesyncd.conf > /mnt/etc/systemd/timesyncd.conf
 cat "${cfg}/loader.conf" > /mnt/boot/loader/loader.conf
+cat /etc/systemd/timesyncd.conf > /mnt/etc/systemd/timesyncd.conf
 cat /etc/xdg/reflector/reflector.conf \
   > /mnt/etc/xdg/reflector/reflector.conf
 
