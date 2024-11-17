@@ -58,5 +58,5 @@ case "${1}" in
     afiles
     echo "${afiles}" | nl
     ;;
-  *) usage 0
+  *) usage 1
 esac
