@@ -32,7 +32,7 @@ DNSOverTLS=yes
 DNSSEC=true
 EOF
 
-cat << EOF > /etc/systemd/timesyncd.conf.d/ntp.conf
+cat << 'EOF' > /etc/systemd/timesyncd.conf.d/ntp.conf
 [Time]
 NTP=time.cloudflare.com
 FallbackNTP=pool.ntp.org
