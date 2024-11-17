@@ -75,10 +75,10 @@ sgdisk -Zo \
 mkfs.fat -F32 -n 'ESP' -v -S512 --codepage=437 "${blk}"*1
 mkfs.btrfs -fK -L 'archlinux' -n65536 -m single "${blk}"*2
 
-mount -t btrfs -v -o 'noatime,nodiscard,nobarrier,commit=300,
-lazytime,ssd,compress=zstd:3' "${blk}"*2 /mnt
-mount -t vfat -v -o 'noexec,nodev,nosuid,noatime,utf8=false,
-fmask=0177,dmask=0077,X-mount.mkdir=600,lazytime' "${blk}"*1 /mnt/boot
+mount -t btrfs -v -o noatime,nodiscard,nobarrier,commit=300,\
+lazytime,ssd,compress=zstd:3 "${blk}"*2 /mnt
+mount -t vfat -v -o noexec,nodev,nosuid,noatime,utf8=false,\
+fmask=0177,dmask=0077,X-mount.mkdir=600,lazytime "${blk}"*1 /mnt/boot
 
 # Install
 pacstrap -KP /mnt \
