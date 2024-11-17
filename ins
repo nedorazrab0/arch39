@@ -14,19 +14,11 @@ sysctl -w net.ipv4.tcp_congestion_control='bbr'
 
 mkdir -p /etc/systemd/{resolved,timesyncd}.conf.d
 
-cloudfv4='1.1.1.1#cloudflare-dns.com'
-cloudf-altv4='1.0.0.1#cloudflare-dns.com'
-cloudfv6='2606:4700:4700::1111#cloudflare-dns.com'
-cloudf-altv6='2606:4700:4700::1001#cloudflare-dns.com'
-googv4='8.8.8.8#dns.google'
-goog-altv4='8.8.4.4#dns.google'
-googv6='2001:4860:4860::8888#dns.google'
-goog-altv6='2001:4860:4860::8844#dns.google'
-
 cat << EOF > /etc/systemd/resolved.conf.d/dns.conf
 [Resolve]
-DNS=$cloudfv4 $cloudf-altv4 $cloudfv6 $cloudf-altv6
-FallbackDNS=$googv4 $goog-altv4 $googv6 $goog-altv6
+DNS=1.1.1.1#cloudflare-dns.com 1.0.0.1#cloudflare-dns.com 2606:4700:4700::1111#cloudflare-dns.com 2606:4700:4700::1001#cloudflare-dns.com
+FallbackDNS=8.8.8.8#dns.google 8.8.4.4#dns.google 2001:4860:4860::8888#dns.google 2001:4860:4860::8844#dns.google
+Domains=~.
 Cache=yes
 DNSOverTLS=yes
 DNSSEC=true
