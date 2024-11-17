@@ -131,7 +131,7 @@ echo 'SleepOperation=suspend' >> /mnt/etc/systemd/logind.conf
 echo 'nedocomp' > /mnt/etc/hostname
 echo 'permit :wheel' > /mnt/etc/doas.conf
 
-for script in atp wlc wqc mnt scr h pwg pl fls pm dc mk; do
+for script in atp wlc wqc mnt frt scr h pwg pl fls pm sd mk; do
   cp "${bpath}/${script}" "/mnt/usr/bin/${script}"
   chmod 755 "/mnt/usr/bin/${script}"
 done
