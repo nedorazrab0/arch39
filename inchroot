@@ -6,7 +6,7 @@ set -e
 name="${1}"
 password="${2}"
 zone="${3}"
-sboot="${4}"
+spkg="${4}"
 
 echo '- CHROOT'
 
