@@ -17,10 +17,11 @@ hwclock -wu
 useradd -m -G 'wheel,video' -s /usr/bin/zsh "${name}"
 echo "${name}:${password}" | chpasswd
 
-systemctl enable \ 
+systemctl enable \
   systemd-networkd systemd-resolved systemd-networkd-persistent-storage \
   systemd-timesyncd fstrim.timer reflector.timer
 
+# Secure Boot setup
 if [[ -n "${spkg}" ]]; then
   pacman -S "${spkg}"
   sbctl create-keys
