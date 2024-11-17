@@ -21,7 +21,8 @@ systemctl enable \
   systemd-networkd systemd-resolved systemd-networkd-persistent-storage \
   systemd-timesyncd fstrim.timer reflector.timer
 
-if [[ "${sboot}" == 'y' ]]; then
+if [[ -n "${spkg}" ]]; then
+  pacman -S "${spkg}"
   sbctl create-keys
   sbctl enroll-keys --microsoft
   sbctl sign -s /boot/vmlinuz-linux-zen
