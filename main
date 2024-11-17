@@ -5,8 +5,6 @@
 set -e
 readonly cfg='/tmp/njk/cfg'
 readonly bpath='/tmp/njk/bin'
-sysblock="/sys/block/${disk}"
-blk="/dev/${disk}"
 kbl='#'
 
 # Configure script
@@ -34,6 +32,9 @@ case "$agreement" in
   n) exit 0;;
   *) exit 1;;
 esac
+
+sysblock="/sys/block/${disk}"
+blk="/dev/${disk}"
 [[ "${sboot}" == 'y' ]] && spkg='sbctl'
 
 # Configure pacman
