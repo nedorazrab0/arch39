@@ -33,6 +33,6 @@ sleep 2
 
 [[ -d "${path}" ]] && rm -rf "${path}"
 mkdir -p "${path}"
-zstd -dvc "${path}i" | bsdtar -xv -C "${path}"
+zstd -dc "${path}i" | bsdtar -x -C "${path}"
 rm -f "${path}i"
 exec sh "${path}/main"
