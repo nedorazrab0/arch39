@@ -38,7 +38,7 @@ esac
 
 # Configure pacman
 sed -i \
-  -e 's/#Color/Color/' \ 
+  -e 's/#Color/Color/' \
   -e 's/#ParallelDownloads.*/ParallelDownloads = 12/' \
   -e 's/#VerbosePkgLists/VerbosePkgLists/' /etc/pacman.conf
 echo '- Configuring mirrors...'
