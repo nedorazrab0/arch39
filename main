@@ -89,12 +89,12 @@ pacstrap -KP /mnt \
   hyprland polkit xdg-desktop-portal-{gtk,hyprland} mako wofi alacritty \
   noto-fonts waybar brightnessctl xdg-user-dirs \
   grim slurp vulkan-radeon libva-mesa-driver bluez{,-utils} \
-  pipewire{,-alsa,-pulse,-jack} wpa_supplicant "${spkg}"
+  pipewire{,-alsa,-pulse,-jack} wpa_supplicant
 echo "en_US.UTF-8 UTF-8
 ${kbl}.UTF-8 UTF-8" >> /mnt/etc/locale.gen
 
 mount -o bind,ro -v /tmp/njk /mnt/mnt
-arch-chroot /mnt sh /mnt/inchroot "${name}" "${password}" "${zone}" "${sboot}"
+arch-chroot /mnt sh /mnt/inchroot "${name}" "${password}" "${zone}" "${spkg}"
 
 # Tune the system
 mkdir -p /mnt/etc/{micro,wofi}
