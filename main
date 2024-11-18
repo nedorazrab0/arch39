@@ -129,8 +129,6 @@ cp "${cfg}/60-ioschedulers.rules" /mnt/etc/udev/rules.d
 cp "${cfg}/99-sysctl.conf" /mnt/etc/sysctl.d
 cp "${bpath}/fin" "/mnt/home/${name}"
 
-echo 'DefaultTimeoutStopSec=5s' >> /mnt/etc/systemd/system.conf
-echo 'SleepOperation=suspend' >> /mnt/etc/systemd/logind.conf
 echo 'permit :wheel' > /mnt/etc/doas.conf
 python3 "${bpath}/hostnamegen" > /mnt/etc/hostname
 
@@ -155,6 +153,5 @@ rm -f \
 # wonderhoy
 echo '- Goodbye ;)'
 sleep 2
-date > /mnt/etc/arch-release
 umount -vR /mnt
 systemctl poweroff
