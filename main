@@ -128,10 +128,10 @@ cp "${bpath}/fin" "/mnt/home/${name}"
 
 echo 'DefaultTimeoutStopSec=5s' >> /mnt/etc/systemd/system.conf
 echo 'SleepOperation=suspend' >> /mnt/etc/systemd/logind.conf
-echo 'nedocomp' > /mnt/etc/hostname
 echo 'permit :wheel' > /mnt/etc/doas.conf
+python3 "${bpath}/hostnamegen" > /mnt/etc/hostname
 
-for script in atp wlc wqc mnt frt scr h pwg pl fls pm sd mk; do
+for script in atp wlc wqc mnt frt scr h pwg pl fls pm sd mk hostnamegen; do
   cp "${bpath}/${script}" "/mnt/usr/bin/${script}"
   chmod 755 "/mnt/usr/bin/${script}"
 done
@@ -152,5 +152,6 @@ rm -f \
 # wonderhoy
 echo '- Goodbye ;)'
 sleep 2
+date > /mnt/etc/arch-release
 umount -vR /mnt
 systemctl poweroff
