@@ -4,3 +4,5 @@ Type=ether
 
 [Network]
 DHCP=yes
+Domains=~.
+UseDNS=no
