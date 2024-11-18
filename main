@@ -102,6 +102,7 @@ arch-chroot /mnt sh /mnt/inchroot "${name}" "${password}" "${zone}" "${spkg}"
 # Tune the system
 mkdir -p /mnt/etc/{micro,wofi}
 mkdir -p \
+  /mnt/etc/systemd/{resolved,timesyncd}.conf.d
   /mnt/etc/systemd/system/{systemd-networkd-wait-online.service,boot.mount}.d
 
 cat "${cfg}/hyprland.conf" | sed "s/kb_layout = us/&,${kbl::2}/" \
@@ -117,6 +118,8 @@ cp "${cfg}/one-iface.conf" \
   /mnt/etc/systemd/system/systemd-networkd-wait-online.service.d
 cp "${cfg}/mount-options.conf" \
   /mnt/etc/systemd/system/boot.mount.d
+cp {,mnt}/etc/systemd/resolved.conf.d/dns.conf
+cp {,mnt}/etc/systemd/timesyncd.conf.d/ntp.conf
 cp "${cfg}/zram-generator.conf" /mnt/etc/systemd
 cp "${cfg}/arch-zen.conf" /mnt/boot/loader/entries/arch-zen.conf
 cp "${cfg}/"{20-wired,25-wireless}.network /mnt/etc/systemd/network
