@@ -28,7 +28,7 @@ afiles() {
   afiles="$(adb shell find "${apath}/*" -prune -exec basename -a '{}' \+)"
 }
 
-await(){
+await() {
   echo '- Waiting for device...'
   adb wait-for-device
 }
