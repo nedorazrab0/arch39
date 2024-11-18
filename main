@@ -37,6 +37,9 @@ sysblock="/sys/block/${disk}"
 blk="/dev/${disk}"
 [[ "${sboot}" == 'y' ]] && spkg='sbctl'
 
+# Timezone
+timedatectl set-timezone "${zone}"
+
 # Configure pacman
 sed -i \
   -e 's/#Color/Color/' \
