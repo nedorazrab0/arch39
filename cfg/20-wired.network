@@ -2,7 +2,11 @@
 Kind=!*
 Type=ether
 
+[DHCP]
+UseDNS=no
+
 [Network]
+Description=Wired network interface
 DHCP=yes
 Domains=~.
-UseDNS=no
+
