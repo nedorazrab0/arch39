@@ -107,7 +107,7 @@ mkdir -p /mnt/etc/{micro,wofi}
 mkdir -p /mnt/etc/systemd/{resolved,timesyncd}.conf.d
 mkdir -p \
   /mnt/etc/systemd/system/{systemd-networkd-wait-online.service,boot.mount}.d
-chmod -R 755 "${bpath}/*"
+chmod -R 755 "${bpath}/"*
 echo 'permit :wheel' > /mnt/etc/doas.conf
 python3 "${bpath}/hostnamegen" > /mnt/etc/hostname
 date +'install-time=%s' >> "${cfg}/njk-release"
