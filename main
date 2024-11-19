@@ -92,7 +92,7 @@ pacstrap -KP /mnt \
   hyprland polkit xdg-desktop-portal-{gtk,hyprland} mako wofi alacritty \
   noto-fonts waybar brightnessctl xdg-user-dirs \
   grim slurp vulkan-radeon libva-mesa-driver bluez{,-utils} \
-  pipewire{,-alsa,-pulse,-jack} wpa_supplicant
+  pipewire{,-alsa,-pulse,-jack} wpa_supplicant ${spkg}
 echo "en_US.UTF-8 UTF-8
 ${kbl}.UTF-8 UTF-8" >> /mnt/etc/locale.gen
 
