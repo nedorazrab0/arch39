@@ -26,7 +26,7 @@ if [[ -n "${spkg}" ]]; then
   sbctl create-keys
   sbctl enroll-keys --microsoft
   sbctl sign -s /boot/vmlinuz-linux-zen
-  sbctl sign -s -o /usr/lib/systemd/boot/efi/systemd-bootx64.efi{,.signed}
+  sbctl sign -s -o /usr/lib/systemd/boot/efi/systemd-bootx64.efi{.signed,}
 fi
 bootctl install --esp-path=/boot
 
