@@ -41,7 +41,8 @@ shapart="${sha:0:2}-${sha:2:3}-${sha:5:3}--${sha:8:2}-${sha:10:3}-${sha:13:3}"
 
 echo '- SHA256 Part:'
 echo "  ${shapart}"
-sleep 2
+echo '- Press [Enter] to continue'
+read -r ans && unset ans
 
 [[ -d "${path}" ]] && rm -rf "${path}"
 mkdir -p "${path}"
