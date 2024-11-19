@@ -10,10 +10,11 @@ def main():
         "minori", "haruka", "airi", "shizuku",
         "kohane", "an", "akito", "toya",
         "tsukasa", "emu", "nene", "rui",
-        "kanade", "mafuye", "enanan", "mizuk",
+        "kanade", "mafuye", "ena", "mizuk",
         "mafumom", "miku", "rin", "len",
         "luka", "meiko", "kaito", "teto",
-        "gumi", "gapuko", "una", "neru", "dex"
+        "gumi", "gapuko", "una", "neru",
+        "dex", "yuki", "kafu"
         ]
 
     bazar = [
@@ -33,7 +34,9 @@ def main():
         "persik", "usewa", "us", "sportik", "blat", "case", "canon", "byte",
         "cinema", "krokodil", "hz", "help", "hard", "ebay", "actor", "kms",
         "golubec", "gaz", "sas", "suslik", "arabic", "just", "narik", "nasway",
-        "toxic", "dox", "osa", "banan", "long", "short", "default", "grusha"
+        "toxic", "dox", "osa", "banan", "long", "short", "default", "grusha",
+        "deka", "piko", "micro", "nano", "gekto", "kilo", "mega",
+        "tera", "peta", "exa", "zeta", "yota", "pcr", "express", "absolut", "sigma"
         ]
 
     return choice(singers) + "-" + choice(bazar)
