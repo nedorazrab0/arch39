@@ -23,7 +23,6 @@ systemctl enable \
 
 # Secure Boot setup
 if [[ -n "${spkg}" ]]; then
-  pacman -S "${spkg}"
   sbctl create-keys
   sbctl enroll-keys --microsoft
   sbctl sign -s /boot/vmlinuz-linux-zen
