@@ -9,4 +9,3 @@ UseDNS=no
 Description=Wired network interface
 DHCP=yes
 Domains=~.
-
