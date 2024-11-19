@@ -17,7 +17,7 @@ jobs:
 
       - name: Writing the variables
         run: |
-          rfile='./njk-release'
+          rfile='./cfg/njk-release'
           date +'release-date:%s' >> "${rfile}"
           cat "${rfile}" | tee -a "${GITHUB_ENV}"
 
