@@ -3,8 +3,11 @@ Type=wlan
 WLANInterfaceType=station
 #SSID=*
 
+[DHCP]
+UseDNS=no
+
 [Network]
+Description=Wireless network interface
 DHCP=yes
 Domains=~.
-UseDNS=no
 IgnoreCarrierLoss=3s
