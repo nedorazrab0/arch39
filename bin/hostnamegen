@@ -35,8 +35,8 @@ def main():
         "cinema", "krokodil", "hz", "help", "hard", "ebay", "actor", "kms",
         "golubec", "gaz", "sas", "suslik", "arabic", "just", "narik", "nasway",
         "toxic", "dox", "osa", "banan", "long", "short", "default", "grusha",
-        "deka", "piko", "micro", "nano", "gekto", "kilo", "mega",
-        "tera", "peta", "exa", "zeta", "yota", "pcr", "express", "absolut", "sigma"
+        "deka", "piko", "micro", "nano", "gekto", "kilo", "mega", "tera",
+        "peta", "exa", "zeta", "yota", "pcr", "express", "absolut", "sigma"
         ]
 
     return choice(singers) + "-" + choice(bazar)
