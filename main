@@ -105,6 +105,10 @@ mkdir -p /mnt/etc/systemd/{resolved,timesyncd}.conf.d
 mkdir -p \
   /mnt/etc/systemd/system/{systemd-networkd-wait-online.service,boot.mount}.d
 
+echo 'permit :wheel' > /mnt/etc/doas.conf
+python3 "${bpath}/hostnamegen" > /mnt/etc/hostname
+date +'install-time=%s' >> "${cfg}/njk-release"
+
 cat "${cfg}/hyprland.conf" | sed "s/kb_layout = us/&,${kbl::2}/" \
   > /mnt/etc/hyprland.conf
 cat "${cfg}/style.css" > /mnt/etc/xdg/waybar/style.css
@@ -130,10 +134,8 @@ cp "${cfg}/zshrc" /mnt/etc/zsh/zshrc
 cp "${cfg}/alacritty.toml" /mnt/etc
 cp "${cfg}/60-ioschedulers.rules" /mnt/etc/udev/rules.d
 cp "${cfg}/99-sysctl.conf" /mnt/etc/sysctl.d
+cp "${cfg}/njk-release" /mnt/etc
 cp "${bpath}/fin" "/mnt/home/${name}"
-
-echo 'permit :wheel' > /mnt/etc/doas.conf
-python3 "${bpath}/hostnamegen" > /mnt/etc/hostname
 
 for script in atp wlc wqc mnt frt scr h pwg pl fls pm sd mk hostnamegen; do
   cp "${bpath}/${script}" "/mnt/usr/bin/${script}"
@@ -147,11 +149,14 @@ fi
 
 touch "/mnt/home/${name}/.zshrc"
 
-chmod 400 /mnt/etc/doas.conf
-chmod 755 "/mnt/home/${name}/fin"
-
 rm -f \
   /mnt/usr/share/applications/{qv4l2,qvidcap,bvnc,bssh,avahi-discover}.desktop
+
+chmod 400 /mnt/etc/doas.conf
+chmod 444 /mnt/etc/njk-release
+chmod 755 "/mnt/home/${name}/fin"
+
+chattr +i /mnt/etc/njk-release
 
 # wonderhoy
 echo '- Goodbye ;)'
