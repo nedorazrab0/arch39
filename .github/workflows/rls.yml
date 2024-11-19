@@ -15,6 +15,12 @@ jobs:
           sudo apt-get update
           sudo apt-get install libarchive-tools
 
+      - name: Writing the variables
+        run: |
+          rfile='./njk-release'
+          date +'release-date:%s' >> "${rfile}"
+          cat "${rfile}" | tee -a "${GITHUB_ENV}"
+
       - name: Compressing
         run: |
           bsdtar --exclude=./README.md -b1 -cv ./* \
