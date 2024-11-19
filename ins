@@ -30,7 +30,6 @@ NTP=time.cloudflare.com
 FallbackNTP=pool.ntp.org
 EOF
 
-systemctl daemon-reload
 systemctl restart systemd-{timesyncd,resolved,networkd}
 
 # main
