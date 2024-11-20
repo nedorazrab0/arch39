@@ -137,7 +137,6 @@ cp "${cfg}/zshrc" /mnt/etc/zsh/zshrc
 cp "${cfg}/60-ioschedulers.rules" /mnt/etc/udev/rules.d
 cp "${cfg}/99-sysctl.conf" /mnt/etc/sysctl.d
 cp "${cfg}/"{alacritty.toml,njk-release} /mnt/etc
-cp "${bpath}/fin" "/mnt/home/${name}"
 cp -a "${bpath}/." /mnt/usr/bin
 
 touch "/mnt/home/${name}/.zshrc"
