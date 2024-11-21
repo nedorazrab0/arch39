@@ -22,7 +22,7 @@ systemctl enable \
   systemd-timesyncd fstrim.timer reflector.timer
 
 # Secure Boot setup
-if [[ -n "${spkg}" ]]; then
+if [[ "${sboot}" == 'y' ]]; then
   sbctl create-keys
   sbctl enroll-keys --microsoft
   sbctl sign -s /boot/vmlinuz-linux-zen
