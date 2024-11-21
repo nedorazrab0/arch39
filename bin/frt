@@ -8,8 +8,8 @@ label="${3}"
 
 usage() {
   cat << EOF
-- Use it to format your disks
-  Usage: $0 [option] [partition] [label]
+- Use this script to format your disks
+  Usage: ${0##*/} [option] [partition] [label]
 - Options:
   f     Format a blk on a SSD 
           or on a thumb drive (only for your tweaked pc)
