@@ -62,7 +62,7 @@ echo 'none' > "${sysblock}/queue/scheduler"
 echo '128' > "${sysblock}/queue/nr_requests"
 echo '2' > "${sysblock}/queue/rq_affinity"
 
-# Disk partitioning
+# Disk partition
 echo '- You have 2 seconds to save your disk!'
 sleep 2
 cd /
@@ -100,7 +100,7 @@ echo "en_US.UTF-8 UTF-8
 ${kbl}.UTF-8 UTF-8" >> /mnt/etc/locale.gen
 
 mount -o bind,ro -v /tmp/njk /mnt/mnt
-arch-chroot /mnt sh /mnt/inchroot "${name}" "${password}" "${zone}" "${spkg}"
+arch-chroot /mnt sh /mnt/inchroot "${name}" "${password}" "${zone}" "${sboot}"
 
 # Tune the system
 mkdir -p /mnt/etc/{micro,wofi}
@@ -125,8 +125,8 @@ cp "${cfg}/one-iface.conf" \
   /mnt/etc/systemd/system/systemd-networkd-wait-online.service.d
 cp "${cfg}/mount-options.conf" \
   /mnt/etc/systemd/system/boot.mount.d
-cp {,mnt}/etc/systemd/resolved.conf.d/dns.conf
-cp {,mnt}/etc/systemd/timesyncd.conf.d/ntp.conf
+cp {,/mnt}/etc/systemd/resolved.conf.d/dns.conf
+cp {,/mnt}/etc/systemd/timesyncd.conf.d/ntp.conf
 cp "${cfg}/zram-generator.conf" /mnt/etc/systemd
 cp "${cfg}/arch-zen.conf" /mnt/boot/loader/entries
 cp "${cfg}/"{20-wired,25-wireless}.network /mnt/etc/systemd/network
