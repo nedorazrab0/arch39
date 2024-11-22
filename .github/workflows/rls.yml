@@ -23,8 +23,10 @@ jobs:
 
       - name: Compressing
         run: |
-          bsdtar --exclude=./README.md -b1 -cv ./* \
-              | zstd -T0 --ultra -20zvc > ./njki
+          bsdtar \
+            --exclude-vcs --exclude=./{.github/,README.md} \
+            -b1 -cv ./* \
+            | zstd -T0 --ultra -20zvc > ./njki
 
       - name: Releasing
         env:
