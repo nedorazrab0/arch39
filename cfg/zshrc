@@ -6,6 +6,7 @@ zstyle ':completion:*' rehash true
 
 n=$'\n'
 PROMPT="%B%F{#F2074D}%#%? %F{#48D8DB}%d%F{nocolor}${n}%b"
+RPROMPT="%F{#33CCBB}%n@%M%F{nocolor}"
 
 bindkey '^[[H' beginning-of-line
 bindkey '^[[F' end-of-line
