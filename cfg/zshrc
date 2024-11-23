@@ -10,3 +10,4 @@ RPROMPT="%F{#33CCBB}%n@%M%F{nocolor}"
 
 bindkey '^[[H' beginning-of-line
 bindkey '^[[F' end-of-line
+bindkey '^[l' clear-screen
