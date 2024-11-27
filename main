@@ -1,4 +1,4 @@
-#!/usr/bin/sh
+#!/usr/bin/env bash
 #
 # Arch install
 
@@ -18,9 +18,9 @@ echo '- Locale (en_US is preinstalled):'
 read -r kbl
 echo '- Timezone (e.g. Europe/Moscow):'
 read -r zone
-echo '- Do you want Secure Boot?'
-echo '  Make sure you are in the "setup mode"'
-echo '  or cleared your Secure Boot keys! (y/N)'
+echo '- Do you want Secure Boot?
+  Make sure you are in the "setup mode"
+  or cleared your Secure Boot keys! (y/N)'
 read -r sboot
 echo '- Target disk name:'
 read -r disk
@@ -73,7 +73,7 @@ umount -v "${blk}"*
 blkdiscard -vf "${blk}"
 set -e
 
-wipefs -a "${blk}"
+wipefs --all "${blk}"
 sgdisk -Zo \
   -n1::+64M -t1:ef00 -c1:'EFI System Partition' \
   -n2::+ -t2:8304 -c2:'Arch Linux Root' -p "${blk}"
@@ -81,10 +81,10 @@ sgdisk -Zo \
 mkfs.fat -F32 -n 'ESP' -v -S512 --codepage=437 "${blk}"*1
 mkfs.btrfs -fK -L 'archlinux' -n65536 -m single "${blk}"*2
 
-mount -v -t btrfs -o noatime,nodiscard,nobarrier,commit=300,\
-lazytime,ssd,compress=zstd:3 "${blk}"*2 /mnt
-mount -v -t vfat -o noexec,nodev,nosuid,noatime,utf8=false,\
-fmask=0177,dmask=0077,X-mount.mkdir=600,lazytime "${blk}"*1 /mnt/boot
+mount -v -t btrfs -o "noatime,nodiscard,nobarrier,commit=300,\
+lazytime,ssd,compress=zstd:3" "${blk}"*2 /mnt
+mount -v -t vfat -o "noexec,nodev,nosuid,noatime,utf8=false,\
+fmask=0177,dmask=0077,X-mount.mkdir=600,lazytime" "${blk}"*1 /mnt/boot
 
 # Install
 pacstrap -KP /mnt \
@@ -96,21 +96,23 @@ pacstrap -KP /mnt \
   noto-fonts waybar brightnessctl xdg-user-dirs \
   grim slurp vulkan-radeon mesa bluez{,-utils} \
   pipewire{,-alsa,-pulse,-jack} wpa_supplicant ${spkg}
-echo "en_US.UTF-8 UTF-8
-${kbl}.UTF-8 UTF-8" >> /mnt/etc/locale.gen
-
-mount -v -o bind,ro /tmp/njk /mnt/mnt
-arch-chroot /mnt sh /mnt/inchroot "${name}" "${password}" "${zone}" "${sboot}"
 
 # Tune the system
 mkdir -p /mnt/etc/{micro,wofi}
 mkdir -p /mnt/etc/systemd/{resolved,timesyncd}.conf.d
+mkdir -p "/mnt/home/${name}/"{atp,trash}
 mkdir -p \
   /mnt/etc/systemd/system/{systemd-networkd-wait-online.service,boot.mount}.d
 chmod -R 755 "${bpath}"
+
+echo "en_US.UTF-8 UTF-8
+${kbl}.UTF-8 UTF-8" >> /mnt/etc/locale.gen
 echo 'permit :wheel' > /mnt/etc/doas.conf
+
 python3 "${bpath}/hostnamegen" > /mnt/etc/hostname
 date +'install-time=%s' >> "${cfg}/njk-release"
+touch "/mnt/home/${name}/.zshrc"
+hwclock -wv --utc
 
 cat "${cfg}/hyprland.conf" | sed "s/kb_layout = us/&,${kbl::2}/" \
   > /mnt/etc/hyprland.conf
@@ -139,16 +141,18 @@ cp "${cfg}/99-sysctl.conf" /mnt/etc/sysctl.d
 cp "${cfg}/"{alacritty.toml,njk-release} /mnt/etc
 cp -a "${bpath}/." /mnt/usr/bin
 
-touch "/mnt/home/${name}/.zshrc"
-
 rm -f \
   /mnt/usr/share/applications/{qv4l2,qvidcap,bvnc,bssh,avahi-discover}.desktop
 
+chown "${name}/${name}" /mnt/home/${name}/{atp,trash}
 chmod 400 /mnt/etc/doas.conf
 chmod 444 /mnt/etc/njk-release
-chmod 755 "/mnt/home/${name}/fin"
-
 chattr +i /mnt/etc/njk-release
+
+# Chroot actions
+mount -v -o 'bind,ro' /tmp/njk /mnt/mnt
+arch-chroot /mnt bash /mnt/inchroot \
+  "${name}" "${password}" "${zone}" "${sboot}"
 
 # wonderhoy
 echo '- Goodbye ;)'

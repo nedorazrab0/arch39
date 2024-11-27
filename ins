@@ -1,11 +1,14 @@
-#!/usr/bin/sh
+#!/usr/bin/env bash
 #
 # Download and run the main script
 
 set -e
-readonly path='/tmp/njk'
+readonly path='/tmp/y2ai'
+readonly f-ext='.tar.zst'
+url="https://github.com/nedorazrab0/arch-install/releases/download/rolling/\
+${path##*/}${f-ext}"
 
-# net tweaks
+# Net tweaks
 sysctl -w net.ipv4.tcp_timestamps=0
 sysctl -w net.ipv4.tcp_fastopen=3
 sysctl -w net.core.somaxconn=8192
@@ -33,9 +36,8 @@ EOF
 systemctl restart systemd-{timesyncd,resolved,networkd}
 
 # main
-curl -fLo "${path}i" \
-  'https://github.com/nedorazrab0/arch-install/releases/download/rolling/njki'
-sha="$(openssl sha256 ${path}i | cut -d ' ' -f2)"
+curl -fL -o "${path}${f-ext}" "${url}"
+sha="$(openssl sha256 ${path}${f-ext} | cut -d ' ' -f2)"
 shapart="${sha:0:2}-${sha:2:3}-${sha:5:3}--${sha:8:2}-${sha:10:3}-${sha:13:3}"
 
 echo
@@ -46,6 +48,7 @@ read -r ans && unset ans
 
 [[ -d "${path}" ]] && rm -rf "${path}"
 mkdir -p "${path}"
-zstd -dc "${path}i" | bsdtar -x -C "${path}"
-rm -f "${path}i"
-exec sh "${path}/main"
+zstd -dc "${path}${f-ext}" | bsdtar -x -C "${path}"
+rm -f "${path}${f-ext}"
+
+exec bash "${path}/main"

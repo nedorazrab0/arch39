@@ -1,4 +1,4 @@
-#!/usr/bin/sh
+#!/usr/bin/env bash
 #
 # System tune in chroot
 
@@ -12,7 +12,6 @@ echo '- CHROOT'
 
 locale-gen
 ln -sf "/usr/share/zoneinfo/${zone}" /etc/localtime
-hwclock -wu
 
 useradd -m -G 'wheel,video' -s /usr/bin/zsh "${name}"
 echo "${name}:${password}" | chpasswd
