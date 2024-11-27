@@ -97,6 +97,11 @@ pacstrap -KP /mnt \
   grim slurp vulkan-radeon mesa bluez{,-utils} \
   pipewire{,-alsa,-pulse,-jack} wpa_supplicant ${spkg}
 
+# Chroot actions
+mount -v -o 'bind,ro' /tmp/njk /mnt/mnt
+arch-chroot /mnt bash /mnt/inchroot \
+  "${name}" "${password}" "${zone}" "${sboot}"
+
 # Tune the system
 mkdir -p /mnt/etc/{micro,wofi}
 mkdir -p /mnt/etc/systemd/{resolved,timesyncd}.conf.d
@@ -118,6 +123,7 @@ cat "${cfg}/hyprland.conf" | sed "s/kb_layout = us/&,${kbl::2}/" \
   > /mnt/etc/hyprland.conf
 cat "${cfg}/style.css" > /mnt/etc/xdg/waybar/style.css
 cat "${cfg}/config.jsonc" > /mnt/etc/xdg/waybar/config.jsonc
+cat "${cfg}/loader.conf" > /mnt/boot/loader/loader.conf
 cat /etc/systemd/timesyncd.conf > /mnt/etc/systemd/timesyncd.conf
 cat /etc/xdg/reflector/reflector.conf \
   > /mnt/etc/xdg/reflector/reflector.conf
@@ -147,11 +153,6 @@ chown "${name}/${name}" /mnt/home/${name}/{atp,trash}
 chmod 400 /mnt/etc/doas.conf
 chmod 444 /mnt/etc/njk-release
 chattr +i /mnt/etc/njk-release
-
-# Chroot actions
-mount -v -o 'bind,ro' /tmp/njk /mnt/mnt
-arch-chroot /mnt bash /mnt/inchroot \
-  "${name}" "${password}" "${zone}" "${sboot}"
 
 # wonderhoy
 echo '- Goodbye ;)'
