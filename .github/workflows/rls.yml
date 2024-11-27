@@ -30,8 +30,8 @@ jobs:
       - name: Calculating hash
         run: |
           sha="$(openssl sha256 ./njki | cut -d ' ' -f2)"
-          shapart="${sha:0:2}-${sha:2:3}-${sha:5:3}-\
-          -${sha:8:2}-${sha:10:3}-${sha:13:3}"
+          echo "${sha:0:2}-${sha:2:3}-${sha:5:3}-\
+          -${sha:8:2}-${sha:10:3}-${sha:13:3}" | tee -a "${GITHUB_ENV}"
 
       - name: Releasing
         run: |
