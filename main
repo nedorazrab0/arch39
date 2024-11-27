@@ -142,7 +142,6 @@ cp -a "${bpath}/." /mnt/usr/bin
 rm -f \
   /mnt/usr/share/applications/{qv4l2,qvidcap,bvnc,bssh,avahi-discover}.desktop
 
-chown "${name}:${name}" /mnt/home/${name}/{atp,trash}
 chmod 400 /mnt/etc/doas.conf
 chmod 444 /mnt/etc/njk-release
 chattr +i /mnt/etc/njk-release
@@ -151,6 +150,7 @@ chattr +i /mnt/etc/njk-release
 mount -v -o 'bind,ro' /tmp/y2ai /mnt/mnt
 arch-chroot /mnt bash /mnt/inchroot \
   "${name}" "${password}" "${zone}" "${sboot}"
+chown "${name}:${name}" /mnt/home/${name}/{atp,trash}
 
 # wonderhoy
 echo '- Goodbye ;)'
