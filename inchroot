@@ -15,6 +15,7 @@ ln -sf "/usr/share/zoneinfo/${zone}" /etc/localtime
 
 useradd -m -G 'wheel,video' -s /usr/bin/zsh "${name}"
 echo "${name}:${password}" | chpasswd
+chown "${name}:${name}" /home/${name}/{atp,trash}
 
 systemctl enable \
   systemd-networkd systemd-resolved systemd-networkd-persistent-storage \
