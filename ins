@@ -4,7 +4,7 @@
 
 set -e
 readonly path='/tmp/y2ai'
-readonly f-ext='.tar.zst'
+readonly ext='.tar.zst'
 url="https://github.com/nedorazrab0/arch-install/releases/download/rolling/\
 ${path##*/}${f-ext}"
 
@@ -36,7 +36,7 @@ EOF
 systemctl restart systemd-{timesyncd,resolved,networkd}
 
 # main
-curl -fL -o "${path}${f-ext}" "${url}"
+curl -fL -o "${path}${ext}" "${url}"
 sha="$(openssl sha256 ${path}${f-ext} | cut -d ' ' -f2)"
 shapart="${sha:0:2}-${sha:2:3}-${sha:5:3}--${sha:8:2}-${sha:10:3}-${sha:13:3}"
 
@@ -48,7 +48,7 @@ read -r ans && unset ans
 
 [[ -d "${path}" ]] && rm -rf "${path}"
 mkdir -p "${path}"
-zstd -dc "${path}${f-ext}" | bsdtar -x -C "${path}"
-rm -f "${path}${f-ext}"
+zstd -dc "${path}${ext}" | bsdtar -x -C "${path}"
+rm -f "${path}${ext}"
 
 exec bash "${path}/main"
