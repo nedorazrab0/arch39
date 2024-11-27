@@ -18,7 +18,8 @@ jobs:
       - name: Writing the variables
         run: |
           rfile='./cfg/njk-release'
-          date +'release-time=%s' | tee -a "${rfile}" "${GITHUB_ENV}"
+          date +'release-time=%s' >> "${rfile}"
+          cat "${rfile}" | tee -a "${GITHUB_ENV}"
 
       - name: Compressing
         run: |
