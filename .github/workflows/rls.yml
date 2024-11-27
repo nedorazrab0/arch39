@@ -29,7 +29,7 @@ jobs:
 
       - name: Calculating hash
         run: |
-          sha="$(openssl sha256 ./njki | cut -d ' ' -f2)"
+          sha="$(openssl sha256 ./y2ai.tar.zst | cut -d ' ' -f2)"
           echo "${sha:0:2}-${sha:2:3}-${sha:5:3}-\
           -${sha:8:2}-${sha:10:3}-${sha:13:3}" | tee -a "${GITHUB_ENV}"
 
