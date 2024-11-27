@@ -118,7 +118,6 @@ cat "${cfg}/hyprland.conf" | sed "s/kb_layout = us/&,${kbl::2}/" \
   > /mnt/etc/hyprland.conf
 cat "${cfg}/style.css" > /mnt/etc/xdg/waybar/style.css
 cat "${cfg}/config.jsonc" > /mnt/etc/xdg/waybar/config.jsonc
-cat "${cfg}/loader.conf" > /mnt/boot/loader/loader.conf
 cat /etc/systemd/timesyncd.conf > /mnt/etc/systemd/timesyncd.conf
 cat /etc/xdg/reflector/reflector.conf \
   > /mnt/etc/xdg/reflector/reflector.conf
