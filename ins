@@ -6,7 +6,7 @@ set -e
 readonly path='/tmp/y2ai'
 readonly ext='.tar.zst'
 url="https://github.com/nedorazrab0/arch-install/releases/download/rolling/\
-${path##*/}${f-ext}"
+${path##*/}${ext}"
 
 # Net tweaks
 sysctl -w net.ipv4.tcp_timestamps=0
@@ -37,7 +37,7 @@ systemctl restart systemd-{timesyncd,resolved,networkd}
 
 # main
 curl -fL -o "${path}${ext}" "${url}"
-sha="$(openssl sha256 ${path}${f-ext} | cut -d ' ' -f2)"
+sha="$(openssl sha256 ${path}${ext} | cut -d ' ' -f2)"
 shapart="${sha:0:2}-${sha:2:3}-${sha:5:3}--${sha:8:2}-${sha:10:3}-${sha:13:3}"
 
 echo
