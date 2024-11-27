@@ -1,12 +1,12 @@
-#!/usr/bin/sh
+#!/usr/bin/env bash
 #
-# Finalize the install
+# Flatpaks
 
 set -e
 
-mkdir "${HOME}/"{atp,trash}
-list='org.mozilla.firefox io.github.spacingbat3.webcord io.mpv.Mpv org.telegram.desktop
-      org.onlyoffice.desktopeditors com.transmissionbt.Transmission org.kde.krita com.bitwarden.desktop'
+list='org.mozilla.firefox io.github.spacingbat3.webcord io.mpv.Mpv
+      org.telegram.desktop org.onlyoffice.desktopeditors
+      com.transmissionbt.Transmission org.kde.krita com.bitwarden.desktop'
 
 flatpak install flathub ${list} --noninteractive
 for pkg in $list; do
