@@ -3,6 +3,7 @@
 # System tune in chroot
 
 set -e
+readonly cfg='/mnt/cfg'
 name="${1}"
 password="${2}"
 zone="${3}"
@@ -15,7 +16,6 @@ ln -sf "/usr/share/zoneinfo/${zone}" /etc/localtime
 
 useradd -m -G 'wheel,video' -s /usr/bin/zsh "${name}"
 echo "${name}:${password}" | chpasswd
-chown "${name}:${name}" /home/${name}/{atp,trash}
 
 systemctl enable \
   systemd-networkd systemd-resolved systemd-networkd-persistent-storage \
@@ -28,6 +28,10 @@ if [[ "${sboot}" == 'y' ]]; then
   sbctl sign -s /boot/vmlinuz-linux-zen
   sbctl sign -s -o /usr/lib/systemd/boot/efi/systemd-bootx64.efi{.signed,}
 fi
+
+# systemd-boot
 bootctl install --esp-path=/boot
+cp "${cfg}/arch-zen.conf" /boot/loader/entries
+cat "${cfg}/loader.conf" > /boot/loader/loader.conf
 
 echo '- Exiting chroot'
