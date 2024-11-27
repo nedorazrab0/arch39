@@ -34,10 +34,10 @@ jobs:
           -${sha:8:2}-${sha:10:3}-${sha:13:3}" | tee -a "${GITHUB_ENV}"
 
       - name: Releasing
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           [[ "${release}" == 'test' ]] && flag='-p'
           gh release delete "${release}" --cleanup-tag -y || true
           printf "SHA256 Part:\n\`${shapart}\`" \
             | gh release create "${release}" ${flag} ./y2ai.tar.zst -F-
-        env:
-          GH_TOKEN: ${{ github.token }}
