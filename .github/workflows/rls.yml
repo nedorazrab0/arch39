@@ -18,24 +18,25 @@ jobs:
       - name: Writing the variables
         run: |
           rfile='./cfg/njk-release'
-          date +'release-time=%s' >> "${rfile}"
-          cat "${rfile}" | tee -a "${GITHUB_ENV}"
+          date +'release-time=%s' | tee -a "${rfile}" "${GITHUB_ENV}"
 
       - name: Compressing
         run: |
           bsdtar \
-            --exclude-vcs --exclude=./{.github/,README.md} \
-            -b1 -cv ./* \
-            | zstd -T0 --ultra -20zvc > ./njki
+            --exclude-vcs --exclude=./{.github/,README.md} -b1 -cv ./* \
+            | zstd -T0 --ultra -20zvc > ./y2ai.tar.zst
 
-      - name: Releasing
-        env:
-          GH_TOKEN: ${{ github.token }}
+      - name: Calculating hash
         run: |
           sha="$(openssl sha256 ./njki | cut -d ' ' -f2)"
-          shapart="${sha:0:2}-${sha:2:3}-${sha:5:3}--${sha:8:2}-${sha:10:3}-${sha:13:3}"
+          shapart="${sha:0:2}-${sha:2:3}-${sha:5:3}-\
+          -${sha:8:2}-${sha:10:3}-${sha:13:3}"
 
+      - name: Releasing
+        run: |
           [[ "${release}" == 'test' ]] && flag='-p'
           gh release delete "${release}" --cleanup-tag -y || true
-          echo -e "SHA256 Part:\n\`${shapart}\`" \
-              | gh release create "${release}" ${flag} ./njki -F-
+          printf "SHA256 Part:\n\`${shapart}\`" \
+            | gh release create "${release}" ${flag} ./y2ai.tar.zst -F-
+        env:
+          GH_TOKEN: ${{ github.token }}
