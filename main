@@ -98,7 +98,7 @@ pacstrap -KP /mnt \
   pipewire{,-alsa,-pulse,-jack} wpa_supplicant ${spkg}
 
 # Chroot actions
-mount -v -o 'bind,ro' /tmp/njk /mnt/mnt
+mount -v -o 'bind,ro' /tmp/y2ai /mnt/mnt
 arch-chroot /mnt bash /mnt/inchroot \
   "${name}" "${password}" "${zone}" "${sboot}"
 
