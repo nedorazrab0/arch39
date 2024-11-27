@@ -150,7 +150,7 @@ chattr +i /mnt/etc/njk-release
 mount -v -o 'bind,ro' /tmp/y2ai /mnt/mnt
 arch-chroot /mnt bash /mnt/inchroot \
   "${name}" "${password}" "${zone}" "${sboot}"
-chown "${name}:${name}" /mnt/home/${name}/{atp,trash}
+#chown "${name}:${name}" /mnt/home/${name}/{atp,trash}
 
 # wonderhoy
 echo '- Goodbye ;)'
