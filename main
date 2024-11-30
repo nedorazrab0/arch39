@@ -110,7 +110,6 @@ echo 'permit :wheel' > /mnt/etc/doas.conf
 
 python3 "${bpath}/hostnamegen" > /mnt/etc/hostname
 date +'install-time=%s' >> "${cfg}/njk-release"
-touch "/mnt/home/${name}/.zshrc"
 hwclock -wv --utc
 
 cat "${cfg}/hyprland.conf" | sed "s/kb_layout = us/&,${kbl::2}/" \
