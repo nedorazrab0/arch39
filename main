@@ -100,7 +100,6 @@ pacstrap -KP /mnt \
 # Tune the system
 mkdir -p /mnt/etc/{micro,wofi}
 mkdir -p /mnt/etc/systemd/{resolved,timesyncd}.conf.d
-mkdir -p "/mnt/home/${name}/"{atp,trash}
 mkdir -p \
   /mnt/etc/systemd/system/{systemd-networkd-wait-online.service,boot.mount}.d
 chmod -R 755 "${bpath}"
