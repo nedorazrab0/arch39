@@ -7,7 +7,7 @@ readonly cfg='/mnt/cfg'
 name="${1}"
 password="${2}"
 zone="${3}"
-spkg="${4}"
+sboot="${4}"
 
 echo '- CHROOT'
 
