@@ -109,7 +109,7 @@ ${kbl}.UTF-8 UTF-8" >> /mnt/etc/locale.gen
 echo 'permit :wheel' > /mnt/etc/doas.conf
 
 python3 "${bpath}/hostnamegen" > /mnt/etc/hostname
-date +'install-time=%s' >> "${cfg}/njk-release"
+date +'install-time=%s' >> "${cfg}/y2ai-release"
 hwclock -wv --utc
 
 cat "${cfg}/hyprland.conf" | sed "s/kb_layout = us/&,${kbl::2}/" \
@@ -134,15 +134,15 @@ cp "${cfg}/wofi.css" /mnt/etc/wofi/css
 cp "${cfg}/zshrc" /mnt/etc/zsh/zshrc
 cp "${cfg}/60-ioschedulers.rules" /mnt/etc/udev/rules.d
 cp "${cfg}/99-sysctl.conf" /mnt/etc/sysctl.d
-cp "${cfg}/"{alacritty.toml,njk-release} /mnt/etc
+cp "${cfg}/"{alacritty.toml,y2ai-release} /mnt/etc
 cp -a "${bpath}/." /mnt/usr/bin
 
 rm -f \
   /mnt/usr/share/applications/{qv4l2,qvidcap,bvnc,bssh,avahi-discover}.desktop
 
 chmod 400 /mnt/etc/doas.conf
-chmod 444 /mnt/etc/njk-release
-chattr +i /mnt/etc/njk-release
+chmod 444 /mnt/etc/y2ai-release
+chattr +i /mnt/etc/y2ai-release
 
 # Chroot actions
 mount -v -o 'bind,ro' /tmp/y2ai /mnt/mnt
