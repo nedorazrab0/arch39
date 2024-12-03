@@ -46,6 +46,7 @@ Log in and type `h` to launch Hyprland!
 | [`frt`](./bin/frt) | Format a partition |
 | [`h`](./bin/h) | Launch Hyprland |
 | [`hostnamegen`](./bin/hostnamegen) | Generate hostname or SSID |
+| [`emailgen`](./bin/emailgen) | Generate an email address |
 | [`mk`](./bin/mk) | Launch Micro |
 | [`mnt`](./bin/mnt) | Mount a disk |
 | [`pk`](./bin/pk) | Flatpak aliases |
