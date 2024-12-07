@@ -1,6 +1,7 @@
 // Micro's config
 
 {
+  "clipboard": "terminal",
   "diffgutter": true,
   "infobar": false,
   "parsecursor": true,
