@@ -90,7 +90,7 @@ fmask=0177,dmask=0077,X-mount.mkdir=600,lazytime" "${blk}"*1 /mnt/boot
 pacstrap -KP /mnt \
   base linux-zen booster linux-firmware amd-ucode \
   btrfs-progs f2fs-tools xfsprogs exfatprogs dosfstools gptfdisk \
-  android-tools opendoas git {un,}zip gnome-boxes flatpak zram-generator \
+  android-tools opendoas git unzip gnome-boxes flatpak zram-generator \
   micro zsh reflector gamescope \
   hyprland polkit xdg-desktop-portal-{gtk,hyprland} mako wofi alacritty \
   noto-fonts waybar brightnessctl xdg-user-dirs \
