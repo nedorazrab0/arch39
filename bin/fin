@@ -1,9 +1,7 @@
 #!/usr/bin/env bash
 #
 # Flatpaks, mkdir
-
 set -e
-
 
 mkdir "${HOME}"/{atp,trash}
 list='org.mozilla.firefox io.github.spacingbat3.webcord io.mpv.Mpv
@@ -11,8 +9,5 @@ list='org.mozilla.firefox io.github.spacingbat3.webcord io.mpv.Mpv
       com.transmissionbt.Transmission org.kde.krita com.bitwarden.desktop'
 
 flatpak install flathub ${list} --noninteractive
-for pkg in $list; do
-    flatpak override "${pkg}" --filesystem=home -u
-done
 
 doas rm -f "$(realpath "${0}")"
