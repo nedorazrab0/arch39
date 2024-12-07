@@ -4,8 +4,7 @@ from string import ascii_lowercase, digits
 from random import choice
 
 def gen(n):
-    a = "".join(choice(ascii_lowercase + digits) for i in range(n))
-    return a
+    return "".join(choice(ascii_lowercase + digits) for i in range(n))
 
 def main():
     print(gen(2) + "." + gen(3) + "." + gen(3) + "  " + "@gmail.com")
