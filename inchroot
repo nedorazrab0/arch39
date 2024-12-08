@@ -4,6 +4,7 @@
 
 set -e
 readonly cfg='/mnt/cfg'
+readonly bpath='/mnt/bin'
 name="${1}"
 password="${2}"
 zone="${3}"
