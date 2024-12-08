@@ -22,7 +22,8 @@ echo "en_US.UTF-8 UTF-8
 ${kbl}.UTF-8 UTF-8" >> /etc/locale.gen
 echo 'permit :wheel' > /etc/doas.conf
 
-python3 "${bpath}/hostnamegen" > /etc/hostname
+hostname="$(python3 "${bpath}/hostnamegen")"
+echo "# ${hostname}" >> "${cfg}/y2ai-release"
 date +'install-time=%s' >> "${cfg}/y2ai-release"
 hwclock -wv --utc
 
@@ -33,6 +34,7 @@ cat "${cfg}/config.jsonc" > /etc/xdg/waybar/config.jsonc
 cat /etc/systemd/timesyncd.conf > /etc/systemd/timesyncd.conf
 cat /etc/xdg/reflector/reflector.conf \
   > /etc/xdg/reflector/reflector.conf
+echo "${hostname}" > /etc/hostname
 
 cp "${cfg}/one-iface.conf" \
   /etc/systemd/system/systemd-networkd-wait-online.service.d
