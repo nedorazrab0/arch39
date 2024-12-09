@@ -32,9 +32,7 @@ cat "${cfg}/hyprland.conf" | sed "s/kb_layout = us/&,${kbl::2}/" \
   > /etc/hyprland.conf
 cat "${cfg}/style.css" > /etc/xdg/waybar/style.css
 cat "${cfg}/config.jsonc" > /etc/xdg/waybar/config.jsonc
-cat /etc/systemd/timesyncd.conf > /etc/systemd/timesyncd.conf
-cat /etc/xdg/reflector/reflector.conf \
-  > /etc/xdg/reflector/reflector.conf
+cat "${cfg}/reflector.conf" > /etc/xdg/reflector/reflector.conf
 echo "${hostname}" > /etc/hostname
 
 cp "${cfg}/one-iface.conf" \
