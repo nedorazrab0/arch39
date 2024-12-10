@@ -5,6 +5,11 @@
 set -e
 unit="${3}"
 
+dreload() {
+  systemctl daemon-reload
+  exit 0
+}
+
 if [[ "${@}" =~ '--help' ]]; then
   cat "${0}"
   exit 0
@@ -24,7 +29,7 @@ case "${1}" in
   st) a='start';;
   sp) a='stop';;
   rs) a='restart';;
-  rl) a='reload';;
+  rl) dreload;;
 esac
 
 case "${2}" in
