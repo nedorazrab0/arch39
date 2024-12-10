@@ -4,7 +4,7 @@
 
 from random import choice
 
-def main():
+def namegen():
     singers = [
         "ichika", "saki", "honami", "shiho",
         "minori", "haruka", "airi", "shizuku",
@@ -41,5 +41,8 @@ def main():
 
     return choice(singers) + "-" + choice(bazar)
 
+def main():
+    print(namegen())
+
 if __name__ == "__main__":
-    print(main())
+    main()
