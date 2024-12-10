@@ -75,8 +75,8 @@ sgdisk -Zo \
   -n1::+64M -t1:ef00 -c1:'EFI System Partition' \
   -n2::+ -t2:8304 -c2:'Arch Linux Root' -p "${blk}"
 
-bootpart="/dev/${blk}"*1
-rootpart="/dev/${blk}"*2
+bootpart="${blk}"*1
+rootpart="${blk}"*2
 
 mkfs.fat -F32 -n 'ESP' -v -S512 --codepage=437 "${bootpart}"
 mkfs.btrfs -fK -L 'archlinux' -n65536 -m single "${rootpart}"
