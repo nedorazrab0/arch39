@@ -70,7 +70,7 @@ cd /
 mountpoint -q /mnt && umount -vR /mnt
 umount -v "${blk}"* || true
 
-wipefs --all "${blk}"*[0-9]* "${blk}"
+wipefs --all "${blk}"*? "${blk}"
 blkdiscard -vf "${blk}" || true
 sgdisk -Zo \
   -n1::+64M -t1:ef00 -c1:'EFI System Partition' \
@@ -79,9 +79,9 @@ sgdisk -Zo \
 mkfs.fat -F32 -n 'ESP' -v -S512 --codepage=437 "${blk}"*1
 mkfs.btrfs -fK -L 'archlinux' -n65536 -m single "${blk}"*2
 
-mount -v -t btrfs -o "noatime,nodiscard,nobarrier,commit=300,\
+mount -t btrfs -v -o "noatime,nodiscard,nobarrier,commit=300,\
 lazytime,ssd,compress=zstd:3" "${blk}"*2 /mnt
-mount -v -t vfat -o "noexec,nodev,nosuid,noatime,utf8=false,\
+mount -t vfat -v -o "noexec,nodev,nosuid,noatime,utf8=false,\
 fmask=0177,dmask=0077,X-mount.mkdir=600,lazytime" "${blk}"*1 /mnt/boot
 
 # Install
@@ -96,7 +96,7 @@ pacstrap -KP /mnt \
   pipewire{,-alsa,-pulse,-jack} wpa_supplicant ${spkg}
 
 # Chroot actions
-mount -v -o 'bind,rw' /tmp/y2ai /mnt/mnt
+mount -o 'bind,rw' -v /tmp/y2ai /mnt/mnt
 arch-chroot /mnt bash /mnt/inchroot \
   "${name}" "${password}" "${zone}" "${sboot}" "${kbl}"
 umount -v /mnt/mnt
