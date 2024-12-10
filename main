@@ -98,7 +98,7 @@ pacstrap -KP /mnt \
 # Chroot actions
 mount -v -o 'bind,rw' /tmp/y2ai /mnt/mnt
 arch-chroot /mnt bash /mnt/inchroot \
-  "${name}" "${password}" "${zone}" "${sboot}"
+  "${name}" "${password}" "${zone}" "${sboot}" "${kbl}"
 umount -v /mnt/mnt
 
 # wonderhoy
