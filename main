@@ -33,12 +33,13 @@ case "$agreement" in
   *) exit 1;;
 esac
 
+parts="/dev/${blk}"*?
+bootpart="/dev/${blk}"*1
+rootpart="/dev/${blk}"*2
+
 sysblock="/sys/block/${disk}"
 blk="/dev/${disk}"
-if [[ "${sboot}" == 'y' ]]; then
-  spkg='sbctl'
-  sbupdate='bootctl-update'
-fi
+[[ "${sboot}" == 'y' ]] && sbpkg='sbctl'
 
 # Timezone
 timedatectl set-timezone "${zone}"
@@ -70,19 +71,19 @@ cd /
 mountpoint -q /mnt && umount -vR /mnt
 umount -v "${blk}"* || true
 
-wipefs --all "${blk}"*? "${blk}"
+wipefs --all "${parts}" "${blk}"
 blkdiscard -vf "${blk}" || true
 sgdisk -Zo \
   -n1::+64M -t1:ef00 -c1:'EFI System Partition' \
   -n2::+ -t2:8304 -c2:'Arch Linux Root' -p "${blk}"
 
-mkfs.fat -F32 -n 'ESP' -v -S512 --codepage=437 "${blk}"*1
-mkfs.btrfs -fK -L 'archlinux' -n65536 -m single "${blk}"*2
+mkfs.fat -F32 -n 'ESP' -v -S512 --codepage=437 "${bootpart}"
+mkfs.btrfs -fK -L 'archlinux' -n65536 -m single "${rootpart}"
 
 mount -t btrfs -v -o "noatime,nodiscard,nobarrier,commit=300,\
-lazytime,ssd,compress=zstd:3" "${blk}"*2 /mnt
+lazytime,ssd,compress=zstd:3" "${rootpart}" /mnt
 mount -t vfat -v -o "noexec,nodev,nosuid,noatime,utf8=false,\
-fmask=0177,dmask=0077,X-mount.mkdir=600,lazytime" "${blk}"*1 /mnt/boot
+fmask=0177,dmask=0077,lazytime,X-mount.mkdir=600" "${bootpart}" /mnt/boot
 
 # Install
 pacstrap -KP /mnt \
@@ -93,7 +94,7 @@ pacstrap -KP /mnt \
   hyprland polkit xdg-desktop-portal-{gtk,hyprland} mako wofi alacritty \
   noto-fonts waybar brightnessctl xdg-user-dirs \
   grim slurp vulkan-radeon mesa bluez{,-utils} \
-  pipewire{,-alsa,-pulse,-jack} wpa_supplicant ${spkg}
+  pipewire{,-alsa,-pulse,-jack} wpa_supplicant ${sbpkg}
 
 # Chroot actions
 mount -o 'bind,rw' -v /tmp/y2ai /mnt/mnt
