@@ -18,12 +18,12 @@ echo '- Locale (en_US is preinstalled):'
 read -r kbl
 echo '- Timezone (e.g. Europe/Moscow):'
 read -r zone
+echo '- Target disk name:'
+read -r disk
 echo '- Do you want Secure Boot?
   Make sure you are in the "setup mode"
   or cleared your Secure Boot keys! (y/N)'
 read -r sboot
-echo '- Target disk name:'
-read -r disk
 echo '- Do you want to destroy your own disk? (y/N):'
 read -r agreement
 
