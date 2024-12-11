@@ -47,7 +47,7 @@ sed -i \
   -e 's/#ParallelDownloads.*/ParallelDownloads = 12/' \
   -e 's/#VerbosePkgLists/VerbosePkgLists/' /etc/pacman.conf
 echo '- Configuring mirrors...'
-systemctl restart reflector
+systemctl stop reflector  # Wait for reflector complete the sync
 pacman -Syy archlinux-keyring --noconfirm
 
 # Disk tune
