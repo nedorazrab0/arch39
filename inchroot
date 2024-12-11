@@ -22,7 +22,7 @@ chmod -R 755 "${bpath}"
 
 echo "en_US.UTF-8 UTF-8
 ${kbl}.UTF-8 UTF-8" >> /etc/locale.gen
-echo 'permit :wheel' > /etc/doas.conf
+echo 'permit persist setenv { EDITOR mk } :wheel as root' > /etc/doas.conf
 
 hostname="$(python3 "${bpath}/hostnamegen")"
 echo "# ${hostname}" >> "${cfg}/y2ai-release"
@@ -83,6 +83,6 @@ fi
 # systemd-boot
 bootctl install --esp-path=/boot
 cp "${cfg}/arch-zen.conf" /boot/loader/entries
-cat "${cfg}/loader.conf" > /boot/loader/loader.conf
+cat 'editor no' > /boot/loader/loader.conf
 
 echo '- Exiting chroot'
