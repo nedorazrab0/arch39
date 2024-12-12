@@ -83,6 +83,6 @@ fi
 # systemd-boot
 bootctl install --esp-path=/boot
 cp "${cfg}/arch-zen.conf" /boot/loader/entries
-cat 'editor no' > /boot/loader/loader.conf
+echo 'editor no' > /boot/loader/loader.conf
 
 echo '- Exiting chroot'
