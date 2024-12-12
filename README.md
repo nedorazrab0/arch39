@@ -1,5 +1,6 @@
 # y2ai
 Yet Another Arch Installer
+![](https://raw.githubusercontent.com/nedorazrab0/test/main/20241212_15h13m26s_grim.png)
 
 ## Features
 - [Hyprland](https://hyprland.org)
