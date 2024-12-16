@@ -96,7 +96,7 @@ pacstrap -KP /mnt \
   android-tools opendoas git unzip gnome-boxes flatpak zram-generator \
   micro zsh reflector gamescope man-db less \
   hyprland polkit xdg-desktop-portal-{gtk,hyprland} mako wofi alacritty \
-  noto-fonts waybar brightnessctl xdg-user-dirs \
+  noto-fonts{,-extra} waybar brightnessctl xdg-user-dirs \
   grim slurp vulkan-radeon mesa bluez{,-utils} \
   pipewire{,-alsa,-pulse,-jack} wpa_supplicant ${sbpkg}
 
