@@ -20,16 +20,13 @@ mkdir -p \
   /etc/systemd/system/{systemd-networkd-wait-online.service,boot.mount}.d
 chmod -R 755 "${bpath}"
 
-echo "en_US.UTF-8 UTF-8
-${kbl}.UTF-8 UTF-8" >> /etc/locale.gen
-echo 'permit persist setenv { EDITOR mk } :wheel as root' > /etc/doas.conf
-
+echo 'permit persist setenv { EDITOR } :wheel as root' > /etc/doas.conf
 hostname="$(python3 "${bpath}/hostnamegen")"
-echo "# ${hostname}" >> "${cfg}/y2ai-release"
-date +'install-time=%s' >> "${cfg}/y2ai-release"
+echo "# ${hostname}
+"$(date +'install-time=%s')"" >> "${cfg}/y2ai-release"
 hwclock -wv --utc
 
-cat "${cfg}/hyprland.conf" | sed "s/kb_layout = us/&,${kbl::2}/" \
+cat "${cfg}/hyprland.conf" | sed "s/kb_layout = us/&,${lang}/" \
   > /etc/hyprland.conf
 cat "${cfg}/style.css" > /etc/xdg/waybar/style.css
 cat "${cfg}/config.jsonc" > /etc/xdg/waybar/config.jsonc
@@ -61,12 +58,12 @@ chmod 444 /etc/y2ai-release
 chattr +i /etc/y2ai-release
 
 # Main
-locale-gen
 ln -sf "/usr/share/zoneinfo/${zone}" /etc/localtime
-
+mkdir /etc/skel/{atp,trash}
+touch /etc/skel/.zshrc
+rm -f /etc/skel/.bash*
 useradd -m -G 'wheel,video' -s /usr/bin/zsh "${name}"
 echo "${name}:${password}" | chpasswd
-touch "/home/${name}/.zshrc"
 
 systemctl enable \
   systemd-networkd systemd-resolved systemd-networkd-persistent-storage \
