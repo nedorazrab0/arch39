@@ -20,7 +20,6 @@ mkdir -p \
   /etc/systemd/system/{systemd-networkd-wait-online.service,boot.mount}.d
 chmod -R 755 "${bpath}"
 
-echo 'permit persist setenv { EDITOR } :wheel as root' > /etc/doas.conf
 hostname="$(python3 "${bpath}/hostnamegen")"
 echo "# ${hostname}
 "$(date +'install-time=%s')"" >> "${cfg}/y2ai-release"
@@ -53,7 +52,6 @@ cp -a "${bpath}/." /usr/local/bin
 rm -f \
   /usr/share/applications/{qv4l2,qvidcap,bvnc,bssh,avahi-discover}.desktop
 
-chmod 400 /etc/doas.conf
 chmod 444 /etc/y2ai-release
 chattr +i /etc/y2ai-release
 
