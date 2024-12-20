@@ -42,6 +42,7 @@ Log in and type `h` to launch Hyprland!
 | ------ | -------- |
 | [`atp`](./bin/atp) | Transport files via adb |
 | [`bootctl-update`](./bin/bootctl-update) | Update `systemd-boot` with Secure Boot enabled |
+| [`kp`](./bin/kp) | Elevate privileges |
 | [`fin`](./bin/fin) | Install some flatpaks, mkdir atp,trash |
 | [`fls`](./bin/fls) | Flash a drive |
 | [`frt`](./bin/frt) | Format a partition |
