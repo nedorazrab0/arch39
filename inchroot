@@ -20,18 +20,6 @@ mkdir -p \
   /etc/systemd/system/{systemd-networkd-wait-online.service,boot.mount}.d
 chmod -R 755 "${bpath}"
 
-hostname="$(python3 "${bpath}/hostnamegen")"
-echo "# ${hostname}
-"$(date +'install-time=%s')"" >> "${cfg}/y2ai-release"
-hwclock -wv --utc
-
-cat "${cfg}/hyprland.conf" | sed "s/kb_layout = us/&,${lang}/" \
-  > /etc/hyprland.conf
-cat "${cfg}/style.css" > /etc/xdg/waybar/style.css
-cat "${cfg}/config.jsonc" > /etc/xdg/waybar/config.jsonc
-cat "${cfg}/reflector.conf" > /etc/xdg/reflector/reflector.conf
-echo "${hostname}" > /etc/hostname
-
 cp "${cfg}/one-iface.conf" \
   /etc/systemd/system/systemd-networkd-wait-online.service.d
 cp "${cfg}/mount-options.conf" \
@@ -48,6 +36,18 @@ cp "${cfg}/60-ioschedulers.rules" /etc/udev/rules.d
 cp "${cfg}/99-sysctl.conf" /etc/sysctl.d
 cp "${cfg}/"{alacritty.toml,y2ai-release} /etc
 cp -a "${bpath}/." /usr/local/bin
+
+hostname="$(python3 "${bpath}/hostnamegen")"
+echo "# ${hostname}
+"$(date +'install-time=%s')"" >> "${cfg}/y2ai-release"
+hwclock -wv --utc
+
+sed "s/kb_layout = us/&,${lang}/" "${cfg}/hyprland.conf" \
+  > /etc/hyprland.conf
+cat "${cfg}/style.css" > /etc/xdg/waybar/style.css
+cat "${cfg}/config.jsonc" > /etc/xdg/waybar/config.jsonc
+cat "${cfg}/reflector.conf" > /etc/xdg/reflector/reflector.conf
+echo "${hostname}" > /etc/hostname
 
 rm -f \
   /usr/share/applications/{qv4l2,qvidcap,bvnc,bssh,avahi-discover}.desktop
