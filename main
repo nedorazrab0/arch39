@@ -97,7 +97,7 @@ pacstrap -KP /mnt \
   micro zsh reflector gamescope mandoc less \
   hyprland polkit xdg-desktop-portal-{gtk,hyprland} mako wofi alacritty \
   noto-fonts{,-extra} waybar brightnessctl xdg-user-dirs \
-  grim slurp vulkan-radeon mesa bluez{,-utils} \
+  grim slurp vulkan-radeon mesa bluez{,-utils} iptables-nft \
   pipewire{,-alsa,-pulse,-jack} wpa_supplicant ${sbpkg}
 
 # Chroot actions
