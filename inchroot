@@ -15,7 +15,7 @@ echo '- CHROOT'
 
 # Tune the system
 mkdir -p /etc/{micro,wofi}
-mkdir -p /etc/systemd/{resolved,timesyncd}.conf.d
+mkdir -p /etc/systemd/{resolved,timesyncd,zram-generator}.conf.d
 mkdir -p \
   /etc/systemd/system/{systemd-networkd-wait-online.service,boot.mount}.d
 chmod -R 755 "${bpath}"
@@ -26,7 +26,7 @@ cp "${cfg}/mount-options.conf" \
   /etc/systemd/system/boot.mount.d
 cp "${cfg}/dns.conf" /etc/systemd/resolved.conf.d/dns.conf
 cp "${cfg}/ntp.conf" /etc/systemd/timesyncd.conf.d/ntp.conf
-cp "${cfg}/zram-generator.conf" /etc/systemd
+cp "${cfg}/zram.conf" /etc/systemd/zram-generator.conf.d
 cp "${cfg}/"{20-wired,25-wireless}.network /etc/systemd/network
 cp "${cfg}/settings.json" /etc/micro
 cp "${cfg}/wofi.cfg" /etc/wofi/cfg
