@@ -51,6 +51,8 @@ echo '- Configuring mirrors...'
 until grep -qi 'reflector' /etc/pacman.d/mirrorlist; do
   sleep 1
 done
+pacman-key --init
+pacman-key --populate archlinux
 pacman -Syy archlinux-keyring --needed --noconfirm
 
 # Disk tune
@@ -90,10 +92,8 @@ mount -t vfat -v -o "noexec,nodev,nosuid,noatime,utf8=false,\
 fmask=0177,dmask=0077,lazytime,X-mount.mkdir=600" ${bootpart} /mnt/boot
 
 # Install
-pacman-key --init
-pacman-key --populate archlinux
 mountpoint -q /var/cache/pacman/pkg && hostcache='-c'
-pacstrap ${hostcache} -KP /mnt \
+pacstrap ${hostcache} -P /mnt \
   base linux-zen booster linux-firmware amd-ucode \
   btrfs-progs f2fs-tools xfsprogs exfatprogs dosfstools gptfdisk \
   android-tools git unzip docker flatpak zram-generator \
