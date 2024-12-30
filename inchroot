@@ -37,8 +37,6 @@ cp "${cfg}/99-sysctl.conf" /etc/sysctl.d
 cp "${cfg}/"{alacritty.toml,y2ai-release} /etc
 cp -a "${bpath}/." /usr/local/bin
 
-ls -sv mke2fs /sbin/mkfs.ext4nj
-
 hostname="$(python3 "${bpath}/hostnamegen")"
 echo "# ${hostname}
 "$(date +'install-time=%s')"" >> "${cfg}/y2ai-release"
@@ -49,7 +47,6 @@ sed "s/kb_layout = us/&,${lang}/" "${cfg}/hyprland.conf" \
 cat "${cfg}/style.css" > /etc/xdg/waybar/style.css
 cat "${cfg}/config.jsonc" > /etc/xdg/waybar/config.jsonc
 cat "${cfg}/reflector.conf" > /etc/xdg/reflector/reflector.conf
-cat "${cfg}/mke2nj.conf" >> /etc/mke2fs.conf
 echo "${hostname}" > /etc/hostname
 
 rm -f \
