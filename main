@@ -90,8 +90,10 @@ mount -t vfat -v -o "noexec,nodev,nosuid,noatime,utf8=false,\
 fmask=0177,dmask=0077,lazytime,X-mount.mkdir=600" ${bootpart} /mnt/boot
 
 # Install
-[[ "$(cat /version)" == 'v' ]] && cache='-c'
-pacstrap ${cache} -KP /mnt \
+pacman-key --init
+pacman-key --populate archlinux
+mountpoint -q /var/cache/pacman/pkg && hostcache='-c'
+pacstrap ${hostcache} -KP /mnt \
   base linux-zen booster linux-firmware amd-ucode \
   btrfs-progs f2fs-tools xfsprogs exfatprogs dosfstools gptfdisk \
   android-tools git unzip docker flatpak zram-generator \
