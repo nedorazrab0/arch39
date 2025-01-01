@@ -15,7 +15,8 @@ echo '- CHROOT'
 
 # Tune the system
 mkdir -p /etc/{micro,wofi}
-mkdir -p /etc/systemd/{resolved,timesyncd,zram-generator}.conf.d
+mkdir -p \
+  /etc/systemd/{resolved,timesyncd,journald,system,zram-generator}.conf.d
 mkdir -p \
   /etc/systemd/system/{systemd-networkd-wait-online.service,boot.mount}.d
 chmod -R 755 "${bpath}"
@@ -47,6 +48,18 @@ sed "s/kb_layout = us/&,${lang}/" "${cfg}/hyprland.conf" \
 cat "${cfg}/style.css" > /etc/xdg/waybar/style.css
 cat "${cfg}/config.jsonc" > /etc/xdg/waybar/config.jsonc
 cat "${cfg}/reflector.conf" > /etc/xdg/reflector/reflector.conf
+
+cat << EOF > "${conf}/airootfs/etc/systemd/journal.conf.d/size.conf"
+[Journal]
+SystemMaxUse=512K
+EOF
+
+cat << EOF > "${conf}/airootfs/etc/systemd/system.conf.d/timeout.conf"
+[Manager]
+DefaultTimeoutStartSec=15s
+DefaultTimeoutStopSec=2s
+EOF
+
 echo "${hostname}" > /etc/hostname
 
 rm -f \
