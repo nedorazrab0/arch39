@@ -60,10 +60,12 @@ DefaultTimeoutStartSec=15s
 DefaultTimeoutStopSec=2s
 EOF
 
-echo "${hostname}" > /etc/hostname
+cat << EOF | tee -a /usr/share/applications/{qv4l2,qvidcap,bvnc,bssh,avahi-discover}.desktop
+NoDisplay=true
+Hidden=true
+EOF
 
-rm -f \
-  /usr/share/applications/{qv4l2,qvidcap,bvnc,bssh,avahi-discover}.desktop
+echo "${hostname}" > /etc/hostname
 
 chmod 444 /etc/y2ai-release
 chattr +i /etc/y2ai-release
