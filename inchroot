@@ -33,7 +33,7 @@ cp "${cfg}/settings.json" /etc/micro
 cp "${cfg}/wofi.cfg" /etc/wofi/cfg
 cp "${cfg}/wofi.css" /etc/wofi/css
 cp "${cfg}/zshrc" /etc/zsh/zshrc
-cp "${cfg}/60-io.rules" /etc/udev/rules.d
+cp "${cfg}/"{60-io,50-sata}.rules /etc/udev/rules.d
 cp "${cfg}/99-sysctl.conf" /etc/sysctl.d
 cp "${cfg}/"{alacritty.toml,y2ai-release} /etc
 cp -a "${bpath}/." /usr/local/bin
