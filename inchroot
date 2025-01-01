@@ -49,7 +49,7 @@ cat "${cfg}/style.css" > /etc/xdg/waybar/style.css
 cat "${cfg}/config.jsonc" > /etc/xdg/waybar/config.jsonc
 cat "${cfg}/reflector.conf" > /etc/xdg/reflector/reflector.conf
 
-cat << EOF > "${conf}/airootfs/etc/systemd/journal.conf.d/size.conf"
+cat << EOF > "${conf}/airootfs/etc/systemd/journald.conf.d/size.conf"
 [Journal]
 SystemMaxUse=512K
 EOF
