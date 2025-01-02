@@ -1,7 +1,7 @@
 # HDD
 ACTION=="add", KERNEL=="sd[a-z]*", ATTR{removable}=="0", \
   ATTR{queue/rotational}=="1", ATTR{queue/scheduler}="bfq", \
-  ATTR{queue/nr_requests}="128", ATTR{queue/read_ahead_kb}="512", \
+  ATTR{queue/nr_requests}="64", ATTR{queue/read_ahead_kb}="512", \
   ATTR{queue/rq_affinity}="2"
 # Thumb drive
 ACTION=="add", KERNEL=="sd[a-z]*", ATTR{removable}=="1", \
