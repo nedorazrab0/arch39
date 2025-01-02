@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+#
+# for zram-generator
+set -e
+
+mke2fs -t ext4 -Fq -I1024 -m0 -O "^has_journal,^metadata_csum,sparse_super2,\
+^metadata_csum_seed,^resize_inode,stable_inodes,uninit_bg,extra_isize" "${@}"
