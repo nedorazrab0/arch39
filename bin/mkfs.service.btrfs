@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+#
+# for zram-generator and other automated stuff
+set -e
+
+mkfs.btrfs -f -n65536 -m single "${@}"
