@@ -34,7 +34,7 @@ Log in and type `h` to launch Hyprland!
 - [sysctl](./cfg/99-sysctl.conf)
 - [Root mount options](./cfg/arch-zen.conf)
 - [`/boot` mount options](./cfg/mount-options.conf)
-- [zram](./cfg/zram-generator.conf)
+- [zram](./cfg/zram.conf)
 
 <a name="scripts"></a>
 ## Scripts
