@@ -38,6 +38,9 @@ blk="/dev/${disk}"
 parts="${blk}"*?
 [[ "${sboot}" == 'y' ]] && sbpkg='sbctl'
 
+# sysctl
+sysctl --load="${cfg}/99-sysctl.conf"
+
 # Timezone
 timedatectl set-timezone "${zone}"
 
@@ -56,11 +59,6 @@ pacman-key --populate archlinux
 pacman -Syy archlinux-keyring --needed --noconfirm
 
 # Disk tune
-sysctl -w vm.vfs_cache_pressure=150
-sysctl -w vm.dirty_bytes=268435456
-sysctl -w vm.dirty_background_bytes=134217728
-sysctl -w vm.dirty_writeback_centisecs=1500
-
 echo 'none' > "${sysblock}/queue/scheduler"
 echo '128' > "${sysblock}/queue/nr_requests"
 echo '2' > "${sysblock}/queue/rq_affinity"
