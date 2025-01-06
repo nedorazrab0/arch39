@@ -9,6 +9,9 @@ url="https://github.com/nedorazrab0/y2ai/releases/download/rolling/\
 ${path##*/}${ext}"
 
 # Net tweaks
+sysctl -w net.core.netdev_max_backlog = 4096
+sysctl -w net.ipv4.tcp_slow_start_after_idle = 0
+sysctl -w net.ipv4.tcp_rfc1337 = 1
 sysctl -w net.ipv4.tcp_timestamps=0
 sysctl -w net.ipv4.tcp_fastopen=3
 sysctl -w net.core.somaxconn=8192
