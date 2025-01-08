@@ -51,6 +51,9 @@ sed -i \
   -e 's/#VerbosePkgLists/VerbosePkgLists/' /etc/pacman.conf
 echo '- Configuring mirrors...'
 # Wait for reflector complete the sync
+if mountpoint -q /var/cache/pacman/pkg && ! grep -qi 'reflector'; then 
+  systemctl start reflector
+fi
 until grep -qi 'reflector' /etc/pacman.d/mirrorlist; do
   sleep 1
 done
