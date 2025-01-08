@@ -41,7 +41,7 @@ cp -a "${bpath}/." /usr/local/bin
 hostname="$(python3 "${bpath}/hostnamegen")"
 echo "# ${hostname}
 "$(date +'install-time=%s')"" >> "${cfg}/y2ai-release"
-hwclock -wv --utc
+hwclock -w --utc
 
 sed "s/kb_layout = us/&,${lang}/" "${cfg}/hyprland.conf" \
   > /etc/hyprland.conf
@@ -49,12 +49,12 @@ cat "${cfg}/style.css" > /etc/xdg/waybar/style.css
 cat "${cfg}/config.jsonc" > /etc/xdg/waybar/config.jsonc
 cat "${cfg}/reflector.conf" > /etc/xdg/reflector/reflector.conf
 
-cat << EOF > "${conf}/airootfs/etc/systemd/journald.conf.d/size.conf"
+cat << 'EOF' > /etc/systemd/journald.conf.d/size.conf
 [Journal]
 SystemMaxUse=512K
 EOF
 
-cat << EOF > "${conf}/airootfs/etc/systemd/system.conf.d/timeout.conf"
+cat << 'EOF' > /etc/systemd/system.conf.d/timeout.conf
 [Manager]
 DefaultTimeoutStartSec=15s
 DefaultTimeoutStopSec=2s
