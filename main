@@ -39,7 +39,7 @@ parts="${blk}"*?
 [[ "${sboot}" == 'y' ]] && sbpkg='sbctl'
 
 # sysctl
-sysctl --load="${cfg}/99-sysctl.conf"
+sysctl --load="${cfg}/99-sysctl.conf" || true
 
 # Timezone
 timedatectl set-timezone "${zone}"
