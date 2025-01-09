@@ -27,7 +27,7 @@ read -r sboot
 echo '- Do you want to destroy your own disk? (y/N):'
 read -r agreement
 
-case "$agreement" in
+case "${agreement}" in
   y) true;;
   n) exit 0;;
   *) exit 1;;
