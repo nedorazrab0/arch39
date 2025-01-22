@@ -18,7 +18,7 @@ jobs:
       - name: Archiving cfg/
         run: |
           chmod 755 ./cfg/usr/local/bin
-          bsdtar -b1 -cv ./cfg > ./cfg.tar
+          bsdtar -b1 -cv ./cfg/* > ./cfg.tar
           rm -rf ./cfg
 
       - name: Compressing
