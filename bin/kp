@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-#
-# Elevate privileges
-
-run0 --shell-prompt-prefix='' --background='' --setenv='EDITOR' "${@}"

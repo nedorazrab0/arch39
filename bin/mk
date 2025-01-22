@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-#
-# Run Micro with custom config
-set -e
-micro -config-dir /etc/micro "${@}"
