@@ -22,6 +22,8 @@ NoDisplay=true
 Hidden=true
 EOF
 
+echo "${lang}" >> /etc/hypr/layout.conf
+
 # Main
 ln -sf "/usr/share/zoneinfo/${zone}" /etc/localtime
 mkdir /etc/skel/{atp,trash}
