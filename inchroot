@@ -1,10 +1,8 @@
 #!/usr/bin/env bash
 #
 # System tune in chroot
-
 set -e
-readonly cfg='/mnt/cfg'
-readonly bpath='/mnt/bin'
+
 name="${1}"
 password="${2}"
 zone="${3}"
@@ -14,66 +12,19 @@ lang="${5}"
 echo '- CHROOT'
 
 # Tune the system
-mkdir -p /etc/{micro,wofi}
-mkdir -p \
-  /etc/systemd/{resolved,timesyncd,journald,system,zram-generator}.conf.d
-mkdir -p \
-  /etc/systemd/system/{systemd-networkd-wait-online.service,boot.mount}.d
-chmod -R 755 "${bpath}"
+bsdtar -xf /mnt/cfg.tar -C /
 
-cp "${cfg}/one-iface.conf" \
-  /etc/systemd/system/systemd-networkd-wait-online.service.d
-cp "${cfg}/mount-options.conf" \
-  /etc/systemd/system/boot.mount.d
-cp "${cfg}/dns.conf" /etc/systemd/resolved.conf.d/dns.conf
-cp "${cfg}/ntp.conf" /etc/systemd/timesyncd.conf.d/ntp.conf
-cp "${cfg}/zram.conf" /etc/systemd/zram-generator.conf.d
-cp "${cfg}/"{20-wired,25-wireless}.network /etc/systemd/network
-cp "${cfg}/settings.json" /etc/micro
-cp "${cfg}/wofi.cfg" /etc/wofi/cfg
-cp "${cfg}/wofi.css" /etc/wofi/css
-cp "${cfg}/zshrc" /etc/zsh/zshrc
-cp "${cfg}/"{60-io,50-sata}.rules /etc/udev/rules.d
-cp "${cfg}/99-sysctl.conf" /etc/sysctl.d
-cp "${cfg}/"{alacritty.toml,y2ai-release} /etc
-cp -a "${bpath}/." /usr/local/bin
-
-hostname="$(python3 "${bpath}/hostnamegen")"
-echo "# ${hostname}
-"$(date +'install-time=%s')"" >> "${cfg}/y2ai-release"
+python3 /usr/local/bin/hostnamegen > /etc/hostname
 hwclock -w --utc
 
-sed "s/kb_layout = us/&,${lang}/" "${cfg}/hyprland.conf" \
-  > /etc/hyprland.conf
-cat "${cfg}/style.css" > /etc/xdg/waybar/style.css
-cat "${cfg}/config.jsonc" > /etc/xdg/waybar/config.jsonc
-cat "${cfg}/reflector.conf" > /etc/xdg/reflector/reflector.conf
-
-cat << 'EOF' > /etc/systemd/journald.conf.d/size.conf
-[Journal]
-SystemMaxUse=512K
-EOF
-
-cat << 'EOF' > /etc/systemd/system.conf.d/timeout.conf
-[Manager]
-DefaultTimeoutStartSec=15s
-DefaultTimeoutStopSec=2s
-EOF
-
-cat << EOF | tee -a /usr/share/applications/{qv4l2,qvidcap,bvnc,bssh,avahi-discover}.desktop
+cat << 'EOF' | tee -a /usr/share/applications/{qv4l2,qvidcap,bvnc,bssh,avahi-discover}.desktop
 NoDisplay=true
 Hidden=true
 EOF
 
-echo "${hostname}" > /etc/hostname
-
-chmod 444 /etc/y2ai-release
-chattr +i /etc/y2ai-release
-
 # Main
 ln -sf "/usr/share/zoneinfo/${zone}" /etc/localtime
 mkdir /etc/skel/{atp,trash}
-touch /etc/skel/.zshrc
 rm -f /etc/skel/.bash*
 useradd -m -G 'wheel,video' -s /usr/bin/zsh "${name}"
 echo "${name}:${password}" | chpasswd
@@ -92,7 +43,5 @@ fi
 
 # systemd-boot
 bootctl install --esp-path=/boot
-cp "${cfg}/arch-zen.conf" /boot/loader/entries
-echo 'editor no' > /boot/loader/loader.conf
 
 echo '- Exiting chroot'
