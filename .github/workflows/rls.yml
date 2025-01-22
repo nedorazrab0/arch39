@@ -16,7 +16,7 @@ jobs:
           sudo apt-get install libarchive-tools
 
       - name: Archiving cfg/
-        run:
+        run: |
           chmod 755 ./cfg/usr/local/bin
           bsdtar -c ./cfg > ./cfg.tar
           rm -rf ./cfg
