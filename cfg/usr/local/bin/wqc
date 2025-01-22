@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+#
+# Connect to WIFI
+
+set -e
+
+if [[ "${@}" =~ '--help' ]]; then
+  echo '- Use it to connect to WIFI'
+  exit 0
+fi
+
+if (( $(id -u) != 0 )); then
+  echo '! Run it as root'
+  exit 1
+fi
+
+echo '- Interface name: '
+read -r iname
+echo '- SSID: '
+read -r name
+echo '- Password: '
+stty -echo  # Do not expose a password
+read -r password
+stty echo
+
+wsc="/etc/wpa_supplicant/wpa_supplicant-${iname}.conf"
+echo 'ctrl_interface=/run/wpa_supplicant' > "${wsc}"
+chmod 600 "${wsc}"
+wpa_passphrase "$name" "$password" | sed '/#psk=./d' >> "${wsc}"
+systemctl enable --now "wpa_supplicant@${iname}"
+systemctl restart systemd-networkd

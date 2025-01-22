@@ -1,0 +1,62 @@
+#!/usr/bin/env bash
+#
+# Transfer files via adb
+
+set -e
+readonly apath='/storage/emulated/0/atp'
+# adb(){ /custom/path/adb; }
+
+usage() {
+  cat << EOF
+- Use this script to transport files via adb
+  Usage ${0##*/} [options]
+- Options:
+  push  Push '\$3' (file) to '/storage/emulated/0/atp' on your phone
+  pull  Pull '\$3' (number of file) from '/storage/emulated/0/atp' to '$HOME/atp'
+  ls    Show files and their numbers in 'storage/emulated/0/atp'
+  -z    Turn off the compression (useful for transfer big binaries)
+- Example:
+  ${0##*/} push ./hui/zzz.zip -z
+  ${0##*/} pull 7
+  ${0##*/} ls
+EOF
+
+  exit "${1}"
+}
+
+afiles() {
+  afiles="$(adb shell find "${apath}/*" -prune -exec basename -a '{}' \+)"
+}
+
+await() {
+  echo '- Waiting for device...'
+  adb wait-for-device
+}
+
+[[ "${@}" =~ '--help' ]] && usage 0
+
+if [[ "${@}" =~ '-z' ]]; then
+  comp='none'
+else
+  comp='brotli'
+fi
+
+case "${1}" in
+  push)
+    await
+    adb shell mkdir -p "${apath}"
+    adb push "${2}" "${apath}" -z "${comp}";;
+  pull)
+    [[ -z "${2}" ]] && usage 1
+    await
+    afiles
+    afile="$(echo "${afiles}" | sed -n "${2}p")"
+    adb pull "${apath}/${afile}" "${HOME}/atp" -z "${comp}"
+    ;;
+  ls)
+    await
+    afiles
+    echo "${afiles}" | nl
+    ;;
+  *) usage 1
+esac

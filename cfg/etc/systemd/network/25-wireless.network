@@ -1,0 +1,13 @@
+[Match]
+Type=wlan
+WLANInterfaceType=station
+#SSID=*
+
+[DHCP]
+UseDNS=no
+
+[Network]
+Description=Wireless network interface
+DHCP=yes
+Domains=~.
+IgnoreCarrierLoss=3s

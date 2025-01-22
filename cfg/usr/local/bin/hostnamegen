@@ -1,0 +1,48 @@
+#!/usr/bin/env python3
+#
+# Generate a hostname (or an SSID)
+
+from random import choice
+
+def namegen():
+    singers = [
+        "ichika", "saki", "honami", "shiho",
+        "minori", "haruka", "airi", "shizuku",
+        "kohane", "an", "akito", "toya",
+        "tsukasa", "emu", "nene", "rui",
+        "kanade", "mafuye", "ena", "mizuk",
+        "mafumom", "miku", "rin", "len",
+        "luka", "meiko", "kaito", "teto",
+        "gumi", "gapuko", "una", "neru",
+        "dex", "yuki", "kafu"
+        ]
+
+    bazar = [
+        "alfa", "acid", "amazon", "amber", "ametist", "antiq", "barguzin",
+        "aqua", "lime", "beta", "black", "blue", "crimson", "cream", "nitro",
+        "cyan", "dark", "gray", "rust", "violet", "deep", "blueway", "blueray",
+        "bzip", "bosin", "dejavu", "ac", "dc", "electron", "3", "5", "6", "8",
+        "wtf", "crab", "crib", "ping", "use", "z", "hui", "positron", "shpala",
+        "padla", "shkaf", "xray", "delta", "echo", "krevetka", "melt", "viva",
+        "tango", "kubik", "king", "x", "joker", "giga", "2611", "69", "batman",
+        "topaz", "ebonit", "obsidian", "bor", "beril", "carbon", "azot", "ss",
+        "oxid", "vodorod", "mef", "nudes", "merinda", "rds", "pomidor", "pvp",
+        "red", "green", "orange", "indigo", "magenta", "gay", "mint", "silver",
+        "avacado", "milk", "117", "niga", "300", "1488", "smetanka", "parovoz",
+        "oguzok", "pivozavr", "indinohoodie", "ka4ok", "tor4ok", "tapok",
+        "dvornik", "bezdar", "sobaka", "bless", "kys", "bsd", "4urka", "omega",
+        "persik", "usewa", "us", "sportik", "blat", "case", "canon", "byte",
+        "cinema", "krokodil", "hz", "help", "hard", "ebay", "actor", "kms",
+        "golubec", "gaz", "sas", "suslik", "arabic", "just", "narik", "nasway",
+        "toxic", "dox", "osa", "banan", "long", "short", "default", "grusha",
+        "deka", "piko", "micro", "nano", "gekto", "kilo", "mega", "tera",
+        "peta", "exa", "zeta", "yota", "pcr", "express", "absolut", "sigma"
+        ]
+
+    return choice(singers) + "-" + choice(bazar)
+
+def main():
+    print(namegen())
+
+if __name__ == "__main__":
+    main()

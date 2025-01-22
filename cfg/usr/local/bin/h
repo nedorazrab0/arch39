@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+#
+# Run Hyprland with custom config
+set -e
+Hyprland -c /etc/hyprland.conf

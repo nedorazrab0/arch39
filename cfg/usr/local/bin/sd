@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+#
+# Systemctl aliases
+
+set -e
+unit="${3}"
+
+dreload() {
+  systemctl daemon-reload
+  exit 0
+}
+
+if [[ "${@}" =~ '--help' ]]; then
+  cat "${0}"
+  exit 0
+fi
+
+if [[ -z "${1}" ]]; then
+    systemctl
+    exit
+fi
+
+case "${1}" in
+  s) a='status';;
+  e) a='enable';;
+  d) a='disable';;
+  c) a='cat';;
+  ed) a='edit';;
+  st) a='start';;
+  sp) a='stop';;
+  rs) a='restart';;
+  rl) dreload;;
+esac
+
+case "${2}" in
+  s) b='.service';;
+  t) b='.timer';;
+  m) b='.mount';;
+  tg) b='.target';;
+esac
+
+systemctl "${a}" "${unit}${b}"
