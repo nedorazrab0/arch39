@@ -15,11 +15,10 @@ jobs:
           sudo apt-get update
           sudo apt-get install libarchive-tools
 
-      - name: Writing the variables
-        run: |
-          rfile='./cfg/y2ai-release'
-          date +'release-time=%s' >> "${rfile}"
-          cat "${rfile}" | tee -a "${GITHUB_ENV}"
+      - name: Archiving cfg/
+        run:
+          bsdtar -c ./cfg > ./cfg.tar
+          rm -rf ./cfg
 
       - name: Compressing
         run: |
@@ -37,6 +36,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
+          release=test
           [[ "${release}" == 'test' ]] && flag='-p'
           gh release delete "${release}" --cleanup-tag -y || true
           printf "SHA256 Part:\n\`${shapart}\`" \
