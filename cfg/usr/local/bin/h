@@ -2,4 +2,5 @@
 #
 # Run Hyprland with custom config
 set -e
-Hyprland -c /etc/hyprland.conf
+
+Hyprland -c /etc/hypr/hyprland.conf
