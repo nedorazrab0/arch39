@@ -17,19 +17,19 @@ jobs:
 
       - name: Archiving cfg/
         run: |
-          chmod 755 ./cfg/usr/local/bin
-          bsdtar -b1 -cv ./cfg/* > ./cfg.tar
+          chmod -R 755 ./cfg/usr/local/bin
+          bsdtar -b1 -C ./cfg -cv . > ./cfg.tar
           rm -rf ./cfg
 
       - name: Compressing
         run: |
           bsdtar \
             --exclude-vcs --exclude=./{.github/,README.md} -b1 -cv ./* \
-            | zstd -T0 --ultra -20zvc > ./y2ai.tar.zst
+            | lz4 -12zvc --favor-decSpeed > ./y2ai.tar.lz4
 
       - name: Calculating hash
         run: |
-          sha="$(openssl sha256 ./y2ai.tar.zst | cut -d ' ' -f2)"
+          sha="$(openssl sha256 ./y2ai.tar.lz4 | cut -d ' ' -f2)"
           echo "shapart=${sha:0:2}-${sha:2:3}-${sha:5:3}-\
           -${sha:8:2}-${sha:10:3}-${sha:13:3}" | tee -a "${GITHUB_ENV}"
 
@@ -41,4 +41,4 @@ jobs:
           [[ "${release}" == 'test' ]] && flag='-p'
           gh release delete "${release}" --cleanup-tag -y || true
           printf "SHA256 Part:\n\`${shapart}\`" \
-            | gh release create "${release}" ${flag} ./y2ai.tar.zst -F-
+            | gh release create "${release}" ${flag} ./y2ai.tar.lz4 -F-
