@@ -12,7 +12,7 @@ lang="${5}"
 echo '- CHROOT'
 
 # Tune the system
-bsdtar -xf /mnt/cfg.tar -C /
+bsdtar --uid 0 --gid 0 -xf /mnt/cfg.tar -C /
 
 python3 /usr/local/bin/hostnamegen > /etc/hostname
 hwclock -w --utc
