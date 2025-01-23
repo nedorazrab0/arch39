@@ -1,6 +1,8 @@
 autoload -Uz compinit
 compinit
 
+setopt rm_star_silent
+
 zstyle ':completion:*' menu select
 zstyle ':completion:*' rehash true
 
