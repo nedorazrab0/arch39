@@ -4,7 +4,7 @@
 set -e
 
 readonly path='/tmp/y2ai'
-readonly ext='.tar.zst'
+readonly ext='.tar.lz4'
 url="https://github.com/nedorazrab0/y2ai/releases/download/rolling/\
 ${path##*/}${ext}"
 
@@ -57,7 +57,7 @@ read -r ans && unset ans
 
 [[ -d "${path}" ]] && rm -rf "${path}"
 mkdir -p "${path}"
-zstd -dc "${path}${ext}" | bsdtar -x -C "${path}"
+lz4 -dc "${path}${ext}" | bsdtar -x -C "${path}"
 rm -f "${path}${ext}"
 
 exec bash "${path}/main"
