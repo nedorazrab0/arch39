@@ -3,8 +3,6 @@
 # Arch install
 
 set -e
-readonly cfg='/tmp/y2ai/cfg'
-readonly bpath='/tmp/y2ai/bin'
 kbl='#'
 
 # Configure script
