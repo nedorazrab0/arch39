@@ -3,11 +3,9 @@
 # Flatpaks, mkdir
 set -e
 
-mkdir "${HOME}"/{atp,trash}
+mkdir ~/{atp,trash}
 list='org.mozilla.firefox io.mpv.Mpv
-      org.telegram.desktop org.onlyoffice.desktopeditors
-      com.transmissionbt.Transmission org.kde.krita com.bitwarden.desktop'
+  org.telegram.desktop org.onlyoffice.desktopeditors
+  com.transmissionbt.Transmission org.kde.krita'
 
 flatpak install flathub ${list} --noninteractive
-
-doas rm -f "$(realpath "${0}")"
