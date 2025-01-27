@@ -18,6 +18,7 @@ Clean install only!
 ```shell
 bash -c "$(curl -f 'https://raw.githubusercontent.com/nedorazrab0/y2ai/main/ins')"
 ```
+> [Arch9660](https://github.com/nedorazrab0/arch9660)
 > [ArchISO](https://archlinux.org/download)
 
 ### After install
