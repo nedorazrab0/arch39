@@ -1,6 +1,6 @@
 * {
   font-family: NotoSans;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 window {
@@ -12,20 +12,20 @@ window {
 
 
 #input {
-  margin: 5px;
+  margin: 4px;
   border: none;
   color: #f8f8f2;
   background-color: #1A1A1F;
 }
 
 #inner-box {
-  margin: 5px;
+  margin: 4px;
   border: none;
   background-color: #1A1A1F;
 }
 
 #outer-box {
-  margin: 5px;
+  margin: 4px;
   border: none;
   background-color: #1A1A1F;
 }
@@ -36,20 +36,20 @@ window {
 }
 
 #text {
-  margin: 5px;
+  margin: 4px;
   border: none;
   color: #E5E5E0;
   
 }
 
 #text:selected {
-  margin: 5px;
+  margin: 4px;
   border: none;
   color: #1A1A1F;
 }
 
 #entry {
-  margin: 5px;
+  margin: 4px;
   border: none;
 }
 
