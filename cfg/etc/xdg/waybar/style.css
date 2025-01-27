@@ -2,7 +2,7 @@
 
 * {
   font-family: "NotoSans";
-  font-weight: 600;
+  font-weight: 700;
   font-size: 14px;
 }
 
@@ -88,12 +88,12 @@ button:hover {
     color: #000000;
   }
 }
-/*
+
 #battery.critical:not(.charging) {
   background-color: #f2074d;
   color: #1a1a1f;
 }
-*/
+
 label:focus {
   background-color: #000000;
 }
