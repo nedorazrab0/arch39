@@ -35,11 +35,11 @@
     // },
     "battery": {
         "states": {
-            "critical": 100
+            "critical": 25
         },
         "format": "{capacity}%",
         "format-full": "{capacity}%",
-        "format-charging": "{capacity}%",
+        "format-charging": "+{capacity}%",
         "format-plugged": "{capacity}%",
         "format-alt": "{time}",
     },
