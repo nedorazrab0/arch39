@@ -1,9 +1,8 @@
 #!/usr/bin/env bash
 #
-# Flatpaks, mkdir
+# Flatpaks
 set -e
 
-mkdir ~/{atp,trash}
 list='org.mozilla.firefox io.mpv.Mpv
   org.telegram.desktop org.onlyoffice.desktopeditors
   com.transmissionbt.Transmission org.kde.krita'
