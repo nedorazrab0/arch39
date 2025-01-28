@@ -26,8 +26,7 @@ echo "${lang}" >> /etc/hypr/layout.conf
 
 # Main
 ln -sf "/usr/share/zoneinfo/${zone}" /etc/localtime
-mkdir /etc/skel/{atp,trash}
-rm -f /etc/skel/.bash*
+rm -f /etc/skel/.bash* /etc/skel/{atp,trash}/.gitkeep
 useradd -m -G 'wheel,video' -s /usr/bin/zsh "${name}"
 echo "${name}:${password}" | chpasswd
 
