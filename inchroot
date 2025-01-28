@@ -17,10 +17,10 @@ bsdtar --uid 0 --gid 0 -xf /mnt/cfg.tar -C /
 python3 /usr/local/bin/hostnamegen > /etc/hostname
 hwclock -w --utc
 
-cat << 'EOF' | tee -a /usr/share/applications/{qv4l2,qvidcap,bvnc,bssh,avahi-discover}.desktop
-NoDisplay=true
-Hidden=true
-EOF
+echo | tee /usr/share/applications/\
+{Alacritty,qv4l2,qvidcap,bvnc,bssh,avahi-discover,micro}.desktop
+chattr +i /usr/share/applications/\
+{Alacritty,qv4l2,qvidcap,bvnc,bssh,avahi-discover,micro}.desktop
 
 echo "${lang}" >> /etc/hypr/layout.conf
 
