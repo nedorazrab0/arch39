@@ -99,7 +99,7 @@ fmask=0177,dmask=0077,lazytime,X-mount.mkdir=600" ${bootpart} /mnt/boot
 
 # Install
 mountpoint -q /var/cache/pacman/pkg && hostcache='-c'
-pacstrap ${hostcache} -P /mnt \
+pacstrap ${hostcache} /mnt \
   base linux-zen booster linux-firmware amd-ucode \
   btrfs-progs f2fs-tools xfsprogs exfatprogs dosfstools gptfdisk \
   android-tools git github-cli docker flatpak zram-generator \
