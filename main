@@ -91,7 +91,8 @@ bootpart="${blk}"*1
 rootpart="${blk}"*2
 
 mkfs.fat -F32 -n 'ESP' -v -S512 --codepage=437 ${bootpart}
-mkfs.btrfs -fK -L 'archlinux' -n65536 -m single ${rootpart}
+mkfs.btrfs -fK -L 'archlinux' -O 'block-group-tree' \
+  -n65536 --csum xxhash -m single ${rootpart}
 
 mount -t btrfs -v -o "noatime,nodiscard,nobarrier,commit=300,\
 lazytime,ssd,compress=zstd:3" ${rootpart} /mnt
@@ -104,7 +105,7 @@ pacstrap ${hostcache} /mnt \
   base linux-zen booster linux-firmware amd-ucode \
   btrfs-progs f2fs-tools xfsprogs exfatprogs dosfstools gptfdisk \
   android-tools git github-cli docker flatpak zram-generator \
-  micro zsh reflector gamescope mandoc less pigz unzip \
+  micro zsh reflector gamescope mandoc less xxhash pigz unzip \
   hyprland polkit xdg-desktop-portal-{gtk,hyprland} mako wofi alacritty \
   noto-fonts{,-extra} waybar brightnessctl xdg-user-dirs \
   grim slurp vulkan-radeon mesa bluez{,-utils} iptables-nft \
