@@ -34,13 +34,20 @@ if (( $(id -u) != 0 )); then
 fi
 
 case "${1}" in
-  f) mkfs.btrfs -f -L "${label}" -n65536 -m single "${blk}"
+  f)
+    mkfs.btrfs -f -L "${label}" -n65536 -O 'block-group-tree' \ 
+      --csum xxhash -m single "${blk}"
+    ;;
   fu)
     mkfs.f2fs -fi -l "${label}" \
-     -O 'extra_attr,inode_checksum,sb_checksum,compression' "${blk}";;
+     -O 'extra_attr,inode_checksum,sb_checksum,compression' "${blk}"
+    ;;
   u) mkfs.exfat -L "${label}" "${blk}";;
   uu) mkfs.fat -n "${label}" -v --codepage=437 "${blk}";;
-  h) mkfs.btrfs -fK -L "${label}" -n65536 "${blk}";;
+  h)
+    mkfs.btrfs -fK -L "${label}" -n65536 -O 'block-group-tree' \
+      --csum xxhash "${blk}"
+    ;;
   hu) mkfs.xfs -fK -L "${label}" -i 'size=2048' "${blk}";;
   *) usage 1;;
 esac
