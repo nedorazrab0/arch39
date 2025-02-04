@@ -3,7 +3,7 @@
 # Arch install
 
 set -e
-kbl='#'
+lang='#'
 
 # Configure script
 echo '- Username:'
