@@ -32,7 +32,7 @@ systemctl restart systemd-{timesyncd,resolved,networkd}
 
 # sysctl
 cat << 'EOF' | sysctl -p - || true
-kernel.unprivileged_bpf_disabled=0
+kernel.unprivileged_bpf_disabled = 0
 net.core.netdev_budget_usecs = 5000
 net.core.netdev_budget = 600
 net.core.netdev_max_backlog = 65536
