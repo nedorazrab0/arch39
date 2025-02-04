@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Download and run the main script
+# Download and run main script
 set -e
 
 readonly path='/tmp/y2ai'
@@ -70,12 +70,12 @@ EOF
 
 # main
 curl -fL -o "${path}${ext}" "${url}"
-sha="$(openssl sha256 ${path}${ext} | cut -d ' ' -f2)"
-shapart="${sha:0:2}-${sha:2:3}-${sha:5:3}--${sha:8:2}-${sha:10:3}-${sha:13:3}"
+xxh="$(xxhsum -H2 ${path}${ext} | cut -d ' ' -f1)"
+xxhpart="${xxh:0:2}-${xxh:2:3}-${xxh:5:3}--${xxh:8:2}-${xxh:10:3}-${xxh:13:3}"
 
 echo
-echo '- SHA256 Part:'
-echo "  ${shapart}"
+echo '- XXH128 Part:'
+echo "  ${xxhpart}"
 echo '- Press [Enter] to continue'
 read -r ans && unset ans
 
