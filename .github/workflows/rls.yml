@@ -40,7 +40,6 @@ jobs:
 
       - name: Release
         run: |
-          gh release delete rolling --cleanup-tag -y || true
           printf "XXH128 Part:\n\`${xxhpart}\`" \
             | gh release create rolling ./y2ai.tar.lz4 -F-
         env:
