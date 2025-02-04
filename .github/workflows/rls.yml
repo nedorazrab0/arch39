@@ -15,10 +15,10 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
 
-      - name: Install `libarchive-tools`
+      - name: Install pkgs
         run: |
           sudo apt-get update
-          sudo apt-get install libarchive-tools
+          sudo apt-get install xxhash libarchive-tools
 
       - name: Archive cfg/
         run: |
@@ -41,7 +41,7 @@ jobs:
       - name: Release
         run: |
           gh release delete rolling --cleanup-tag -y || true
-          printf "XXH128 Part:\n\`${shapart}\`" \
+          printf "XXH128 Part:\n\`${xxhpart}\`" \
             | gh release create rolling ./y2ai.tar.lz4 -F-
         env:
           GH_TOKEN: ${{ github.token }}
