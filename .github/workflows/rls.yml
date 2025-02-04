@@ -10,35 +10,38 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Installing `libarchive-tools`
+      - name: Delete old release
+        run: gh release delete rolling --cleanup-tag -y || true
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+      - name: Install `libarchive-tools`
         run: |
           sudo apt-get update
           sudo apt-get install libarchive-tools
 
-      - name: Archiving cfg/
+      - name: Archive cfg/
         run: |
           chmod -R 755 ./cfg/usr/local/bin
           bsdtar -b1 -C ./cfg -cv . > ./cfg.tar
           rm -rf ./cfg
 
-      - name: Compressing
+      - name: Compress
         run: |
           bsdtar \
             --exclude-vcs --exclude=./{.github/,README.md} -b1 -cv ./* \
             | lz4 -12zvc --favor-decSpeed > ./y2ai.tar.lz4
 
-      - name: Calculating hash
+      - name: Calculate hash
         run: |
-          sha="$(openssl sha256 ./y2ai.tar.lz4 | cut -d ' ' -f2)"
-          echo "shapart=${sha:0:2}-${sha:2:3}-${sha:5:3}-\
-          -${sha:8:2}-${sha:10:3}-${sha:13:3}" | tee -a "${GITHUB_ENV}"
+          xxh="$(xxhsum -H2 ./y2ai.tar.lz4 | cut -d ' ' -f1)"
+          echo "xxhpart=${xxh:0:2}-${xxh:2:3}-${xxh:5:3}-\
+          -${xxh:8:2}-${xxh:10:3}-${xxh:13:3}" | tee -a "${GITHUB_ENV}"
 
-      - name: Releasing
+      - name: Release
+        run: |
+          gh release delete rolling --cleanup-tag -y || true
+          printf "XXH128 Part:\n\`${shapart}\`" \
+            | gh release create rolling ./y2ai.tar.lz4 -F-
         env:
           GH_TOKEN: ${{ github.token }}
-        run: |
-          readonly release=rolling
-          [[ "${release}" == 'test' ]] && flag='-p'
-          gh release delete "${release}" --cleanup-tag -y || true
-          printf "SHA256 Part:\n\`${shapart}\`" \
-            | gh release create "${release}" ${flag} ./y2ai.tar.lz4 -F-
