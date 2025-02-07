@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 #
 # Update `systemd-boot` with Secure Boot enabled
-
 set -e
 
 if [[ "${@}" =~ --help ]]; then
