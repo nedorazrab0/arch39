@@ -1,17 +1,31 @@
 #!/usr/bin/env bash
 #
 # Flash a drive
-
 set -e
+
 file="${1}"
-blk="/dev/$2"
+blk="/dev/${2}"
+opts='iflag=fullblock oflag=noatime ibs=4M obs=256K conv=fsync'
+  # Max speed in my tests
+
+if [[ "${@}" =~ '--help' ]]; then
+  cat "${0}"
+  exit 0
+fi
 
 if (( $(id -u) != 0 )); then
   echo '! Run it as root'
   exit 1
 fi
 
+if [[ -b "${blk}" ]]; then
+  echo 'Nevezhda blyat'
+  exit 1
+fi
+
 umount "${blk}"* || true
-dd if="${file}" of="${blk}" \
-  iflag=fullblock oflag=noatime ibs=4M obs=256K conv=fsync
-  # Max speed in my tests
+if [[ "${@}" =~ '-u' ]]; then
+  curl -ZLf "${file}" | dd if="${file}" of="${blk}" "${opts}"
+else
+  dd if="${file}" of="${blk}" "${opts}"
+fi
