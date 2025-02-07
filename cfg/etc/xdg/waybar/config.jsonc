@@ -13,9 +13,9 @@
     "hyprland/language",
     "pulseaudio",
     "battery",
-    // "battery#bat2",
+    //"battery#bat2",
     "clock"
-    //  "tray"
+    //"tray"
   ],
   // Modules configuration
   "hyprland/workspaces": {
@@ -30,9 +30,9 @@
     "tooltip-format": "<tt>{:%B :%Y}<tt>",
     "format-alt": "{:%d.%m.%y}"
   },
-  // "backlight": {
-  //   "format": "{percent}%",
-  // },
+  //"backlight": {
+  //  "format": "{percent}%",
+  //},
   "battery": {
     "states": {
       "critical": 25
@@ -59,8 +59,8 @@
     "format-bluetooth": "{volume}/100 Bt",
     "format-bluetooth-muted": "Bt",
     "format-muted": "x",
-    // "format-source": "{volume}%",
-    // "format-source-muted": "x"
+    //"format-source": "{volume}%",
+    //"format-source-muted": "x"
   },
   "hyprland/language": {
     "format": "{short}"
