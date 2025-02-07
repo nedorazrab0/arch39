@@ -18,7 +18,7 @@ if (( $(id -u) != 0 )); then
   exit 1
 fi
 
-if [[ -b "${blk}" ]]; then
+if [[ ! -b "${blk}" ]]; then
   echo 'Nevezhda blyat'
   exit 1
 fi
