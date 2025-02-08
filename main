@@ -45,9 +45,6 @@ vm.dirty_background_bytes = 134217728
 vm.dirty_writeback_centisecs = 30000
 EOF
 
-# Timezone
-timedatectl set-timezone "${zone}"
-
 # Configure pacman
 sed -i \
   -e 's/#Color/Color/' \
