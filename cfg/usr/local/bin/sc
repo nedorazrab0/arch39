@@ -6,6 +6,6 @@ set -e
 while true; do
   time="$(date)"
   clear
-  printf "' '${time}"
+  printf " ${time}"
   sleep 0.5
 done
