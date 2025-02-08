@@ -31,20 +31,23 @@ button:hover {
 #workspaces button {
   padding: 0 5px;
   background-color: transparent;
-  color: #ffffff;
+  color: #e5e5e0;
 }
+
 /*
 #workspaces button:hover {
   background: rgba(0, 0, 0, 0.2);
 }
 */
+
 #workspaces button.active {
   background-color: #48d8db;
   color: #1a1a1f;
 }
 
 #workspaces button.urgent {
-  background-color: #eb4d4b;
+  background-color: #f2074d;
+  color: #1a1a1f;
 }
 
 #clock,
@@ -75,6 +78,7 @@ button:hover {
 #battery {
   background-color: #48d8db;
   color: #1a1a1f;
+
 }
 /*
 #battery.charging, #battery.plugged {
@@ -82,6 +86,7 @@ button:hover {
   background-color: #26A65B;
 }
 */
+
 @keyframes blink {
   to {
    background-color: #ffffff;
@@ -99,12 +104,13 @@ label:focus {
 }
 
 #network {
-  background-color: #48D8DB;
-  color: #1A1A1F;
+  background-color: #48d8db;
+  color: #1a1a1f;
 }
 
 #network.disconnected {
   background-color: #f2074d;
+  color: #1a1a1f;
 }
 
 #pulseaudio {
@@ -117,6 +123,7 @@ label:focus {
   color: #2a5c45;
 }
 
+/*
 #tray {
   background-color: #2980b9;
 }
@@ -129,6 +136,7 @@ label:focus {
   -gtk-icon-effect: highlight;
   background-color: #f2074d;
 }
+*/
 
 #language {
   background-color: #48d8db;
