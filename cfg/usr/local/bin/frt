@@ -7,9 +7,9 @@ blk="/dev/${2}"
 label="${3}"
 
 usage() {
-  cat << EOF
+  cat << 'EOF'
 - Use this script to format your disks
-  Usage: ${0##*/} [option] [partition] [label]
+  Usage: frt [option] [partition] [label]
 - Options:
   f     Format a blk on a SSD 
           or on a thumb drive (only for your tweaked pc)
@@ -19,8 +19,8 @@ usage() {
   u     Format a blk on a disk for all platforms (e.g. win)
   uu    Format a blk on a disk for your archaic school pc (dosfs)
 - Example:
-  ${0##*/} f sdd4 hui
-  ${0##*/} uu sda1 bosin
+  frt f sdd4 hui
+  frt uu sda1 bosin
 EOF
 
   exit "${1}"
@@ -48,6 +48,6 @@ case "${1}" in
     mkfs.btrfs -fK -L "${label}" -n65536 -O 'block-group-tree' \
       --csum xxhash "${blk}"
     ;;
-  hu) mkfs.xfs -fK -L "${label}" -i 'size=2048' "${blk}";;
+  hu) mkfs.xfs -fK -L "${label}" -i 'size=1024' "${blk}";;
   *) usage 1;;
 esac
