@@ -3,5 +3,6 @@
 # for zram-generator
 set -e
 
-mke2fs -t ext4 -Fq -I1024 -m0 -O "^has_journal,^metadata_csum,sparse_super2,\
-^metadata_csum_seed,^resize_inode,stable_inodes,uninit_bg,extra_isize" "${@}"
+lsmod | grep -qw '^null_blk ' || modprobe null_blk
+mkfs.xfs -fq -i 'size=1024' -l 'logdev=/dev/nullb0,size=64M' \
+  -m 'crc=0' "${@}"
