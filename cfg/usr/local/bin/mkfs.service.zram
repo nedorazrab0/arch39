@@ -3,6 +3,4 @@
 # for zram-generator
 set -e
 
-lsmod | grep -qw '^null_blk ' || modprobe null_blk
-mkfs.xfs -fq -i 'size=1024' -l 'logdev=/dev/nullb0,size=64M' \
-  -m 'crc=0' "${@}"
+mkfs.xfs -fq -i 'size=1024' -l 'size=64M' -m 'crc=0' "${@}"
