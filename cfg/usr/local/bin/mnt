@@ -46,7 +46,12 @@ for blk in ${blks}; do
         exfat|vfat) amo='noexec,nodev,nosuid,umask=0022';;
       esac
       ;;
-    h) [[ "${fs}" == 'btrfs' ]] && amo='nossd,nodiscard,autodefrag,compress=zstd:6';;
+    h)
+      case "${fs}" in
+        btrfs) amo='nossd,nodiscard,autodefrag,compress=zstd:6';;
+        xfs) amo='nodiscard,dax=always';;
+      esac
+      ;;
     x) x='true';;
     *) usage 1;;
   esac
