@@ -7,18 +7,18 @@ readonly apath='/storage/emulated/0/atp'
 # adb(){ /custom/path/adb; }
 
 usage() {
-  cat << EOF
+  cat << 'EOF'
 - Use this script to transport files via adb
-  Usage ${0##*/} [options]
+  Usage: atp [options]
 - Options:
-  push  Push '\$3' (file) to '/storage/emulated/0/atp' on your phone
-  pull  Pull '\$3' (number of file) from '/storage/emulated/0/atp' to '$HOME/atp'
+  to  Push '\$3' (file) to '/storage/emulated/0/atp' on your phone
+  from  Pull '\$3' (number of file) from '/storage/emulated/0/atp' to '$HOME/atp'
   ls    Show files and their numbers in 'storage/emulated/0/atp'
   -z    Turn off the compression (useful for transfer big binaries)
 - Example:
-  ${0##*/} push ./hui/zzz.zip -z
-  ${0##*/} pull 7
-  ${0##*/} ls
+  atp push ./hui/zzz.zip -z
+  atp pull 7
+  atp ls
 EOF
 
   exit "${1}"
@@ -42,11 +42,11 @@ else
 fi
 
 case "${1}" in
-  push)
+  to)
     await
     adb shell mkdir -p "${apath}"
     adb push "${2}" "${apath}" -z "${comp}";;
-  pull)
+  from)
     [[ -z "${2}" ]] && usage 1
     await
     afiles
