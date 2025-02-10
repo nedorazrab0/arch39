@@ -1,8 +1,15 @@
 #!/usr/bin/env bash
 #
 # Flatpak aliases
-
 set -e
+
+ilist() {
+  flatpak list --app --columns=application
+}
+
+slist(){
+  flatpak search "${1}" --columns=application
+}
 
 if [[ "${@}" =~ '--help' ]]; then
   cat "${0}"
@@ -10,13 +17,12 @@ if [[ "${@}" =~ '--help' ]]; then
 fi
 
 case "${1}" in
-  i) flatpak install flathub "$2" --noninteractive;;
-  r) flatpak uninstall "$2" --delete-data;;
-  u) flatpak update;;
-  l) flatpak list --columns=application,version;;
-  s) flatpak search "$2" --columns=name,application;;
-  sq) flatpak search "$2" --columns=application;;
-  sd) flatpak search "$2" --columns=application,description;;
-  ha) flatpak override "$2" --filesystem=home -u;;    # home dir access
-  *) flatpak "${@}";;
+  i) flatpak install flathub "$(ilist | sed -n ${2}p)" --noninteractive;;
+  u) flatpak uninstall "$(ilist | sed -n ${2}p)" --delete-data --noninteractive;;
+  up) flatpak update --noninteractive;;
+  r) flatpak run "$(ilist | sed -n ${2}p)" "${3}"
+  l) ilist | nl;;
+  sq) slist "${2}" | nl;;
+  s) flatpak search "${2}" --columns=name,application;;
+  sd) flatpak search "${2}" --columns=application,description;;
 esac
