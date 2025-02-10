@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Flatpak aliases
+# Flatpak helper
 set -e
 
 ilist() {
@@ -11,18 +11,34 @@ slist(){
   flatpak search "${1}" --columns=application
 }
 
-if [[ "${@}" =~ '--help' ]]; then
-  cat "${0}"
-  exit 0
-fi
+usage() {
+  cat << 'EOF'
+- Flatpak helper
+  Usage: pk [options]
+- Options:
+  l   Get list of installed apps (number + id)
+  sq  Get list of searched by $2 apps (number + id)
+  i   Install app by its number ($2)
+  u   Uninstall app by its number ($2)
+  up  Upgrade all flatpak apps
+  r   Run an app by its number
+      with $3 options (not necessarily)
+  s   Get list of searched by $2 apps (name + id)
+  sd  Get list of searched by $2 apps (name + description)
+EOF
+
+  exit "${1}"
+}
 
 case "${1}" in
-  i) flatpak install flathub "$(ilist | sed -n ${2}p)" --noninteractive;;
+  i) flatpak install flathub "$(slist | sed -n ${2}p)" --noninteractive;;
   u) flatpak uninstall "$(ilist | sed -n ${2}p)" --delete-data --noninteractive;;
   up) flatpak update --noninteractive;;
-  r) flatpak run "$(ilist | sed -n ${2}p)" "${3}";;
-  l) ilist | nl;;
-  sq) slist "${2}" | nl;;
+  r) flatpak run "$(ilist | sed -n ${2}p)" ${3};;
+  l) ilist | nl | less;;
+  sq) slist "${2}" | nl | less;;
   s) flatpak search "${2}" --columns=name,application;;
   sd) flatpak search "${2}" --columns=application,description;;
+  h) usage 0
+  *) flatpak "${@}"
 esac
