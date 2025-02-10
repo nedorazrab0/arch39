@@ -1,15 +1,19 @@
+zrh() rehash
+zle -N zrh
+
 autoload -Uz compinit
 compinit
-
+zstyle ':completion:*' menu select
 setopt rm_star_silent
 
-zstyle ':completion:*' menu select
-zstyle ':completion:*' rehash true
-
 n=$'\n'
-PROMPT="%B%F{#F2074D}%#%? %F{#48D8DB}%d%F{nocolor}${n}%b"
-RPROMPT="%B%F{#33CCBB}%n@%M%F{nocolor}%b"
+PROMPT="%B%F{#f2074d}%#%? %F{#48d8db}%d%F{nocolor}${n}%b"
+RPROMPT="%B%F{#33ccbb}%n@%M%F{nocolor}%b"
 
 bindkey '^[[H' beginning-of-line
 bindkey '^[[F' end-of-line
 bindkey '^[l' clear-screen
+bindkey '^[[3~' delete-char
+bindkey '^[[5~' up-history
+bindkey '^[[6~' down-history
+bindkey '^[u' zrh
