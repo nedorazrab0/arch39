@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+#
+# Alias
+set -e
+
+ls --color
