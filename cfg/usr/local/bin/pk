@@ -20,7 +20,7 @@ case "${1}" in
   i) flatpak install flathub "$(ilist | sed -n ${2}p)" --noninteractive;;
   u) flatpak uninstall "$(ilist | sed -n ${2}p)" --delete-data --noninteractive;;
   up) flatpak update --noninteractive;;
-  r) flatpak run "$(ilist | sed -n ${2}p)" "${3}"
+  r) flatpak run "$(ilist | sed -n ${2}p)" "${3}";;
   l) ilist | nl;;
   sq) slist "${2}" | nl;;
   s) flatpak search "${2}" --columns=name,application;;
