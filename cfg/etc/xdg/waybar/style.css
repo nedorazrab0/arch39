@@ -4,6 +4,7 @@
   font-family: "NotoSans";
   font-weight: 700;
   font-size: 14px;
+  min-height: 0px;
 }
 
 window#waybar {
