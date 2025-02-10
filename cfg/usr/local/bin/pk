@@ -42,6 +42,6 @@ case "${1}" in
   sq) slist "${2}" | nl | less;;
   s) flatpak search "${2}" --columns=name,application;;
   sd) flatpak search "${2}" --columns=application,description;;
-  h) usage 0
-  *) flatpak "${@}"
+  h) usage 0;;
+  *) flatpak "${@}";;
 esac
