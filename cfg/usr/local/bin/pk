@@ -18,7 +18,7 @@ usage() {
 - Options:
   l   Get list of installed apps (number + id)
   sq  Get list of searched by $2 apps (number + id)
-  i   Install app by its number ($2)
+  i   Install app by its number in search list (pattern + number)
   u   Uninstall app by its number ($2)
   up  Upgrade all flatpak apps
   r   Run an app by its number
@@ -31,8 +31,11 @@ EOF
 }
 
 case "${1}" in
-  i) flatpak install flathub "$(slist | sed -n ${2}p)" --noninteractive;;
-  u) flatpak uninstall "$(ilist | sed -n ${2}p)" --delete-data --noninteractive;;
+  i) flatpak install flathub "$(slist ${2} | sed -n ${3}p)" --noninteractive;;
+  u)
+    flatpak uninstall "$(ilist | sed -n ${2}p)" \
+      --delete-data --noninteractive
+    ;;
   up) flatpak update --noninteractive;;
   r) flatpak run "$(ilist | sed -n ${2}p)" ${3};;
   l) ilist | nl | less;;
