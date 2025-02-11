@@ -46,7 +46,8 @@ case "${1}" in
   to)
     await
     adb shell mkdir -p "${apath}"
-    adb push "${2}" "${apath}" -z "${comp}";;
+    adb push "${2}" "${apath}" -z "${comp}"
+    ;;
   from)
     [[ -z "${2}" ]] && usage 1
     await
