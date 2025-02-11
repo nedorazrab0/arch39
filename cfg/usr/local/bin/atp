@@ -24,10 +24,6 @@ EOF
   exit "${1}"
 }
 
-afiles() {
-  afiles="$(adb shell find "${apath}/*" -prune -exec basename -a '{}' \+)"
-}
-
 await() {
   echo '- Waiting for device...'
   adb wait-for-device
@@ -49,8 +45,8 @@ case "${1}" in
   from)
     [[ -z "${2}" ]] && usage 1
     await
-    afiles
-    afile="$(echo "${afiles}" | sed -n "${2}p")"
+    afile="$(adb shell find "${apath}/*" -prune -exec \
+      basename -a '{}' \+ | sed -n "${2}p")"
     adb pull "${apath}/${afile}" "${HOME}/atp" -z "${comp}"
     ;;
   ls)
