@@ -18,10 +18,7 @@ ln -sf /etc/pam.d/{su,su-l}
 python3 /usr/local/bin/hostnamegen > /etc/hostname
 hwclock -w --utc
 
-echo | tee /usr/share/applications/\
-{Alacritty,qv4l2,qvidcap,bvnc,bssh,avahi-discover,micro}.desktop
-chattr +i /usr/share/applications/\
-{Alacritty,qv4l2,qvidcap,bvnc,bssh,avahi-discover,micro}.desktop
+rm -rf /usr/share/applications/*
 
 echo "${lang}" >> /etc/hypr/layout.conf
 
