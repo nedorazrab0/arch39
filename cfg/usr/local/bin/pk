@@ -29,7 +29,8 @@ usage() {
   pk s transimmison
   pk i transmission 1
   pk l
-  pk r 3
+  pk r 3 --help
+  pk u 3
 EOF
 
   exit "${1}"
