@@ -26,7 +26,7 @@ usage() {
   sv   Get list of searched by $2 apps (name + id)
   sd  Get list of searched by $2 apps (name + description)
 - Example:
-  pk s transimmison
+  pk s transmission
   pk i transmission 1
   pk l
   pk r 3 --help
