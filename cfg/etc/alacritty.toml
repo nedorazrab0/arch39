@@ -1,3 +1,21 @@
+[window]
+decorations = "None"
+dynamic_padding = true
+
+[mouse]
+hide_when_typing = true
+
+[scrolling]
+history = 1000
+multiplier = 10
+
+[font]
+normal = { family = "NotoSansMono", style = "SemiBold" }
+size = 8.25
+
 [colors.primary]
-foreground = "#E5E5E0"
-background = "#1A1A1F"
+foreground = "#e5e5e0"
+background = "#1a1a1f"
+
+[debug]
+render_timer = false
