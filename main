@@ -103,7 +103,7 @@ pacstrap ${hostcache} /mnt \
   btrfs-progs xfsprogs exfatprogs dosfstools gptfdisk \
   android-tools git github-cli docker flatpak zram-generator \
   micro zsh reflector gamescope mandoc less xxhash pigz unzip \
-  hyprland polkit xdg-desktop-portal-{gtk,hyprland} mako wofi alacritty \
+  hyprland polkit xdg-desktop-portal-{gtk,hyprland} mako alacritty \
   noto-fonts{,-extra} waybar brightnessctl xdg-user-dirs \
   grim slurp vulkan-radeon mesa bluez{,-utils} iptables-nft \
   pipewire{,-alsa,-pulse,-jack} wpa_supplicant ${sbpkg}
