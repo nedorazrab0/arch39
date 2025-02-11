@@ -46,7 +46,7 @@ case "${1}" in
     [[ -z "${2}" ]] && usage 1
     await
     afile="$(adb shell find "${apath}/*" -prune -exec \
-      basename -a '{}' \+ | sed -n "${2}p")"
+      basename -a {} \+ | sed -n "${2}p")"
     adb pull "${apath}/${afile}" "${HOME}/atp" -z "${comp}"
     ;;
   ls)
