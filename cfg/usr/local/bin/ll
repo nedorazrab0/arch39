@@ -3,4 +3,4 @@
 # Alias
 set -e
 
-ls -lh --color
+ls -lh --color "${@}"
