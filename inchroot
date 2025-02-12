@@ -12,7 +12,7 @@ lang="${5}"
 echo '- CHROOT'
 
 # Tune the system
-bsdtar --uid 0 --gid 0 -xf /mnt/cfg.tar -C /
+bsdtar --uid 0 --gid 0 -x -f /mnt/cfg.tar -C /
 
 ln -sf /etc/pam.d/{su,su-l}
 python3 /usr/local/bin/hostnamegen > /etc/hostname
