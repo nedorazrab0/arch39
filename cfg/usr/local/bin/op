@@ -7,6 +7,6 @@ atp='/storage/emulated/0/atp'
 
 case "${1}" in
   g) ssh-keygen -t ed25519 -f "${HOME}/.ssh/linux";;
-  c) adb push "${HOME}/.ssh/android.pub" "${atp}" -z brotli;;
+  c) adb push "${HOME}/.ssh/linux.pub" "${atp}" -z brotli;;
   u) cat "${HOME}/atp/android.pub" > "${HOME}/.ssh/authorized_keys";;
 esac
