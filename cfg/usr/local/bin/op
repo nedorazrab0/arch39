@@ -3,6 +3,21 @@
 # Openssh helper
 set -e
 
+if [[ "${@}" =~ '-h' ]]; then
+  cat << 'EOF'
+- OpenSSH helper
+  Usage: op [options]
+- Options:
+  g  Generate ed25519 keys
+  c  Copy keys to server via ssh
+  u  Connect to the saved IP addr
+- Example:
+  op g
+EOF
+
+  exit 0
+fi
+
 addr() {
   if adb get-serialno; then
     adb exec-out ip a | grep 'inet.*wlan0$' \
