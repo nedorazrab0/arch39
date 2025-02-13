@@ -1,15 +1,14 @@
 #!/usr/bin/env bash
 #
 # Openssh helper
-
 set -e
-atp='/storage/emulated/0/atp'
+
+addr() {
+  adb exec-out ip a | grep 'inet.*wlan0$' | cut -d ' ' -f6 | cut -d '/' -f1
+}
 
 case "${1}" in
-  g) ssh-keygen -t ed25519 -f "${HOME}/.ssh/linux";;
-  c) adb push "${HOME}/.ssh/linux.pub" "${atp}" -z brotli;;
-  u)
-    adb pull "${atp}/android.pub" "${HOME}/atp" -z brotli
-    cat "${HOME}/atp/android.pub" > "${HOME}/.ssh/authorized_keys"
-    ;;
+  g) ssh-keygen -t ed25519;;
+  c) ssh-copy-id -p8022 "$(addr)";;
+  u) ssh -p8022 "$(addr)";;
 esac
