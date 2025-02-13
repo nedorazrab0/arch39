@@ -10,7 +10,7 @@ addr() {
   else
     local ip
     echo '- IP addr:'
-    read addr
+    read -r addr
     echo "${ip}"
   fi
 }
