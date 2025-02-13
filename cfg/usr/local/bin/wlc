@@ -14,7 +14,7 @@ adb start-server
 
 echo '- Waititng for USB connected device...'
 adb wait-for-usb-device
-addr="$(adb exec-out ip a | grep 'inet.*wlan0' | cut -d ' ' -f6 | cut -d '/' -f1)"
+addr="$(adb exec-out ip a | grep 'inet.*wlan0$' | cut -d ' ' -f6 | cut -d '/' -f1)"
 adb tcpip 5555
 echo '- Disconnect your device from USB'
 adb wait-for-usb-disconnect
