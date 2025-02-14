@@ -36,7 +36,7 @@ for blk in ${blks}; do
     s)
       case "$fs" in
         btrfs)
-          amo='nobarrier,notreelog,nologreplay,nodiscard,ssd,compress=zstd:3'
+          amo='nobarrier,nodiscard,ssd,compress=zstd:3'
           ;;
         f2fs) amo='nodiscard,compress_algorithm=zstd:3,compress_chksum';;
       esac
@@ -44,7 +44,7 @@ for blk in ${blks}; do
     u)
       case "$fs" in
         btrfs)
-          amo='nobarrier,notreelog,nologreplay,nodiscard,ssd_spread,compress=zstd:3'
+          amo='nobarrier,nodiscard,ssd_spread,compress=zstd:3'
           ;;
         f2fs) amo='nodiscard,compress_algorithm=zstd:3,compress_chksum';;
         exfat|vfat) amo='noexec,nodev,nosuid,umask=0022';;
@@ -53,7 +53,7 @@ for blk in ${blks}; do
     h)
       case "${fs}" in
         btrfs) 
-          amo='nobarrier,notreelog,nologreplay,nossd,nodiscard,autodefrag,compress=zstd:6'
+          amo='nobarrier,nossd,nodiscard,autodefrag,compress=zstd:6'
           ;;
         xfs) amo='nodiscard,dax=always';;
       esac
