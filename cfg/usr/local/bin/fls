@@ -5,7 +5,6 @@ set -e
 
 file="${1}"
 blk="/dev/${2}"
-opts='iflag=fullblock oflag=noatime ibs=4M obs=256K conv=fsync'
   # Max speed in my tests
 
 if [[ "${@}" =~ '--help' ]]; then
@@ -25,7 +24,9 @@ fi
 
 umount "${blk}"* || true
 if [[ "${@}" =~ '-u' ]]; then
-  curl -ZLf "${file}" | dd if="${file}" of="${blk}" "${opts}"
+  curl -ZLf "${file}" | dd if="${file}" of="${blk}" "${opts}" \
+    iflag=fullblock oflag=noatime ibs=4M obs=256K conv=fsync
 else
-  dd if="${file}" of="${blk}" "${opts}"
+  dd if="${file}" of="${blk}" \
+    iflag=fullblock oflag=noatime ibs=4M obs=256K conv=fsync
 fi
