@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 #
 # Make a screenshot
-
 set -e
-[[ "${1}" == 's' ]] && opt="-g $(slurp)" 
 
-grim ${opt} -l9
+if [[ "${1}" == 's' ]]; then 
+  grim -g "$(slurp)" -l9
+else
+  grim -l9
+fi
