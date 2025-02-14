@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 #
 # Openssh helper
+
 set -e
+ip="${3}"
 
 if [[ "${@}" =~ '-h' ]]; then
   cat << 'EOF'
@@ -19,13 +21,10 @@ EOF
 fi
 
 addr() {
-  if adb get-serialno; then
+  if [[ -z "${ip}" ]]; then
     adb exec-out ip a | grep 'inet.*wlan0$' \
       | cut -d ' ' -f6 | cut -d '/' -f1
   else
-    local ip
-    echo '- IP addr:'
-    read -r addr
     echo "${ip}"
   fi
 }
@@ -34,6 +33,7 @@ case "${1}" in
   g) ssh-keygen -t ed25519 -f "${HOME}/.ssh/id_ed25519";;
   c) ssh-copy-id -p8022 "$(addr)";;
   u)
-    ip="$(grep -o -m1 '^\[.*\]' $HOME/.ssh/known_hosts | tr -d '[,]')"
+    [[ -z "${ip}" ]] \
+      && ip="$(grep -o -m1 '^\[.*\]' $HOME/.ssh/known_hosts | tr -d '[,]')"
     ssh -p8022 "${ip}";;
 esac
