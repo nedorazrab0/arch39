@@ -14,6 +14,8 @@ if [[ "${@}" =~ '-h' ]]; then
   c  Copy keys to server via ssh
   u  Connect to the saved IP addr
 - Example:
+  op c
+  op c 192.0.0.0
   op g
 EOF
 
@@ -22,6 +24,8 @@ fi
 
 addr() {
   if [[ -z "${ip}" ]]; then
+    echo '- Waiting for ADB device...'
+    adb wait-for-device
     adb exec-out ip a | grep 'inet.*wlan0$' \
       | cut -d ' ' -f6 | cut -d '/' -f1
   else
