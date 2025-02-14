@@ -6,11 +6,15 @@ set -e
 clear
 echo
 date
-echo '- This machine will shut down in an hour!'
-echo '- Kill this script to cancel'
-sleep 3540  # 59 min
 
-printf '\n- It is time!\n'
+cat << 'EOF'
+- This machine will shut down in an hour!
+- Kill this script to cancel
+EOF
+echo "PID: ${$}"
+
+sleep 3540  # 59 min
+printf '****\n- It is time!\n'
 sleep 60
 
 exec systemctl poweroff
