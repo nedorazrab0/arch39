@@ -3,7 +3,7 @@
 # Openssh helper
 
 set -e
-ip="${3}"
+ip="${2}"
 
 if [[ "${@}" =~ '-h' ]]; then
   cat << 'EOF'
