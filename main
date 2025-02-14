@@ -91,8 +91,8 @@ mkfs.fat -F32 -n 'ESP' -v -S512 --codepage=437 ${bootpart}
 mkfs.btrfs -fK -L 'archlinux' -O 'block-group-tree' \
   -n65536 --csum xxhash -m single ${rootpart}
 
-mount -t btrfs -v -o "noatime,nodiscard,nobarrier,notreelog,\
-nologreplay,commit=300,lazytime,ssd,compress=zstd:3" ${rootpart} /mnt
+mount -t btrfs -v -o "noatime,nodiscard,nobarrier,\
+commit=300,lazytime,ssd,compress=zstd:3" ${rootpart} /mnt
 mount -t vfat -v -o "noexec,nodev,nosuid,noatime,utf8=false,\
 fmask=0177,dmask=0077,lazytime,X-mount.mkdir=600" ${bootpart} /mnt/boot
 
