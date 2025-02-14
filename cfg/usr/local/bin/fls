@@ -24,7 +24,7 @@ fi
 
 umount "${blk}"* || true
 if [[ "${@}" =~ '-u' ]]; then
-  curl -ZLf "${file}" | dd if="${file}" of="${blk}" "${opts}" \
+  curl -ZLf "${file}" | dd of="${blk}" \
     iflag=fullblock oflag=noatime ibs=4M obs=256K conv=fsync
 else
   dd if="${file}" of="${blk}" \
