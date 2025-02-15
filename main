@@ -119,4 +119,4 @@ umount -v /mnt/mnt
 echo '- Goodbye ;)'
 sleep 2
 umount -vR /mnt
-systemctl poweroff
+exec systemctl poweroff
