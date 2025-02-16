@@ -33,7 +33,7 @@ systemctl enable \
   systemd-networkd systemd-resolved systemd-networkd-persistent-storage \
   systemd-timesyncd fstrim.timer reflector.timer
 
-systemctl mask sshd
+systemctl mask sshd systemd-networkd-wait-online
 
 # Secure Boot setup
 if [[ "${sboot}" == 'y' ]]; then
