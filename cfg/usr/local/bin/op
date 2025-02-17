@@ -42,5 +42,6 @@ case "${1}" in
   u)
     [[ -z "${ip}" ]] \
       && ip="$(grep -o -m1 '^\[.*\]' $HOME/.ssh/known_hosts | tr -d '[,]')"
-    ssh -p8022 "${ip}";;
+    ssh -p8022 "${ip}"
+    ;;
 esac
