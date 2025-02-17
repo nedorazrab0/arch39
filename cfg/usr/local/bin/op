@@ -34,7 +34,10 @@ addr() {
 }
 
 case "${1}" in
-  g) ssh-keygen -t ed25519 -f "${HOME}/.ssh/id_ed25519";;
+  g)
+    ssh-keygen -t ed25519 -f "${HOME}/.ssh/id_ed25519" \
+      -a64 -C "$(whoami)@$(uname -n)-$(date -I)"
+    ;;
   c) ssh-copy-id -p8022 "$(addr)";;
   u)
     [[ -z "${ip}" ]] \
