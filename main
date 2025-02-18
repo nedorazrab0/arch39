@@ -41,7 +41,7 @@ cat << 'EOF' | sysctl -p -
 vm.vfs_cache_pressure = 150
 vm.dirty_bytes = 268435456
 vm.laptop_mode = 0
-vm.dirty_background_bytes = 134217728
+vm.dirty_background_bytes = 67108864
 vm.dirty_writeback_centisecs = 30000
 EOF
 
@@ -92,7 +92,7 @@ mkfs.btrfs -fK -L 'archlinux' -O 'block-group-tree' \
   -n65536 --csum xxhash -m single ${rootpart}
 
 mount -t btrfs -v -o "noatime,nodiscard,nobarrier,\
-commit=300,lazytime,ssd,compress=zstd:3" ${rootpart} /mnt
+commit=300,lazytime,ssd,compress-force=zstd:3" ${rootpart} /mnt
 mount -t vfat -v -o "noexec,nodev,nosuid,noatime,utf8=false,\
 fmask=0177,dmask=0077,lazytime,X-mount.mkdir=600" ${bootpart} /mnt/boot
 
