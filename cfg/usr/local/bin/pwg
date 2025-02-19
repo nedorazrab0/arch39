@@ -2,22 +2,71 @@
 #
 # Generate passwords
 
-from string import ascii_letters, digits, punctuation
+from string import ascii_uppercase, ascii_lowercase, digits, punctuation
 from secrets import choice
+from math import floor, log
+from sys import argv
 
-def pwg(len=20):
-    return "".join(choice(ascii_letters + digits + punctuation)
-                   for i in range(len))
+def helpme():
+    helptext = "- Password generator\n" + \
+        "  Usage: pwg [options]\n" + \
+        "- Options:\n" + \
+        "  [fuldp] [lenght]\n" + \
+        "  u  Use uppercase chars\n" + \
+        "  l  Use lowercase chars\n" + \
+        "  d  Use digits\n" + \
+        "  p  Use punctuation symbols\n" + \
+        "  f  Use all above\n" + \
+        "  e  Generate passwords in an easy memorable look\n" + \
+        "     (2+3+3)+(2+3+3), always 16 chars lenght. 104 entropy bits\n" + \
+        "- Example:\n" + \
+        "  pwg f 39\n" + \
+        "  pwg ul 228\n" + \
+        "  pwg e\n"
+    print(helptext)
+    exit
 
-def main(n=16):
-    """
-    Format: 20 + 2-3-3 + 2-3-3
-    First for security, second + third for better memorization 
-    20 random ASCII chars = 131 (> 128) entropy bits
-    """
-    for i in range(n):
-         print("- " + pwg() + "  " + "".join("  "  + pwg(2) + " " + pwg(3) +
-                                             " " + pwg(3) for i in range(2)))
+def gen(chars, L):
+    return "".join(choice(chars) for i in range(L))
+
+def halferp():
+    chars = ascii_uppercase + ascii_lowercase + digits + punctuation
+    return gen(chars, 2) + " " + gen(chars, 3) + " " + gen(chars, 3)
+
+def erp():
+    for i in range(16):
+        print("- " + halferp() + "  " + halferp())
+
+def std(opt):
+    chars = ""
+    L = int(argv[2])
+    if opt == "f":
+        chars = ascii_uppercase + ascii_lowercase + digits + punctuation
+    else:
+        if "u" in opt:
+            chars = chars + ascii_uppercase
+        if "l" in opt:
+            chars = chars + ascii_lowercase
+        if "d" in opt:
+            chars = chars + digits
+        if "p" in opt:
+            chars = chars + punctuation
+
+    for i in range(16):
+        print("- " + gen(chars, L))
+
+    N = len(chars)
+    bits = L * log(N)/log(2)  # https://en.wikipedia.org/wiki/Password_strength
+    print("\n  Entropy bits: " + str(floor(bits)))
+
+def main():
+    opt = argv[1]
+    if opt == "e":
+        erp()
+    elif opt == "--help":
+        helpme()
+    else:
+        std(opt)
 
 if __name__ == "__main__":
     main()
