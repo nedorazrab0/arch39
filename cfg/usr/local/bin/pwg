@@ -29,13 +29,22 @@ def helpme():
 def gen(chars, L):
     return "".join(choice(chars) for i in range(L))
 
-def halferp():
-    chars = ascii_uppercase + ascii_lowercase + digits + punctuation
+def calculate_ebits(chars):
+    # https://en.wikipedia.org/wiki/Password_strength
+    N = len(chars)
+    bits = L * log(N)/log(2)
+    print("\n  Entropy bits: " + str(floor(bits)))
+
+
+def halferp(chars):
     return gen(chars, 2) + " " + gen(chars, 3) + " " + gen(chars, 3)
 
 def erp():
+    chars = ascii_uppercase + ascii_lowercase + digits + punctuation
     for i in range(16):
-        print("- " + halferp() + "  " + halferp())
+        print("- " + halferp(chars) + "  " + halferp(chars))
+
+    calculate_ebits(chars)
 
 def std(opt):
     chars = ""
@@ -55,9 +64,7 @@ def std(opt):
     for i in range(16):
         print("- " + gen(chars, L))
 
-    N = len(chars)
-    bits = L * log(N)/log(2)  # https://en.wikipedia.org/wiki/Password_strength
-    print("\n  Entropy bits: " + str(floor(bits)))
+    calculate_ebits(chars)
 
 def main():
     opt = argv[1]
