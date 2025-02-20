@@ -29,7 +29,7 @@ def helpme():
 def gen(chars, L):
     return "".join(choice(chars) for i in range(L))
 
-def calculate_ebits(chars):
+def calculate_ebits(chars, L):
     # https://en.wikipedia.org/wiki/Password_strength
     N = len(chars)
     bits = L * log(N)/log(2)
@@ -44,7 +44,7 @@ def erp():
     for i in range(16):
         print("- " + halferp(chars) + "  " + halferp(chars))
 
-    calculate_ebits(chars)
+    calculate_ebits(chars, 16)
 
 def std(opt):
     chars = ""
@@ -64,7 +64,7 @@ def std(opt):
     for i in range(16):
         print("- " + gen(chars, L))
 
-    calculate_ebits(chars)
+    calculate_ebits(chars, L)
 
 def main():
     opt = argv[1]
