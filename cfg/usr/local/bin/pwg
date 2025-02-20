@@ -8,7 +8,6 @@ from gc import collect
 from secrets import choice
 from math import floor, log
 
-
 def helpme():
     helptext = "- Password generator\n" + \
         "  Usage: pwg [options]\n" + \
