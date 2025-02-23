@@ -20,6 +20,8 @@ if [[ -z "${1}" ]]; then
     exit
 fi
 
+[[ "${4}" == '-d' ]] && d='systemd-'
+
 case "${1}" in
   s) a='status';;
   e) a='enable';;
@@ -39,4 +41,4 @@ case "${2}" in
   tg) b='.target';;
 esac
 
-systemctl "${a}" "${unit}${b}"
+systemctl "${a}" "${d}${unit}${b}"
