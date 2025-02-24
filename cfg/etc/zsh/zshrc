@@ -3,7 +3,7 @@ zle -N zrh
 
 autoload -Uz compinit
 compinit -C
-compdef _command kp
+compdef _command kp c
 zstyle ':completion:*' menu select
 setopt rm_star_silent
 
