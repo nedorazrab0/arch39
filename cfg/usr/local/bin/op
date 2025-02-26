@@ -14,9 +14,9 @@ if [[ "${@}" =~ '-h' ]]; then
   c  Copy keys to server via ssh
   u  Connect to the saved IP addr
 - Example:
-  op c
-  op c 192.0.0.0
   op g
+  op c 192.0.0.0
+  op u
 EOF
 
   exit 0
@@ -38,10 +38,10 @@ case "${1}" in
     ssh-keygen -t ed25519 -f "${HOME}/.ssh/id_ed25519" \
       -a64 -C "$(whoami)@$(uname -n)-$(date -I)"
     ;;
-  c) ssh-copy-id -p8022 "$(addr)";;
+  c) ssh-copy-id -p1838 "$(addr)";;
   u)
     [[ -z "${ip}" ]] \
       && ip="$(grep -o -m1 '^\[.*\]' $HOME/.ssh/known_hosts | tr -d '[,]')"
-    ssh -p8022 "${ip}"
+    ssh -p1838 "${ip}"
     ;;
 esac
