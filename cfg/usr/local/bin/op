@@ -35,13 +35,13 @@ addr() {
 
 case "${1}" in
   g)
-    ssh-keygen -t ed25519 -f "${HOME}/.ssh/id_ed25519" \
+    ssh-keygen -t ed25519 -f ~/.ssh/id_ed25519 \
       -a64 -C "$(whoami)@$(uname -n)-$(date -I)"
     ;;
-  c) ssh-copy-id -p1838 "$(addr)";;
+  c) ssh-copy-id -i ~/.ssh/id_ed25519 -p1838 "$(addr)";;
   u)
     [[ -z "${ip}" ]] \
       && ip="$(grep -o -m1 '^\[.*\]' $HOME/.ssh/known_hosts | tr -d '[,]')"
-    ssh -p1838 "${ip}"
+    ssh -i ~/.ssh/id_ed25519 -p1838 "${ip}"
     ;;
 esac
