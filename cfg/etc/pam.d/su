@@ -1,4 +1,5 @@
 #%PAM-1.0
+
 auth optional pam_echo.so `su` is
 account optional pam_echo.so blocked
 password optional pam_echo.so
