@@ -20,7 +20,7 @@ if [[ -z "${1}" ]]; then
     exit
 fi
 
-[[ "${4}" == '-d' ]] && d='systemd-'
+[[ "${4}" == 'd' ]] && d='systemd-'
 
 case "${1}" in
   s) a='status';;
