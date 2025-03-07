@@ -5,6 +5,7 @@ autoload -Uz compinit
 compinit -C
 compdef _command kp c
 zstyle ':completion:*' menu select
+setopt interactivecomments
 setopt rm_star_silent
 
 n=$'\n'
@@ -15,6 +16,6 @@ bindkey '^[[H' beginning-of-line
 bindkey '^[[F' end-of-line
 bindkey '^[l' clear-screen
 bindkey '^[[3~' delete-char
-bindkey '^[[5~' up-history
-bindkey '^[[6~' down-history
+bindkey '^[[5~' backward-word
+bindkey '^[[6~' forward-word
 bindkey '^[u' zrh
