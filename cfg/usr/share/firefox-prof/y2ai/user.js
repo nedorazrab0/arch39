@@ -117,7 +117,7 @@ user_pref("browser.cache.disk.preload_chunk_count", 16);
 user_pref("browser.cache.disk.max_chunks_memory_usage", 65536);
 user_pref("browser.cache.disk.max_priority_chunks_memory_usage", 65536);
 user_pref("browser.cache.check_doc_frequency", 2);
-user_pref("browser.cache.jsbc_compression_level", 3);
+user_pref("browser.cache.jsbc_compression_level", 1);
 user_pref("dom.script_loader.bytecode_cache.enabled", true);
 user_pref("dom.script_loader.bytecode_cache.strategy", 0);
 user_pref("browser.cache.memory.capacity", 4194304);
