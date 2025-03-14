@@ -139,7 +139,7 @@ user_pref("browser.preferences.defaultPerformanceSettings.enabled", false);
 user_pref("network.proxy.socks", "127.0.0.1");
 user_pref("network.proxy.socks5_remote_dns", false);
 user_pref("network.proxy.socks_port", 1080);
-user_pref("network.proxy.type", 5);
+//user_pref("network.proxy.type", 1);
 
 // Network
 user_pref("network.buffer.cache.size", 262144);
