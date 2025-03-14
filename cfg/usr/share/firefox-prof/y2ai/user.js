@@ -36,6 +36,8 @@ user_pref("browser.uiCustomization.state", "{\"placements\":
 
 user_pref("browser.privatebrowsing.vpnpromourl", "");
 user_pref("browser.vpn_promo.enabled", false);
+user_pref("browser.warnOnQuit", false);
+user_pref("browser.warnOnQuitShortcut", false);
 user_pref("extensions.getAddons.showPane", false);
 user_pref("extensions.htmlaboutaddons.recommendations.enabled", false);
 user_pref("browser.discovery.enabled", false);
