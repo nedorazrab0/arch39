@@ -57,6 +57,7 @@ user_pref("cookiebanners.service.mode.privateBrowsing", 2);
 user_pref("cookiebanners.service.enableGlobalRules", true);
 user_pref("cookiebanners.service.enableGlobalRules.subFrames", true);
 user_pref("browser.translations.enable", false);
+user_pref("browser.translations.panelShown", false);
 user_pref("browser.translations.autoTranslate", false);
 user_pref("full-screen-api.transition-duration.enter", "0 0");
 user_pref("full-screen-api.transition-duration.leave", "0 0");
