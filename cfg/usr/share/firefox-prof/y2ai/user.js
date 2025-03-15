@@ -91,8 +91,11 @@ user_pref("browser.compactmode.show", true);
 user_pref("browser.urlbar.placeholderName", "Google");
 user_pref("browser.urlbar.placeholderName.private", "Google");
 user_pref("browser.urlbar.suggest.quicksuggest.nonsponsored", true);
-user_pref("browser.urlbar.weather.featureGate", true);
+user_pref("extensions.activeThemeID", "firefox-compact-dark@mozilla.org");
 user_pref("browser.urlbar.quicksuggest.dataCollection.enabled", true);
+user_pref("startup.homepage_welcome_url", "about:blank");
+user_pref("browser.urlbar.weather.featureGate", true);
+user_pref("browser.theme.toolbar-theme", 1);
 user_pref("sidebar.verticalTabs", false);
 
 // Performance
