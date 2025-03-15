@@ -5,9 +5,10 @@
 set -e
 path="${HOME}/.var/app/net.waterfox.waterfox/.waterfox"
 
-flatpak install flathub org.telegram.desktop org.kde.krita \
-  org.onlyoffice.desktopeditors net.waterfox.waterfox \
-  io.mpv.Mpv com.transmissionbt.Transmission --noninteractive
+flatpak install flathub \
+  com.transmissionbt.Transmission \
+  org.onlyoffice.desktopeditors io.mpv.Mpv \
+  org.kde.krita net.waterfox.waterfox --noninteractive
 
 # Firefox prof
 rm -rf "${path}/"*
