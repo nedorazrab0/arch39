@@ -24,7 +24,7 @@ jobs:
         run: |
           targets='./cfg/etc/wofi'
           for dir in ${targets}; do
-            lz4 --rm -12zvm "${dir}/"*
+            lz4 --rm -12fzvm "${dir}/"*
           done
 
       - name: Archive cfg/
