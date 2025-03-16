@@ -1,15 +1,8 @@
 #!/usr/bin/env bash
 #
 # Finish up the installation
-
 set -e
-path="${HOME}/.var/app/net.waterfox.waterfox/.waterfox"
 
 flatpak install flathub \
-  com.transmissionbt.Transmission \
-  org.onlyoffice.desktopeditors io.mpv.Mpv \
-  org.kde.krita net.waterfox.waterfox --noninteractive
-
-# Firefox prof
-rm -rf "${path}/"*
-cp -Ta /usr/share/firefox-prof "${path}"
+  org.kde.krita org.onlyoffice.desktopeditors com.transmissionbt.Transmission \
+  io.mpv.Mpv net.waterfox.waterfox --noninteractive
