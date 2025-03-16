@@ -97,6 +97,7 @@ user_pref("browser.urlbar.quicksuggest.dataCollection.enabled", true);
 user_pref("startup.homepage_welcome_url", "about:blank");
 user_pref("browser.urlbar.weather.featureGate", true);
 user_pref("browser.theme.toolbar-theme", 1);
+user_pref("browser.sidebar.disabled", true);
 user_pref("sidebar.verticalTabs", false);
 
 // Performance
