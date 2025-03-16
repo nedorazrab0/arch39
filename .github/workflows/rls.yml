@@ -20,6 +20,14 @@ jobs:
           sudo apt-get update
           sudo apt-get install xxhash libarchive-tools
 
+      - name: Compress some files
+        run: |
+          targets='/etc/wofi'
+          for dir in ${targets}; do
+            zstd --ultra -T0 --auto-threads=logical \
+              --rm -20zv "${dir}/"*
+          done
+
       - name: Archive cfg/
         run: |
           chmod -R 755 ./cfg/usr/local/bin
