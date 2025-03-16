@@ -24,8 +24,7 @@ jobs:
         run: |
           targets='./cfg/etc/wofi'
           for dir in ${targets}; do
-            zstd --ultra -T0 --auto-threads=logical \
-              --rm -20zv "${dir}/"*
+            lz4 --rm -12zvm "${dir}/"*
           done
 
       - name: Archive cfg/
