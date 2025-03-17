@@ -34,6 +34,7 @@ user_pref("browser.uiCustomization.state", "{\"placements\":
     [\"nav-bar\",\"status-bar\",\"PersonalToolbar\",\"TabsToolbar\",
     \"toolbar-menubar\"],\"currentVersion\":20,\"newElementCount\":1}");
 
+user_pref("layout.frame_rate", 0);
 user_pref("browser.privatebrowsing.vpnpromourl", "");
 user_pref("browser.vpn_promo.enabled", false);
 user_pref("browser.warnOnQuit", false);
