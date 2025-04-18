@@ -14,8 +14,8 @@ normal = { family = "NotoSansMono", style = "SemiBold" }
 size = 8.25
 
 [colors.primary]
-foreground = "#e5e5e0"
-background = "#1a1a1f"
+foreground = "#ffffff"
+background = "#000000"
 
 [debug]
 render_timer = false
