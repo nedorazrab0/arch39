@@ -11,7 +11,7 @@ setopt interactivecomments
 setopt rm_star_silent
 
 n=$'\n'
-PROMPT="%B%F{#f2074d}%#%? %F{#48d8db}%d%F{nocolor}${n}%b  "
+PROMPT="%B%F{#f2074d}%#%? %F{#33ccbb}%d%F{nocolor}${n}%b  "
 RPROMPT="%B%F{#33ccbb}%n@%M%F{nocolor}%b"
 
 bindkey '^[[H' beginning-of-line
