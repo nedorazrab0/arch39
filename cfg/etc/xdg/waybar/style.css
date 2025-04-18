@@ -1,21 +1,17 @@
 /* Waybar's CSS config */
 
 * {
-  font-family: "NotoSans";
-  font-weight: 700;
+  font-family: NotoSans;
+  font-weight: 800;
   font-size: 14px;
   min-height: 0px;
 }
 
 window#waybar {
-  background-color: #1a1a1f;
-  color: #e5e5e0;
+  background-color: black;
+  color: white;
   transition-property: background-color;
   transition-duration: .5s;
-}
-
-window#waybar.hidden {
-  opacity: 0.2;
 }
 
 button {
@@ -31,24 +27,18 @@ button:hover {
 
 #workspaces button {
   padding: 0 5px;
-  background-color: transparent;
-  color: #e5e5e0;
+  background-color: black;
+  color: white;
 }
-
-/*
-#workspaces button:hover {
-  background: rgba(0, 0, 0, 0.2);
-}
-*/
 
 #workspaces button.active {
-  background-color: #48d8db;
-  color: #1a1a1f;
+  background-color: #33ccbb;
+  color: black;
 }
 
 #workspaces button.urgent {
   background-color: #f2074d;
-  color: #1a1a1f;
+  color: black;
 }
 
 #clock,
@@ -72,32 +62,26 @@ button:hover {
 }
 
 #clock {
-  background-color: #48d8db;
-  color: #1a1a1f;
+  background-color: #33ccbb;
+  color: black;
 }
 
 #battery {
-  background-color: #48d8db;
-  color: #1a1a1f;
+  background-color: #33ccbb;
+  color: black;
 
 }
-/*
-#battery.charging, #battery.plugged {
-  color: #ffffff;
-  background-color: #26A65B;
-}
-*/
 
 @keyframes blink {
   to {
    background-color: #ffffff;
-    color: #000000;
+   color: #000000;
   }
 }
 
 #battery.critical:not(.charging) {
   background-color: #f2074d;
-  color: #1a1a1f;
+  color: black;
 }
 
 label:focus {
@@ -105,43 +89,28 @@ label:focus {
 }
 
 #network {
-  background-color: #48d8db;
-  color: #1a1a1f;
+  background-color: #33ccbb;
+  color: black;
 }
 
 #network.disconnected {
   background-color: #f2074d;
-  color: #1a1a1f;
+  color: black;
 }
 
 #pulseaudio {
-  background-color: #48d8db;
-  color: #1a1a1f;
+  background-color: #33ccbb;
+  color: black;
 }
 
 #pulseaudio.muted {
-  background-color: #90b1b1;
-  color: #2a5c45;
+  background-color: #33ccbb;
+  color: black;
 }
-
-/*
-#tray {
-  background-color: #2980b9;
-}
-
-#tray > .passive {
-  -gtk-icon-effect: dim;
-}
-
-#tray > .needs-attention {
-  -gtk-icon-effect: highlight;
-  background-color: #f2074d;
-}
-*/
 
 #language {
-  background-color: #48d8db;
-  color: #1a1a1f;
+  background-color: #33ccbb;
+  color: black;
   padding: 0 5px;
   margin: 0 0px;
   min-width: 0px;
