@@ -1,33 +1,27 @@
-// -*- mode: jsonc -*-
 // Waybar's config
 
 {
   "layer": "top",
   "position": "bottom",
-  "height": 12,
+  "height": 20,
   "spacing": 4,
   "modules-left": [ "hyprland/workspaces" ],
-  //"modules-right": [ "hyprland/window" ],
   "modules-center": [
     "network",
     "hyprland/language",
     "pulseaudio",
     "battery",
-    //"battery#bat2",
     "clock"
-    //"tray"
   ],
   // Modules configuration
   "hyprland/workspaces": {
     "format": "{name}",
-    "on-scroll-up": "hyprctl dispatch workspace e+1",
-    "on-scroll-down": "hyprctl dispatch workspace e-1"
   },
   "tray": {
     "spacing": 10
   },
   "clock": {
-    "tooltip-format": "<tt>{:%B :%Y}<tt>",
+    "tooltip-format": "<tt>{:%B :%Y}</tt>",
     "format-alt": "{:%d.%m.%y}"
   },
   //"backlight": {
@@ -42,9 +36,6 @@
     "format-charging": "+{capacity}%",
     "format-plugged": "{capacity}%",
     "format-alt": "{time}",
-  },
-  "battery#bat2": {
-    "bat": "BAT2"
   },
   "network": {
     "format-wifi": "wifi",
