@@ -17,5 +17,9 @@ size = 8.25
 foreground = "#ffffff"
 background = "#000000"
 
+[colors.normal]
+white = "#ffffff"
+black = "#000000"
+
 [debug]
 render_timer = false
