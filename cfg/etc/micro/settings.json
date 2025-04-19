@@ -2,13 +2,15 @@
 
 {
   "clipboard": "terminal",
+  "colorscheme": "y2ai",
   "diffgutter": true,
   "infobar": false,
   "parsecursor": true,
   "mouse": false,
   "scrollbar": true,
-  "statusformatl": ">>> $(filename) $(modified)[$(line),$(col)] $(status.paste)| $(opt:fileformat)/$(opt:encoding)/$(opt:filetype)",
-  "statusformatr": "micro ",
+  "sucmd": "kp",
+  "statusformatl": "=== $(filename) [$(line),$(col)] $(modified)",
+  "statusformatr": "",
   "tabsize": 2,
   "tabstospaces": true,
   "*.py": {
