@@ -22,7 +22,7 @@ jobs:
 
       - name: Compress some files
         run: |
-          targets='./cfg/etc/wofi'
+          targets=''
           for dir in ${targets}; do
             lz4 --rm -12fzvm "${dir}/"*
           done
