@@ -21,8 +21,8 @@ usage() {
   ls    Show files and their numbers in 'storage/emulated/0/atp'
   -z    Turn off the compression (useful for transfer big binaries)
 - Example:
-  atp push ./hui/zzz.zip -z
-  atp pull 7
+  atp to ./hui/zzz.zip -z
+  atp from 7
   atp ls
 EOF
 
