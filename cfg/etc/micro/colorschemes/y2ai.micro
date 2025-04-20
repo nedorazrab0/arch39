@@ -1,7 +1,7 @@
 color-link color-column "black"
 color-link comment "#888888,black"
 color-link constant.bool "#33ccbb,black"
-color-link constant "#33ccbb,black"
+color-link constant "#f2074d,black"
 color-link constant.string "#33ccbb,black"
 color-link constant.string.char "#33ccbb,black"
 color-link constant.string.url "#33ccbb,black"
