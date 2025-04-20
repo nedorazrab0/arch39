@@ -11,11 +11,12 @@ if [[ "${@}" =~ '-h' ]]; then
   Usage: op [options]
 - Options:
   g  Generate ed25519 keys
-  c  Copy keys to server via ssh
+  k  Copy keys to server via ssh
+  c  Clean known_hosts
   u  Connect to the saved IP addr
 - Example:
   op g
-  op c 192.0.0.0
+  op k 192.0.0.0
   op u
 EOF
 
@@ -38,7 +39,8 @@ case "${1}" in
     ssh-keygen -t ed25519 -f ~/.ssh/id_ed25519 \
       -a64 -C "$(whoami)@$(uname -n)-$(date -I)"
     ;;
-  c) ssh-copy-id -i ~/.ssh/id_ed25519 -p1838 "$(addr)";;
+  k) ssh-copy-id -i ~/.ssh/id_ed25519 -p1838 "$(addr)";;
+  c) echo > "${HOME}/.ssh/known_hosts";;
   u)
     [[ -z "${ip}" ]] \
       && ip="$(grep -o -m1 '^\[.*\]' $HOME/.ssh/known_hosts | tr -d '[,]')"
