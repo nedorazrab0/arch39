@@ -3,10 +3,8 @@
 # Download and run main script
 set -e
 
-readonly path='/tmp/y2ai'
-readonly ext='.tar.lz4'
-url="https://github.com/nedorazrab0/y2ai/releases/download/rolling/\
-${path##*/}${ext}"
+url="https://github.com/nedorazrab0/y2ai/releases/download/rolling/y2ai.tar.lz4"
+tmp='/tmp/y2ai'
 
 # systemd
 mkdir -p /etc/systemd/{resolved,timesyncd}.conf.d
@@ -68,19 +66,8 @@ net.ipv4.udp_wmem_min = 4096
 EOF
 
 # main
-curl -fL -o "${path}${ext}" "${url}"
-xxh="$(xxhsum -H2 ${path}${ext} | cut -d ' ' -f1)"
-xxhpart="${xxh:0:2}-${xxh:2:3}-${xxh:5:3}--${xxh:8:2}-${xxh:10:3}-${xxh:13:3}"
+[[ -d "${tmp}" ]] && rm -rf "${tmp}"
+mkdir -p "${tmp}"
+curl -fL "${url}" | lz4 -dc | bsdtar -x -C "${tmp}"
 
-echo
-echo '- XXH128 Part:'
-echo "  ${xxhpart}"
-echo '- Press [Enter] to continue'
-read -r ans && unset ans
-
-[[ -d "${path}" ]] && rm -rf "${path}"
-mkdir -p "${path}"
-lz4 -dc "${path}${ext}" | bsdtar -x -C "${path}"
-rm -f "${path}${ext}"
-
-exec bash "${path}/main"
+exec bash "${tmp}/main"
