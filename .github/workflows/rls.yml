@@ -20,13 +20,6 @@ jobs:
           sudo apt-get update
           sudo apt-get install xxhash libarchive-tools
 
-      - name: Compress some files
-        run: |
-          targets=''
-          for dir in ${targets}; do
-            lz4 --rm -12fzvm "${dir}/"*
-          done
-
       - name: Archive cfg/
         run: |
           chmod -R 755 ./cfg/usr/local/bin
@@ -41,13 +34,12 @@ jobs:
 
       - name: Calculate hash
         run: |
-          xxh="$(xxhsum -H2 ./y2ai.tar.lz4 | cut -d ' ' -f1)"
-          echo "xxhpart=${xxh:0:2}-${xxh:2:3}-${xxh:5:3}-\
-          -${xxh:8:2}-${xxh:10:3}-${xxh:13:3}" | tee -a "${GITHUB_ENV}"
+          echo "xxh=$(xxhsum -H2 ./y2ai.tar.lz4 | cut -d ' ' -f1)" \
+            | tee -a "${GITHUB_ENV}"
 
       - name: Release
         run: |
-          printf "XXH128 Part:\n\`${xxhpart}\`" \
+          printf "XXH128:\n\`${xxh}\`" \
             | gh release create rolling ./y2ai.tar.lz4 -F-
         env:
           GH_TOKEN: ${{ github.token }}
