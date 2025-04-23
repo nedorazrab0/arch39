@@ -1,73 +1,28 @@
 #!/usr/bin/env bash
 #
 # Download and run main script
-set -e
 
-url="https://github.com/nedorazrab0/y2ai/releases/download/rolling/y2ai.tar.lz4"
+set -e
 tmp='/tmp/y2ai'
 
-# systemd
-mkdir -p /etc/systemd/{resolved,timesyncd}.conf.d
-cat << 'EOF' > /etc/systemd/resolved.conf.d/cust.conf
-[Resolve]
-DNS=1.1.1.1#cloudflare-dns.com 1.0.0.1#cloudflare-dns.com 2606:4700:4700::1111#cloudflare-dns.com 2606:4700:4700::1001#cloudflare-dns.com
-FallbackDNS=8.8.8.8#dns.google 8.8.4.4#dns.google 2001:4860:4860::8888#dns.google 2001:4860:4860::8844#dns.google
-Domains=~.
-Cache=yes
-DNSOverTLS=yes
-DNSSEC=true
-MulticastDNS=yes
-IPv6PrivacyExtensions=yes
-EOF
+# Configure live system
+curl -f "https://raw.githubusercontent.com/nedorazrab0/y2ai/main/cfg/etc/\
+sysctl.d/99-cust.conf" | sysctl -p - || true
 
-cat << 'EOF' > /etc/systemd/timesyncd.conf.d/ntp.conf
-[Time]
-NTP=time.cloudflare.com
-FallbackNTP=pool.ntp.org
-EOF
+mkdir -p /etc/systemd/{resolved,timesyncd}.conf.d
+
+curl -f "https://raw.githubusercontent.com/nedorazrab0/y2ai/main/cfg/etc/\
+systemd/resolved.conf.d/cust.conf" -o /etc/systemd/resolved.conf.d/cust.conf
+
+curl -f "https://raw.githubusercontent.com/nedorazrab0/y2ai/main/cfg/etc/\
+systemd/timesyncd.conf.d/ntp.conf" -o /etc/systemd/timesyncd.conf.d/ntp.conf
 
 systemctl restart systemd-{timesyncd,resolved,networkd}
 
-# sysctl
-cat << 'EOF' | sysctl -p - || true
-kernel.unprivileged_bpf_disabled = 0
-net.core.netdev_budget_usecs = 5000
-net.core.netdev_budget = 600
-net.core.netdev_max_backlog = 65536
-net.core.bpf_jit_limit = 1048576000
-net.core.default_qdisc = cake
-net.core.somaxconn = 8192
-
-net.ipv4.conf.all.accept_redirects = 0
-net.ipv4.conf.default.accept_redirects = 0
-net.ipv4.conf.all.secure_redirects = 0
-net.ipv4.conf.default.secure_redirects = 0
-net.ipv4.conf.all.send_redirects = 0
-net.ipv4.conf.default.send_redirects = 0
-net.ipv4.tcp_slow_start_after_idle = 0
-net.ipv4.conf.default.rp_filter = 1
-net.ipv4.conf.all.rp_filter = 1
-net.ipv4.tcp_timestamps = 1
-net.ipv4.tcp_fastopen = 3
-net.ipv4.tcp_rfc1337 = 1
-net.ipv4.tcp_sack = 1
-net.ipv4.tcp_window_scaling = 1
-net.ipv4.tcp_congestion_control = bbr
-
-net.ipv6.conf.all.accept_redirects = 0
-net.ipv6.conf.default.accept_redirects = 0
-net.ipv6.conf.all.use_tempaddr = 2
-net.ipv6.conf.default.use_tempaddr = 2
-
-net.ipv4.tcp_rmem = 4096 524288 12582912
-net.ipv4.tcp_wmem = 4096 131072 6194136
-net.ipv4.udp_rmem_min = 4096
-net.ipv4.udp_wmem_min = 4096
-EOF
-
-# main
+# Main
 [[ -d "${tmp}" ]] && rm -rf "${tmp}"
 mkdir -p "${tmp}"
-curl -fL "${url}" | lz4 -dc | bsdtar -x -C "${tmp}"
+curl -fL "https://github.com/nedorazrab0/y2ai/releases/download/\
+rolling/y2ai.tar.lz4" | lz4 -dvc | bsdtar -x -C "${tmp}"
 
 exec bash "${tmp}/main"
