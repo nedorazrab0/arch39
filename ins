@@ -6,7 +6,7 @@ set -e
 tmp='/tmp/y2ai'
 
 # Check archiso
-if [[ -d '/run/archiso' ]]; then
+if [[ ! -d '/run/archiso' ]]; then
   echo '! Your archiso looks strange'
   echo '- Press ENTER to continue anyway'
   read -r cntn && unset cntn
