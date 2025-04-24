@@ -5,6 +5,13 @@
 set -e
 tmp='/tmp/y2ai'
 
+# Check archiso
+if [[ -d '/run/archiso' ]]; then
+  echo '! Your archiso looks strange'
+  echo '- Press ENTER to continue anyway'
+  read -r cntn && unset cntn
+fi
+
 # Configure live system
 curl -f "https://raw.githubusercontent.com/nedorazrab0/y2ai/main/cfg/etc/\
 sysctl.d/99-cust.conf" | sysctl -p - || true
