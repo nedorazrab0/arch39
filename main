@@ -36,15 +36,6 @@ blk="/dev/${disk}"
 parts="${blk}"*?
 [[ "${sboot}" == 'y' ]] && sbpkg='sbctl'
 
-# sysctl
-cat << 'EOF' | sysctl -p -
-vm.vfs_cache_pressure = 150
-vm.dirty_bytes = 268435456
-vm.laptop_mode = 0
-vm.dirty_background_bytes = 67108864
-vm.dirty_writeback_centisecs = 30000
-EOF
-
 # Configure pacman
 sed -i \
   -e 's/#Color/Color/' \
