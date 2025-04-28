@@ -3,12 +3,11 @@
 # Transfer files via adb
 
 set -e
-readonly apath='/storage/emulated/0/atp'
+apath='/storage/emulated/0/atp'
 # adb(){ /custom/path/adb; }
 
 afiles() {
-  adb shell find "${apath}/*" -prune \
-    -exec basename -a {} \+
+  adb shell find "${apath}/*" -prune -exec basename -a {} \+
 }
 
 usage() {
@@ -34,25 +33,25 @@ await() {
   adb wait-for-device
 }
 
-[[ "${@}" =~ '--help' ]] && usage 0
+[[ "${@}" =~ '-h' ]] && usage 0
 
 if [[ "${@}" =~ '-z' ]]; then
-  comp='none'
+  compress='none'
 else
-  comp='brotli'
+  compress='lz4'
 fi
 
 case "${1}" in
   to)
     await
     adb shell mkdir -p "${apath}"
-    adb push "${2}" "${apath}" -z "${comp}"
+    adb push "${2}" "${apath}" -z "${compress}"
     ;;
   from)
     [[ -z "${2}" ]] && usage 1
     await
     afile="$(afiles | sed -n "${2}p")"
-    adb pull "${apath}/${afile}" "${HOME}/atp" -z "${comp}"
+    adb pull "${apath}/${afile}" "${HOME}/atp" -z "${compress}"
     ;;
   ls)
     await
