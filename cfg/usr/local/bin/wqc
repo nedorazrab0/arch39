@@ -4,7 +4,7 @@
 
 set -e
 
-if [[ "${@}" =~ '--help' ]]; then
+if [[ "${@}" =~ '-h' ]]; then
   echo '- Use it to connect to WIFI'
   exit 0
 fi
