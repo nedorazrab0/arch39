@@ -14,8 +14,6 @@ usage() {
   f     Format a blk on a SSD 
           or on a thumb drive (only for your tweaked pc)
   fu    Format a blk on an universal thumb drive (for all linux machines)
-  h     Format a blk on a hard drive
-  hu    Format a blk on  an universal hard drive
   u     Format a blk on a disk for all platforms (e.g. win)
   uu    Format a blk on a disk for your archaic school pc (dosfs)
 - Example:
@@ -26,28 +24,23 @@ EOF
   exit "${1}"
 }
 
-[[ "${@}" =~ '--help' ]] && usage 0
+[[ "${@}" =~ '-h' ]] && usage 0
 
 if (( $(id -u) != 0 )); then
-    echo '! Run this script as root'
-    exit 1
+  echo '! Run this script as root'
+  exit 1
 fi
 
 case "${1}" in
   f)
-    mkfs.btrfs -f -L "${label}" -n65536 -O 'block-group-tree' \ 
+    mkfs.btrfs -f -L "${label}" -n65536 -O 'block-group-tree' \
       --csum xxhash -m single "${blk}"
     ;;
   fu)
     mkfs.f2fs -fi -l "${label}" \
-     -O 'extra_attr,inode_checksum,sb_checksum,compression' "${blk}"
+      -O 'extra_attr,inode_checksum,sb_checksum,compression' "${blk}"
     ;;
   u) mkfs.exfat -L "${label}" "${blk}";;
   uu) mkfs.fat -n "${label}" -v --codepage=437 "${blk}";;
-  h)
-    mkfs.btrfs -fK -L "${label}" -n65536 -O 'block-group-tree' \
-      --csum xxhash "${blk}"
-    ;;
-  hu) mkfs.xfs -fK -L "${label}" -i 'size=1024' "${blk}";;
   *) usage 1;;
 esac
