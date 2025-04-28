@@ -5,9 +5,9 @@ set -e
 
 file="${1}"
 blk="/dev/${2}"
-  # Max speed in my tests
+opts="iflag=fullblock oflag=noatime ibs=4M obs=256K conv=fsync"
 
-if [[ "${@}" =~ '--help' ]]; then
+if [[ "${@}" =~ '-h' ]]; then
   cat "${0}"
   exit 0
 fi
@@ -18,15 +18,13 @@ if (( $(id -u) != 0 )); then
 fi
 
 if [[ ! -b "${blk}" ]]; then
-  echo 'Nevezhda blyat'
+  echo '! Incorect blk'
   exit 1
 fi
 
 umount "${blk}"* || true
 if [[ "${@}" =~ '-u' ]]; then
-  curl -ZLf "${file}" | dd of="${blk}" \
-    iflag=fullblock oflag=noatime ibs=4M obs=256K conv=fsync
+  curl -ZLf "${file}" | dd of="${blk}" ${opts}
 else
-  dd if="${file}" of="${blk}" \
-    iflag=fullblock oflag=noatime ibs=4M obs=256K conv=fsync
+  dd if="${file}" of="${blk}" ${opts}
 fi
