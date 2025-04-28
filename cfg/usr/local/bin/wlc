@@ -4,7 +4,7 @@
 
 set -e
 
-if [[ "${@}" =~ '--help' ]]; then
+if [[ "${@}" =~ '-h' ]]; then
   echo '- Use this script to create wireless adb connect'
   exit 0
 fi
@@ -18,4 +18,4 @@ addr="$(adb exec-out ip a | grep 'inet.*wlan0$' | cut -d ' ' -f6 | cut -d '/' -f
 adb tcpip 5555
 echo '- Disconnect your device from USB'
 adb wait-for-usb-disconnect
-adb connect "$addr:5555"
+adb connect "${addr}:5555"
