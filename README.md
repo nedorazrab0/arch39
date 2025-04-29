@@ -51,6 +51,7 @@ Log in and type `h` to launch Hyprland!
 | ------ | -------- |
 | [`atp`](./cfg/usr/local/bin/atp) | Transport files via adb |
 | [`bootctl-update`](./cfg/usr/local/bin/bootctl-update) | Update `systemd-boot` with Secure Boot enabled |
+| [`dtc`](./cfg/usr/local/bin/dtc) | Detach a thumb drive |
 | [`kp`](./cfg/usr/local/bin/kp) | Elevate privileges |
 | [`fin`](./cfg/usr/local/bin/fin) | Install some flatpaks |
 | [`fls`](./cfg/usr/local/bin/fls) | Flash a drive |
@@ -60,7 +61,7 @@ Log in and type `h` to launch Hyprland!
 | [`hostnamegen`](./cfg/usr/local/bin/hostnamegen) | Generate hostname or SSID |
 | [`emailgen`](./cfg/usr/local/bin/emailgen) | Generate an email address |
 | [`mk`](./cfg/usr/local/bin/mk) | Launch Micro |
-| [`mnt`](./cfg/usr/local/bin/mnt) | Mount a disk |
+| [`mnt`](./cfg/usr/local/bin/mnt) | Mount a blk |
 | [`pk`](./cfg/usr/local/bin/pk) | Flatpak aliases |
 | [`pm`](./cfg/usr/local/bin/pm) | Short Pacman |
 | [`pwg`](./cfg/usr/local/bin/pwg) | Generate passwords |
