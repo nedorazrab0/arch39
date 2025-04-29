@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+#
+# Detach a thumb drive
+set -e
+
+if [[ "${@}" =~ '-h' ]]; then
+  cat "${0}"
+  exit 0
+fi
+
+if (( $(id -u) != 0 )); then
+  echo '! Run this script as root'
+  exit 1
+fi
+
+echo 1 > "/sys/block/${1}/device/delete"
