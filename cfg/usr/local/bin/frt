@@ -3,13 +3,13 @@
 # Format a blk
 
 set -e
-blk="/dev/${2}"
-label="${3}"
+blk="/dev/${1}"
+label="${2}"
 
 usage() {
   cat << 'EOF'
 - Use this script to format your disks
-  Usage: frt [option] [partition] [label]
+  Usage: frt <partition> <label> <option>
 - Options:
   f     Format a blk on a SSD 
           or on a thumb drive (only for your tweaked pc)
@@ -31,7 +31,7 @@ if (( $(id -u) != 0 )); then
   exit 1
 fi
 
-case "${1}" in
+case "${3}" in
   f)
     mkfs.btrfs -f -L "${label}" -n65536 -O 'block-group-tree' \
       --csum xxhash -m single "${blk}"
