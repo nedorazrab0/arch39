@@ -1,5 +1,4 @@
 # SSD
-
 ACTION!="add", GOTO="end"
 SUBSYSTEM!="block", GOTO="end"
 
