@@ -13,7 +13,7 @@ afiles() {
 usage() {
   cat << 'EOF'
 - Use this script to transport files via adb
-  Usage: atp [options]
+  Usage: atp <options>
 - Options:
   to  Push $3 (file) to '/storage/emulated/0/atp' on your phone
   from  Pull $3 (number of file) from '/storage/emulated/0/atp' to '$HOME/atp'
