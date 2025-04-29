@@ -1,76 +1,50 @@
 #!/usr/bin/env bash
 #
 # Mount a disk
-
 set -e
-blks="/dev/${2}*[0-9]*"
 
 usage() {
-  cat << EOF
+  cat << 'EOF'
 - Use this script to mount your disks
-  Usage: ${0##*/} [option] [disk]
+  Usage: mnt <part> [options]
 - Options:
-  s    Mount a SSD
-  h    Mount a HDD
-  u    Mount a thumb drive
-  x    Detach a disk
-- Mount path: "/run/dev/[disk]"
+  s  Use 'ssd_spread' btrfs mount option (useful for thumb drives)
+  x  Umount a blk
 - Exampe:
-  ${0##*/} u sdd
-  ${0##*/} x sda
+  mnt sdd4
+  mnt nvme0n1p3 x
 EOF
 
   exit "${1}"
 }
-  
-[[ "${@}" =~ '--help' ]] && usage 0
+
+[[ "${@}" =~ '-h' ]] && usage 0
 
 if (( $(id -u) != 0 )); then
   echo '! Run this script as root'
   exit 1
 fi
 
-for blk in ${blks}; do
-  fs="$(blkid -s TYPE -o value $blk)"
-  case "${1}" in
-    s)
-      case "$fs" in
-        btrfs)
-          amo='nobarrier,nodiscard,ssd,compress=zstd:3'
-          ;;
-        f2fs) amo='nodiscard,compress_algorithm=zstd:3,compress_chksum';;
-      esac
-      ;;
-    u)
-      case "$fs" in
-        btrfs)
-          amo='nobarrier,nodiscard,ssd_spread,compress=zstd:3'
-          ;;
-        f2fs) amo='nodiscard,compress_algorithm=zstd:3,compress_chksum';;
-        exfat|vfat) amo='noexec,nodev,nosuid,umask=0022';;
-      esac
-      ;;
-    h)
-      case "${fs}" in
-        btrfs) 
-          amo='nobarrier,nossd,nodiscard,autodefrag,compress=zstd:6'
-          ;;
-        xfs) amo='nodiscard,dax=always';;
-      esac
-      ;;
-    x) x='true';;
-    *) usage 1;;
-  esac
+blk="/dev/${1}"
 
-  if [[ -z "${x}" ]]; then
-    mkdir -p "/run${blk}"
-    mount --onlyonce -vo "noatime,lazytime,${amo}" "${blk}" "/run${blk}"
-  else
+case "${2}" in
+  s) spread='_spread';;
+  x)
     umount -v "${blk}"
-  fi
-done
+    rmdir -v "/run${blk}"
+    exit 0
+    ;;
+esac
 
-if [[ -n "${x}" ]]; then
-  echo '1' > "/sys/block/${2}/device/delete"
-  rmdir "/run${blk}"
-fi
+fs="$(blkid -s TYPE -o value ${blk})"
+case "${fs}" in
+  btrfs) opt="nobarrier,nodiscard,ssd${spread},compress=zstd:3";;
+  f2fs)
+    opt='nodiscard,compress_algorithm=zstd:3,compress_chksum'
+    opt="${opt},atgc,gc_merge,fsync_mode=nobarrier"
+    ;;
+  exfat|vfat) opt='noexec,nodev,nosuid,umask=0022';;
+esac
+
+mkdir -p "/run${blk}"
+mount -v --onlyonce -o "noatime,lazytime,${opt}" "${blk}" "/run${blk}"
