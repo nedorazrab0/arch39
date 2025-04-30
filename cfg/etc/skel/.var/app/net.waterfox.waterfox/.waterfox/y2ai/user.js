@@ -65,6 +65,7 @@ user_pref("full-screen-api.transition-duration.leave", "0 0");
 user_pref("full-screen-api.warning.delay", -1);
 user_pref("full-screen-api.warning.timeout", 0);
 user_pref("gfx.webrender.quality.force-subpixel-aa-where-possible", true);
+user_pref("browser.download.always_ask_before_handling_new_types", false);
 user_pref("browser.startup.page", 0);
 user_pref("browser.startup.homepage", "about:blank");
 user_pref("browser.newtabpage.enabled", false);
