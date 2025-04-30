@@ -3,4 +3,4 @@
 # for zram-generator
 set -e
 
-mkfs.xfs -fq -i 'size=1024' -l 'size=64M' -m 'crc=0' "${@}"
+mkfs.xfs -Kfq -i 'size=1024' -l 'size=64M' -m 'crc=0' "${@}"
