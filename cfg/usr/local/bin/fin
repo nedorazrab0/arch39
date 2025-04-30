@@ -4,5 +4,5 @@
 set -e
 
 flatpak install flathub \
-  org.kde.krita org.onlyoffice.desktopeditors com.transmissionbt.Transmission \
+  org.kde.krita org.onlyoffice.desktopeditors \
   io.mpv.Mpv net.waterfox.waterfox --noninteractive
