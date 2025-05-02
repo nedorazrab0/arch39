@@ -5,11 +5,17 @@ user_pref("media.ffmpeg.vaapi.enabled", true);
 user_pref("media.ffmpeg.vaapi.force-surface-zero-copy", 1);
 user_pref("media.webrtc.hw.h264.enabled", true);
 user_pref("media.gmp-gmpopenh264.autoupdate", true);
-user_pref("media.av1.new-thread-count-strategy", true);
 user_pref("media.navigator.mediadatadecoder_vp8_hardware_enabled", true);
 user_pref("media.hardware-video-decoding.force-enabled", true);
 user_pref("media.peerconnection.video.vp9_preferred", true);
 user_pref("webgl.forbid-hardware", false);
+
+user_pref("media.av1.new-thread-count-strategy", true);
+user_pref("media.webrtc.codec.video.av1.enabled", false);
+user_pref("media.webrtc.codec.video.av1.experimental_preferred", false);
+user_pref("media.webrtc.simulcast.av1.enabled", false);
+user_pref("media.av1.enabled", false);
+user_pref("image.avif.use-dav1d", true);
 
 // Remove ugly waterfox design
 user_pref("browser.theme.enableWaterfoxCustomizations", 2);
