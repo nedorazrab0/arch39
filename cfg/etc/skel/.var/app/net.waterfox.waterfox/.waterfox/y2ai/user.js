@@ -35,6 +35,7 @@ user_pref("browser.uiCustomization.state", "{\"placements\":
     \"toolbar-menubar\"],\"currentVersion\":20,\"newElementCount\":1}");
 
 user_pref("apz.overscroll.enabled", true);
+user_pref("apz.gtk.kinetic_scroll.enabled", true);
 user_pref("general.smoothScroll.msdPhysics.enabled", true);
 user_pref("general.smoothScroll.msdPhysics.continuousMotionMaxDeltaMS", 12);
 user_pref("general.smoothScroll.msdPhysics.motionBeginSpringConstant", 600);
@@ -44,9 +45,12 @@ user_pref("general.smoothScroll.msdPhysics.slowdownMinDeltaRatio", "2");
 user_pref("general.smoothScroll.msdPhysics.slowdownSpringConstant", 250);
 user_pref("general.smoothScroll.currentVelocityWeighting", "1");
 user_pref("general.smoothScroll.stopDecelerationWeighting", "1");
-user_pref("mousewheel.default.delta_multiplier_y", 600);
+user_pref("mousewheel.default.delta_multiplier_x", 500);
+user_pref("mousewheel.default.delta_multiplier_y", 500);
+user_pref("mousewheel.default.delta_multiplier_z", 500);
 
 user_pref("layout.frame_rate", 0);
+user_pref("browser.tabs.inTitlebar", true);
 user_pref("browser.privatebrowsing.vpnpromourl", "");
 user_pref("browser.vpn_promo.enabled", false);
 user_pref("browser.warnOnQuit", false);
