@@ -94,8 +94,6 @@ user_pref("layout.word_select.eat_space_to_next_word", false);
 user_pref("ui.key.menuAccessKeyFocuses", false);
 user_pref("ui.key.menuAccessKey", 0);
 user_pref("image.jxl.enabled", true);
-user_pref("mousewheel.default.delta_multiplier_y", 400);
-user_pref("general.smoothScroll.msdPhysics.enabled", true);
 user_pref("browser.startup.blankWindow", true);
 user_pref("browser.display.use_system_colors", false);
 user_pref("browser.search.suggest.enabled", true);
