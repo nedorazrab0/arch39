@@ -216,10 +216,14 @@ user_pref("dom.enable_web_task_scheduling", true);
 user_pref("media.peerconnection.ice.proxy_only_if_behind_proxy", true);
 
 // Security
+user_pref("network.trr.uri", "https://cloudflare-dns.com/dns-query");
+user_pref("network.trr.mode", 3);
+
 user_pref("browser.contentblocking.category", "strict");
 user_pref("privacy.trackingprotection.enabled", true);
 user_pref("privacy.query_stripping.strip_on_share.enabled", true);
 user_pref("privacy.trackingprotection.lower_network_priority", true);
+user_pref("security.cert_pinning.enforcement_level", 2);
 user_pref("fission.webContentIsolationStrategy", 1);
 user_pref("network.cookie.sameSite.laxByDefault", true);
 user_pref("network.cookie.sameSite.noneRequiresSecure", true);
@@ -236,7 +240,7 @@ user_pref("network.http.http3.enable_kyber", true);
 user_pref("privacy.resistFingerprinting.randomization.daily_reset.enabled", true);
 user_pref("privacy.resistFingerprinting.randomization.daily_reset.private.enabled", true);
 user_pref("privacy.resistFingerprinting", true);
-//user_pref("browser.privatebrowsing.forceMediaMemoryCache", true);
+//user_pref("browser.privatebrowsing.forceMediaMemoryCache", false);
 user_pref("browser.sessionstore.privacy_level", 2);
 user_pref("browser.privatebrowsing.resetPBM.enabled", true);
 user_pref("privacy.history.custom", true);
@@ -250,8 +254,8 @@ user_pref("network.IDN_show_punycode", true);
 user_pref("dom.security.https_first", true);
 user_pref("dom.security.https_first_pbm", true);
 user_pref("dom.security.https_first_schemeless", true);
-//user_pref("dom.security.https_only_mode", true);
-//user_pref("dom.security.https_only_mode_error_page_user_suggestions", true);
+user_pref("dom.security.https_only_mode", true);
+user_pref("dom.security.https_only_mode_error_page_user_suggestions", true);
 user_pref("network.dns.echconfig.enabled", true);
 user_pref("network.dns.http3_echconfig.enabled", true);
 user_pref("signon.rememberSignons", false);
