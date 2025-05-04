@@ -1,6 +1,7 @@
 # SSD
 ACTION!="add", GOTO="end"
 SUBSYSTEM!="block", GOTO="end"
+ATTR{partition}=="*", GOTO="end"
 KERNEL=="zram[0-9]*", GOTO="non_zram_end"
 
 ATTR{queue/scheduler}="none", ATTR{queue/nr_requests}="128", \
