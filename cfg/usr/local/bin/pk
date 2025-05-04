@@ -44,8 +44,8 @@ case "${1}" in
     ;;
   up) flatpak update --noninteractive;;
   r) flatpak run "$(ilist | sed -n ${2}p)" ${3};;
-  l) ilist | nl | less;;
-  s) slist "${2}" | nl | less;;
+  l) ilist | nl;;
+  s) slist "${2}" | nl;;
   sv) flatpak search "${2}" --columns=name,application;;
   sd) flatpak search "${2}" --columns=application,description;;
   h) usage 0;;
