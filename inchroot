@@ -15,8 +15,11 @@ echo '- CHROOT'
 bsdtar --uid 0 --gid 0 -x -f /mnt/cfg.tar -C /
 
 ln -sf /etc/pam.d/{su,su-l}
-python3 /usr/local/bin/hostnamegen > /etc/hostname
 hwclock -w --utc
+python3 /usr/local/bin/hostnamegen > /etc/hostname
+chmod 444 /etc/hostname
+chattr +i /etc/hostname
+
 
 rm -rf /usr/share/applications/*
 
