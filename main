@@ -36,14 +36,17 @@ sed -i \
 
 echo '- Configuring mirrors...'
 mlist='/etc/pacman.d/mirrorlist'
+
 # Wait for reflector complete the sync
 if mountpoint -q /var/cache/pacman/pkg \
   && ! grep -qi 'reflector' "${mlist}"; then 
     systemctl start reflector
 fi
+
 until grep -qi 'reflector' "${mlist}"; do
   sleep 1
 done
+
 pacman-key --init
 pacman-key --populate archlinux
 pacman -Syy archlinux-keyring --needed --noconfirm
