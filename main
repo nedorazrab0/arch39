@@ -54,10 +54,7 @@ echo '128' > "${sysblock}/queue/nr_requests"
 echo '2' > "${sysblock}/queue/rq_affinity"
 
 # Disk partition
-echo '- You have 2 seconds to save your disk!'
-sleep 2
 cd /
-
 mountpoint -q /mnt && umount -vR /mnt
 umount -v "${blk}"* || true
 
