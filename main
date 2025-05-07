@@ -29,10 +29,8 @@ parts="${blk}"*?
 [[ "${sboot}" == 'y' ]] && sbpkg='sbctl'
 
 # Configure pacman
-sed -i \
-  -e 's/#Color/Color/' \
-  -e 's/#ParallelDownloads.*/ParallelDownloads = 12/' \
-  -e 's/#VerbosePkgLists/VerbosePkgLists/' /etc/pacman.conf
+curl -f "https://raw.githubusercontent.com/nedorazrab0/arch39/refs/heads/main/\
+cfg/etc/pacman.conf" -o /etc/pacman.conf
 
 echo '- Configuring mirrors...'
 mlist='/etc/pacman.d/mirrorlist'
