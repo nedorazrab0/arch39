@@ -101,7 +101,7 @@ pacstrap ${hostcache} /mnt \
   pipewire{,-alsa,-pulse,-jack} wpa_supplicant ${sbpkg}
 
 # Chroot actions
-mount -o 'bind,ro' -v /tmp/y2ai /mnt/mnt
+mount -o 'bind,ro' -v /tmp/arch39 /mnt/mnt
 arch-chroot /mnt bash /mnt/inchroot \
   "${name}" "${password}" "${zone}" "${sboot}" "${lang}"
 umount -v /mnt/mnt

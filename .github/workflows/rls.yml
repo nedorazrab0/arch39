@@ -30,16 +30,16 @@ jobs:
         run: |
           bsdtar \
             --exclude-vcs --exclude=./{.github/,README.md} -b1 -cv ./* \
-            | lz4 -12zvc > ./y2ai.tar.lz4
+            | lz4 -12zvc > ./arch39.tar.lz4
 
       - name: Calculate hash
         run: |
-          echo "xxh=$(xxhsum -H2 ./y2ai.tar.lz4 | cut -d ' ' -f1)" \
+          echo "xxh=$(xxhsum -H2 ./arch39.tar.lz4 | cut -d ' ' -f1)" \
             | tee -a "${GITHUB_ENV}"
 
       - name: Release
         run: |
           printf "XXH128:\n\`${xxh}\`" \
-            | gh release create rolling ./y2ai.tar.lz4 -F-
+            | gh release create rolling ./arch39.tar.lz4 -F-
         env:
           GH_TOKEN: ${{ github.token }}

@@ -1,6 +1,6 @@
-# y2ai
+# Arch39
 
-Yet Another Arch Installer
+Yet another arch linux installer
 ![](https://raw.githubusercontent.com/nedorazrab0/test/main/20241212_15h13m26s_grim.png)
 
 ## Features
@@ -20,7 +20,7 @@ Yet Another Arch Installer
 Clean install only!
 
 ```shell
-bash -c "$(curl -f 'https://raw.githubusercontent.com/nedorazrab0/y2ai/main/ins')"
+bash -c "$(curl -f 'https://raw.githubusercontent.com/nedorazrab0/arch39/main/ins')"
 ```
 
 > [Arch9660](https://github.com/nedorazrab0/arch9660)
