@@ -22,14 +22,6 @@ echo '- Do you want Secure Boot?
   Make sure you are in the "setup mode"
   or cleared your Secure Boot keys! (y/N)'
 read -r sboot
-echo '- Do you want to destroy your own disk? (y/N):'
-read -r agreement
-
-case "${agreement}" in
-  y) true;;
-  n) exit 0;;
-  *) exit 1;;
-esac
 
 sysblock="/sys/block/${disk}"
 blk="/dev/${disk}"
@@ -41,6 +33,7 @@ sed -i \
   -e 's/#Color/Color/' \
   -e 's/#ParallelDownloads.*/ParallelDownloads = 12/' \
   -e 's/#VerbosePkgLists/VerbosePkgLists/' /etc/pacman.conf
+
 echo '- Configuring mirrors...'
 mlist='/etc/pacman.d/mirrorlist'
 # Wait for reflector complete the sync
