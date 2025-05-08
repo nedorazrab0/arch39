@@ -36,12 +36,6 @@ echo '- Configuring mirrors...'
 mlist='/etc/pacman.d/mirrorlist'
 
 # Wait for reflector complete the sync
-cp /tmp/arch39/cfg/etc/pacman.conf /etc/pacman.conf
-
-echo '- Configuring mirrors...'
-mlist='/etc/pacman.d/mirrorlist'
-
-# Wait for reflector complete the sync
 grep -q 'Reflector' "${mlist}" || systemctl start --no-block reflector
 until grep -q 'Reflector' "${mlist}"; do
   sleep 1
