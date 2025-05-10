@@ -1,0 +1,14 @@
+{
+  "allow_gamepad_permission": false,
+  "bring_back_oof": true,
+  "discord_rpc_enabled": false,
+  "enable_hidpi": false,
+  "fflags": {
+    "FFlagExample": false
+  },
+  "server_location_indicator_enabled": false,
+  "touch_mode": "off",
+  "use_libsecret": false,
+  "use_opengl": true
+  // gamescope crashes with opengl off
+}
