@@ -75,6 +75,7 @@ mount -t vfat -v -o "noexec,nodev,nosuid,noatime,utf8=false,\
 fmask=0177,dmask=0077,lazytime,X-mount.mkdir=600" ${bootpart} /mnt/boot
 
 # Install
+# NOTE: lib32-mesa is important for `gamescope`!!
 mountpoint -q /var/cache/pacman/pkg && hostcache='-c'
 pacstrap ${hostcache} /mnt \
   base linux-zen booster linux-firmware amd-ucode \
@@ -82,9 +83,9 @@ pacstrap ${hostcache} /mnt \
   android-tools git github-cli flatpak zram-generator \
   micro zsh reflector gamescope mandoc less xxhash pigz unzip \
   hyprland polkit xdg-desktop-portal-{gtk,hyprland} mako alacritty \
-  openssh openssl \
+  openssh openssl grim slurp \
   noto-fonts{,-extra} waybar brightnessctl xdg-user-dirs \
-  grim slurp vulkan-radeon mesa bluez{,-utils} iptables-nft \
+  vulkan-radeon mesa lib32-mesa bluez{,-utils} iptables-nft \
   pipewire{,-alsa,-pulse,-jack} wpa_supplicant ${sbpkg}
 
 # Chroot actions
