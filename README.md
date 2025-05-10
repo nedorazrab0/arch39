@@ -53,6 +53,7 @@ Log in and type `h` to launch Hyprland!
 | [`bootctl-update`](./cfg/usr/local/bin/bootctl-update) | Update `systemd-boot` with Secure Boot enabled |
 | [`dtc`](./cfg/usr/local/bin/dtc) | Detach a thumb drive |
 | [`kp`](./cfg/usr/local/bin/kp) | Elevate privileges |
+| [`ko`](./cfg/usr/local/bin/ko) | Upscale |
 | [`fin`](./cfg/usr/local/bin/fin) | Install some flatpaks |
 | [`fls`](./cfg/usr/local/bin/fls) | Flash a drive |
 | [`frt`](./cfg/usr/local/bin/frt) | Format a partition |
