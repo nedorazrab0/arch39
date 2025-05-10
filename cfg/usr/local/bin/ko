@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+#
+# Upscale
+set -e
+
+LD_PRELOAD='' gamescope --expose-wayland --force-grab-cursor -h 360 \
+  --backend wayland -S stretch -F fsr -- "${@}"
