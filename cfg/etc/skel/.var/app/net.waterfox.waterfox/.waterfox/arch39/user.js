@@ -69,6 +69,7 @@ user_pref("extensions.getAddons.showPane", false);
 user_pref("extensions.htmlaboutaddons.recommendations.enabled", false);
 user_pref("browser.discovery.enabled", false);
 user_pref("browser.shell.checkDefaultBrowser", false);
+user_pref("privacy.query_stripping.strip_on_share.enabled", false);
 user_pref("browser.newtabpage.activity-stream.asrouter.userprefs.cfr.addons",
     false);
 user_pref(
@@ -90,9 +91,11 @@ user_pref("full-screen-api.transition-duration.enter", "0 0");
 user_pref("full-screen-api.transition-duration.leave", "0 0");
 user_pref("full-screen-api.warning.delay", -1);
 user_pref("full-screen-api.warning.timeout", 0);
+user_pref("browser.sessionstore.privacy_level", 0);
 user_pref("gfx.webrender.quality.force-subpixel-aa-where-possible", true);
 user_pref("browser.download.always_ask_before_handling_new_types", false);
 user_pref("browser.startup.page", 0);
+user_pref("browser.uitour.enabled", false);
 user_pref("browser.startup.homepage", "about:blank");
 user_pref("browser.newtabpage.enabled", false);
 user_pref("browser.toolbars.bookmarks.visibility", "never");
@@ -221,7 +224,6 @@ user_pref("network.trr.mode", 3);
 
 user_pref("browser.contentblocking.category", "strict");
 user_pref("privacy.trackingprotection.enabled", true);
-user_pref("privacy.query_stripping.strip_on_share.enabled", true);
 user_pref("privacy.trackingprotection.lower_network_priority", true);
 user_pref("security.cert_pinning.enforcement_level", 2);
 user_pref("fission.webContentIsolationStrategy", 1);
@@ -229,7 +231,6 @@ user_pref("network.cookie.sameSite.laxByDefault", true);
 user_pref("network.cookie.sameSite.noneRequiresSecure", true);
 user_pref("network.cookie.sameSite.schemeful", true);
 user_pref("dom.battery.enabled", false);
-user_pref("browser.uitour.enabled", false);
 user_pref("privacy.globalprivacycontrol.enabled", true);
 user_pref("security.OCSP.enabled", 0);
 user_pref("security.ssl.treat_unsafe_negotiation_as_broken", true);
@@ -240,8 +241,7 @@ user_pref("network.http.http3.enable_kyber", true);
 user_pref("privacy.resistFingerprinting.randomization.daily_reset.enabled", true);
 user_pref("privacy.resistFingerprinting.randomization.daily_reset.private.enabled", true);
 user_pref("privacy.resistFingerprinting", true);
-//user_pref("browser.privatebrowsing.forceMediaMemoryCache", false);
-user_pref("browser.sessionstore.privacy_level", 2);
+user_pref("browser.privatebrowsing.forceMediaMemoryCache", false); // O_o
 user_pref("browser.privatebrowsing.resetPBM.enabled", true);
 user_pref("privacy.history.custom", true);
 user_pref("browser.urlbar.trimHttps", true);
