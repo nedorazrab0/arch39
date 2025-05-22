@@ -157,7 +157,7 @@ user_pref("browser.cache.disk.preload_chunk_count", 16);
 user_pref("browser.cache.disk.max_chunks_memory_usage", 65536);
 user_pref("browser.cache.disk.max_priority_chunks_memory_usage", 65536);
 user_pref("browser.cache.check_doc_frequency", 2);
-user_pref("browser.cache.jsbc_compression_level", 1);
+user_pref("browser.cache.jsbc_compression_level", 3);
 user_pref("dom.script_loader.bytecode_cache.enabled", true);
 user_pref("dom.script_loader.bytecode_cache.strategy", 0);
 user_pref("browser.cache.memory.capacity", 4194304);
@@ -215,11 +215,12 @@ user_pref("network.early-hints.preconnect.max_connections", 64);
 user_pref("network.predictor.enabled", true);
 user_pref("network.predictor.enable-prefetch", true);
 user_pref("network.predictor.enable-hover-on-ssl", true);
-user_pref("dom.enable_web_task_scheduling", true);
 user_pref("media.peerconnection.ice.proxy_only_if_behind_proxy", true);
+user_pref("dom.enable_web_task_scheduling", true);
 
 // Security
 user_pref("network.trr.uri", "https://cloudflare-dns.com/dns-query");
+user_pref("network.trr.use_ohttp", false);
 user_pref("network.trr.mode", 3);
 
 user_pref("browser.contentblocking.category", "strict");
