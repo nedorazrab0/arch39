@@ -3,6 +3,11 @@
 # Finish up the installation
 set -e
 
+mkdir -p "${HOME}/"{atp,trash}
+
+gsettings set org.gnome.desktop.interface cursor-blink false
+gsettings set org.gnome.desktop.wm.preferences button-layout 'menu:'
+
 flatpak install flathub \
   org.kde.krita org.onlyoffice.desktopeditors \
   io.mpv.Mpv net.waterfox.waterfox --noninteractive
