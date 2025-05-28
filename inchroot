@@ -20,8 +20,6 @@ python3 /usr/local/bin/hostnamegen > /etc/hostname
 chmod 444 /etc/hostname
 chattr +i /etc/hostname
 
-rm -rf /usr/share/applications/*
-
 setcap 'CAP_SYS_NICE=eip' $(command -v gamescope)
 echo '$layout = us,'"${lang}" > /etc/hypr/layout.conf
 
