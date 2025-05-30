@@ -10,43 +10,29 @@ from math import floor, log
 
 def helpme():
     helptext = "- Password generator\n" + \
-        "  Usage: pwg [options]\n" + \
+        "  Usage: pwg <fuldpc> <len> [custom items]\n" + \
         "- Options:\n" + \
-        "  [fuldp] [lenght]\n" + \
         "  u  Use uppercase chars\n" + \
         "  l  Use lowercase chars\n" + \
         "  d  Use digits\n" + \
         "  p  Use punctuation symbols\n" + \
         "  f  Use all above\n" + \
-        "  e  Generate passwords in an easy memorable look\n" + \
-        "     (2+3+3)+(2+3+3), always 16 chars lenght. 104 entropy bits\n" + \
+        "  c  Add custom itmes\n" + \
         "- Example:\n" + \
         "  pwg f 39\n" + \
-        "  pwg ul 228\n" + \
-        "  pwg e\n"
+        "  pwg up 228\n" + \
+        "  pwg uld 20 '#@-'\n"
 
     print(helptext)
-    exit
 
 def gen(chars, L):
     return "".join(choice(chars) for i in range(L))
 
 def calculate_ebits(chars, L):
-    # https://en.wikipedia.org/wiki/Password_strength
+    # https://en.wikipedia.org/wiki/Password_strength#Required_bits_of_entropy
     N = len(chars)
     bits = L * log(N)/log(2)
-    print("\n  Entropy bits: " + str(floor(bits)))
-
-
-def halferp(chars):
-    return gen(chars, 2) + " " + gen(chars, 3) + " " + gen(chars, 3)
-
-def erp():
-    chars = ascii_uppercase + ascii_lowercase + digits + punctuation
-    for i in range(16):
-        print("- " + halferp(chars) + "  " + halferp(chars))
-
-    calculate_ebits(chars, 16)
+    print("Entropy bits: " + str(floor(bits)))
 
 def std(opt):
     chars = ""
@@ -62,17 +48,17 @@ def std(opt):
             chars = chars + digits
         if "p" in opt:
             chars = chars + punctuation
+        if "c" in opt:
+            chars = chars + argv[3]
 
-    for i in range(16):
+    for i in range(32):
         print("- " + gen(chars, L))
 
     calculate_ebits(chars, L)
 
 def main():
     opt = argv[1]
-    if opt == "e":
-        erp()
-    elif opt == "--help":
+    if opt == "--help":
         helpme()
     else:
         std(opt)
