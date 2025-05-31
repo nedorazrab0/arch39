@@ -4,13 +4,14 @@
 
 from string import ascii_uppercase, ascii_lowercase, digits, punctuation
 from sys import argv
+from time import sleep
 from gc import collect
 from secrets import choice
 from math import floor, log
 
 def helpme():
     helptext = "- Password generator\n" + \
-        "  Usage: pwg <fuldpc> <len> [custom items]\n" + \
+        "  Usage: pwg [fuldpc] <len> [custom items]\n" + \
         "- Options:\n" + \
         "  u  Use uppercase chars\n" + \
         "  l  Use lowercase chars\n" + \
@@ -19,22 +20,56 @@ def helpme():
         "  f  Use all above\n" + \
         "  c  Add custom itmes\n" + \
         "- Example:\n" + \
-        "  pwg f 39\n" + \
-        "  pwg up 228\n" + \
-        "  pwg uld 20 '#@-'\n"
-
+        "  pwg f 20\n" + \
+        "  pwg u 228\n" + \
+        "  pwg ulc 12 '#@-'\n"
     print(helptext)
 
 def gen(chars, L):
+    # Generate a L lenght password from given chars
     return "".join(choice(chars) for i in range(L))
 
+def checkcontain(a, b):
+    # Check if a contains at least one element of b
+    return any(i in a for i in b)
+
+def secgen(chars, L):
+    # Generate a password containing at least one of given chars
+    while True:
+        c = 0
+        p = 0
+        password = gen(chars, L)
+        if checkcontain(chars, ascii_uppercase):
+            c = c + 1
+        if checkcontain(chars, ascii_lowercase):
+            c = c + 2
+        if checkcontain(chars, digits):
+            c = c + 5
+        if checkcontain(chars, punctuation):
+            c = c + 9
+
+        if checkcontain(password, ascii_uppercase):
+            p = p + 1
+        if checkcontain(password, ascii_lowercase):
+            p = p + 2
+        if checkcontain(password, digits):
+            p = p + 5
+        if checkcontain(password, punctuation):
+            p = p + 9
+        if c == p:
+            break
+    return password
+
 def calculate_ebits(chars, L):
-    # https://en.wikipedia.org/wiki/Password_strength#Required_bits_of_entropy
+    """
+    Calculate entropy bits
+    https://en.wikipedia.org/wiki/Password_strength#Required_bits_of_entropy
+    """
     N = len(chars)
     bits = L * log(N)/log(2)
     print("Entropy bits: " + str(floor(bits)))
 
-def std(opt):
+def std(opt, n=3):
     chars = ""
     L = int(argv[2])
     if opt == "f":
@@ -50,19 +85,17 @@ def std(opt):
             chars = chars + punctuation
         if "c" in opt:
             chars = chars + argv[3]
-
-    for i in range(32):
-        print("- " + gen(chars, L))
-
     calculate_ebits(chars, L)
+    print("Generating passwords...")
+    for i in range(n):
+        print("- " + secgen(chars, L))
 
 def main():
     opt = argv[1]
     if opt == "--help":
         helpme()
     else:
-        std(opt)
-
+        std(opt, 3)
     del opt
     collect()
 
