@@ -18,11 +18,15 @@ def helpme():
         "  d  Use digits\n" + \
         "  p  Use punctuation symbols\n" + \
         "  f  Use all above\n" + \
-        "  c  Add custom itmes\n" + \
+        "  c  Add custom chars\n" + \
         "- Example:\n" + \
         "  pwg f 20\n" + \
         "  pwg u 228\n" + \
-        "  pwg ulc 12 '#@-'\n"
+        "  pwg ulc 12 '#@-'\n" + \
+        "- How many entropy bits do i need?\n" + \
+        "  https://en.wikipedia.org/wiki/Universally_unique_identifier\n" + \
+        "  https://en.wikipedia.org/wiki/Password_strength" + \
+        "#Required_bits_of_entropy\n"
     print(helptext)
 
 def gen(chars, L):
@@ -61,10 +65,7 @@ def secgen(chars, L):
     return password
 
 def calculate_ebits(chars, L):
-    """
-    Calculate entropy bits
-    https://en.wikipedia.org/wiki/Password_strength#Required_bits_of_entropy
-    """
+    # Calculate entropy bits
     N = len(chars)
     bits = L * log(N)/log(2)
     print("Entropy bits: " + str(floor(bits)))
