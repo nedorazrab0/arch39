@@ -68,7 +68,7 @@ def calculate_ebits(chars, L):
     # Calculate entropy bits
     N = len(chars)
     bits = L * log(N)/log(2)
-    print("Entropy bits: " + str(floor(bits)))
+    return floor(bits)
 
 def std(opt, n=3):
     chars = ""
@@ -86,7 +86,7 @@ def std(opt, n=3):
             chars = chars + punctuation
         if "c" in opt:
             chars = chars + argv[3]
-    calculate_ebits(chars, L)
+    print("Entropy bits: " + str(calculate_ebits(chars, L)))
     print("Generating passwords...")
     for i in range(n):
         print("- " + secgen(chars, L))
