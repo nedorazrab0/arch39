@@ -84,7 +84,7 @@ pacstrap ${hostcache} /mnt \
   android-tools git github-cli flatpak zram-generator \
   micro zsh reflector gamescope mandoc less xxhash pigz unzip \
   hyprland polkit xdg-desktop-portal-{gtk,hyprland} mako alacritty \
-  openssh openssl grim slurp \
+  openssh openssl grim slurp hypridle hyprlock \
   noto-fonts{,-extra} waybar brightnessctl xdg-user-dirs \
   lib32-vulkan-radeon lib32-mesa lib32-vulkan-mesa-layers bluez{,-utils} \
   iptables-nft pipewire{,-alsa,-pulse,-jack} wpa_supplicant ${sbpkg}
