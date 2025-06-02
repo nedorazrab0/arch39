@@ -4,7 +4,6 @@
 
 from string import ascii_uppercase, ascii_lowercase, digits, punctuation
 from sys import argv
-from time import sleep
 from gc import collect
 from secrets import choice
 from math import floor, log
