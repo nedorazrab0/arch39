@@ -36,7 +36,11 @@ echo '- Configuring mirrors...'
 mlist='/etc/pacman.d/mirrorlist'
 
 # Wait for reflector complete the sync
-grep -q 'Reflector' "${mlist}" || systemctl start --no-block reflector
+if ! grep -q 'Reflector' "${mlist}" && ! systemctl is-active --quiet reflector
+then
+  systemctl start reflector
+fi
+
 until grep -q 'Reflector' "${mlist}"; do
   sleep 1
 done
