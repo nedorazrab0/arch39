@@ -40,11 +40,13 @@ def namegen():
         "golubec", "gaz", "sas", "suslik", "arabic", "just", "narik", "nasway",
         "toxic", "dox", "osa", "banan", "long", "short", "default", "grusha",
         "deka", "piko", "micro", "nano", "gekto", "kilo", "mega", "tera",
-        "peta", "exa", "zeta", "yota", "pcr", "express", "absolut", "sigma"
+        "peta", "exa", "zeta", "yota", "pcr", "express", "absolut", "sigma",
         "energy", "sage", "ascorbinka", "gashish", "teo", "pivas", "podpivas",
         "mmj", "samsa", "ruler", "sekai", "drop", "pop", "godish", "dos",
         "lnf", "ebi", "for", "if", "ip", "link", "cp", "sum", "ps", "39",
-        "hsr", "story", "star", "reborn", "dim", "fan"
+        "hsr", "story", "star", "reborn", "dim", "fan", "gruzin", "palitra",
+        "tadzhik", "encor", "mini", "psina", "goida", "bazar", "gama",
+        "swaston", "kz", "p", "wonder", "cosmo", "otsu", "otchim", "bonk"
         ]
 
     return choice(singers) + "-" + choice(bazar)
