@@ -43,23 +43,24 @@ def secgen(chars, L):
         p = 0
         password = gen(chars, L)
         if checkcontain(chars, ascii_uppercase):
-            c = c + 1
+            c += 2**0
         if checkcontain(chars, ascii_lowercase):
-            c = c + 2
+            c += 2**1
         if checkcontain(chars, digits):
-            c = c + 5
+            c += 2**2
         if checkcontain(chars, punctuation):
-            c = c + 9
+            c += 2**3
 
         if checkcontain(password, ascii_uppercase):
-            p = p + 1
+            p += 2**0
         if checkcontain(password, ascii_lowercase):
-            p = p + 2
+            p += 2**1
         if checkcontain(password, digits):
-            p = p + 5
+            p += 2**2
         if checkcontain(password, punctuation):
-            p = p + 9
-        if c == p:
+            p += 2**3
+
+        if c == p and c + p != 0 :
             break
     return password
 
@@ -69,7 +70,7 @@ def calculate_ebits(chars, L):
     bits = L * log(N)/log(2)
     return floor(bits)
 
-def std(opt, n=3):
+def std(opt, n):
     chars = ""
     L = int(argv[2])
     if opt == "f":
@@ -95,7 +96,7 @@ def main():
     if opt == "--help":
         helpme()
     else:
-        std(opt, 3)
+        std(opt, 6)
     del opt
     collect()
 
