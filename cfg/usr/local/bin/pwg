@@ -29,7 +29,7 @@ def helpme():
     print(helptext)
 
 def gen(chars, L):
-    # Generate a L lenght password from given chars
+    # Generate a L lenght password from the given chars
     return "".join(choice(chars) for i in range(L))
 
 def checkcontain(a, b):
@@ -60,7 +60,7 @@ def secgen(chars, L):
         if checkcontain(password, punctuation):
             p += 2**3
 
-        if c == p and c + p != 0 :
+        if c == p and c + p != 0:
             break
     return password
 
