@@ -3,52 +3,37 @@
 # Generate passwords
 
 from string import ascii_uppercase, ascii_lowercase, digits, punctuation
-from sys import argv
+from argparse import ArgumentParser
 from gc import collect
 from secrets import choice
 from math import floor, log
 
-def helpme():
-    helptext = "- Password generator\n" + \
-        "  Usage: pwg [fuldpc] <len> [custom items]\n" + \
-        "- Options:\n" + \
-        "  u  Use uppercase chars\n" + \
-        "  l  Use lowercase chars\n" + \
-        "  d  Use digits\n" + \
-        "  p  Use punctuation symbols\n" + \
-        "  f  Use all above\n" + \
-        "  c  Add custom chars\n" + \
-        "- Example:\n" + \
-        "  pwg f 20\n" + \
-        "  pwg u 228\n" + \
-        "  pwg ulc 12 '#@-'\n" + \
-        "- How many entropy bits do i need?\n" + \
-        "  https://en.wikipedia.org/wiki/Universally_unique_identifier\n" + \
-        "  https://en.wikipedia.org/wiki/Password_strength" + \
-        "#Required_bits_of_entropy\n"
-    print(helptext)
-
 def gen(chars, L):
-    # Generate a L lenght password from the given chars
+    """Generate a L lenght password from the given chars."""
     return "".join(choice(chars) for i in range(L))
 
 def checkcontain(a, b):
-    # Check if a contains at least one element of b
+    """Check if A contains at least one element of B."""
     return any(i in a for i in b)
 
 def secgen(chars, L):
-    # Generate a password containing at least one of given chars
+    """Generate a password containing at least one of the given chars."""
     while True:
+        minL = 0
         c = 0
         p = 0
         password = gen(chars, L)
         if checkcontain(chars, ascii_uppercase):
+            minL += 1
             c += 2**0
         if checkcontain(chars, ascii_lowercase):
+            minL += 1
             c += 2**1
         if checkcontain(chars, digits):
+            minL += 1
             c += 2**2
         if checkcontain(chars, punctuation):
+            minL += 1
             c += 2**3
 
         if checkcontain(password, ascii_uppercase):
@@ -60,44 +45,70 @@ def secgen(chars, L):
         if checkcontain(password, punctuation):
             p += 2**3
 
-        if c == p and c + p != 0:
+        if L < minL:
+            raise RuntimeError("Too short lenght")
+        elif c == 0 or p == 0:
+            raise RuntimeError("Invalid chars")
+        elif c == p:
             break
     return password
 
 def calculate_ebits(chars, L):
-    # Calculate entropy bits
+    """Calculate entropy bits.
+    https://en.wikipedia.org/wiki/Password_strength#Random_passwords
+    """
     N = len(chars)
     bits = L * log(N)/log(2)
     return floor(bits)
 
-def std(opt, n):
+def std():
+    parser = ArgumentParser(description="generate passwords",
+                            epilog="https://en.wikipedia.org/wiki/"
+                                   + "Universally_unique_identifier")
+    parser.add_argument("-l", "--lower", action="store_true",
+                        help="use lowercase")
+    parser.add_argument("-u", "--upper", action="store_true",
+                        help="use uppercase")
+    parser.add_argument("-d", "--digit", action="store_true",
+                        help="use digits")
+    parser.add_argument("-p", "--punct", action="store_true",
+                        help="use punctuation symbols")
+    parser.add_argument("-o", "--custom", type=set,
+                        help="specify custom chars")
+    parser.add_argument("-n", "--lenght", type=int, default=20,
+                        help="specify the lenght")
+    parser.add_argument("-c", "--count", type=int, default=6,
+                        help="specify the count")
+    parser.add_argument("-q", "--slient", action="store_true",
+                        help="output just passwords")
+    args = parser.parse_args()
+
+    L = args.lenght
     chars = ""
-    L = int(argv[2])
-    if opt == "f":
+
+    if args.upper:
+        chars = chars + ascii_uppercase
+    if args.lower:
+        chars = chars + ascii_lowercase
+    if args.digit:
+        chars = chars + digits
+    if args.punct:
+        chars = chars + punctuation
+    if args.custom:
+        chars = chars + "".join(args.custom)
+    if not chars:
         chars = ascii_uppercase + ascii_lowercase + digits + punctuation
-    else:
-        if "u" in opt:
-            chars = chars + ascii_uppercase
-        if "l" in opt:
-            chars = chars + ascii_lowercase
-        if "d" in opt:
-            chars = chars + digits
-        if "p" in opt:
-            chars = chars + punctuation
-        if "c" in opt:
-            chars = chars + argv[3]
-    print("Entropy bits: " + str(calculate_ebits(chars, L)))
-    print("Generating passwords...")
-    for i in range(n):
-        print("- " + secgen(chars, L))
+
+    decor = ""
+    if not args.slient:
+        decor = "- "
+        print("Entropy bits: " + str(calculate_ebits(chars, L)))
+        print("Generating passwords...")
+    for i in range(args.count):
+        print(decor + secgen(chars, L))
 
 def main():
-    opt = argv[1]
-    if opt == "--help":
-        helpme()
-    else:
-        std(opt, 6)
-    del opt
+    std()
     collect()
 
 if __name__ == "__main__":
