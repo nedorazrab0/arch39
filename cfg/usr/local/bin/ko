@@ -13,6 +13,5 @@ fi
 fps="${1}"
 app="${2}"
 
-SDL_VIDEODRIVER='wayland' LD_PRELOAD='' gamescope --expose-wayland \
-  --force-grab-cursor -w640 -h360 -r "${fps}" -o1 -b --backend=sdl \
-  -S stretch -F fsr -- ${app}
+SDL_VIDEODRIVER='wayland' LD_PRELOAD='' gamescope -r "${fps}" -o1 -b \
+  --force-grab-cursor -w640 -h360 --backend=sdl -S stretch -F fsr -- ${app}
