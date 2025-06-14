@@ -57,7 +57,7 @@ main() {
   local arg
 
   # Parse args
-  [[ -z "${@}" ]] && usage 1
+  ((${#} == 0)) && usage 1
   while getopts 'hn:s:o:ixprukl' arg; do
     case "${arg}" in
       s)
