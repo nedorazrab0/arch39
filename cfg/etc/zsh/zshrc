@@ -1,18 +1,22 @@
-zrh() rehash
+zrh() {
+  rehash
+}
+
 zle -N zrh
 
 autoload -Uz compinit
 compinit -C
 compdef _command kp c
-compdef _flatpak pk
 compdef _pacman pm
 zstyle ':completion:*' menu select
 setopt interactivecomments
 setopt rm_star_silent
 
 n=$'\n'
-PROMPT="%B%F{#f2074d}%#%? %F{#33ccbb}%d%F{nocolor}${n}%b  "
-RPROMPT="%B%F{#33ccbb}%n@%M%F{nocolor}%b"
+(($(id -u) == 0)) && ifroot='[%F{#f2074d}ROOT]%F{nocolor} '
+
+PROMPT="%B%F{#f2074d}%#%? ${ifroot}%F{#33ccbb}%d%F{nocolor}${n}%b  "
+RPROMPT='%B%F{#33ccbb}%n@%M%F{nocolor}%b'
 
 bindkey '^[[H' beginning-of-line
 bindkey '^[[F' end-of-line
