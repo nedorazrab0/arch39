@@ -2,4 +2,34 @@
 #
 # Elevate privileges
 
-run0 --shell-prompt-prefix='' --background='' --setenv='EDITOR' "${@}"
+usage() {
+  echo "usage: ${0##*/} [-h] [COMMAND]"
+  echo
+  echo 'elevate privileges'
+  echo
+  echo 'options:'
+  echo '  -h  show this help message and exit'
+
+  exit "${1}"
+}
+
+main() {
+  local command="${@}"
+
+  if ! command -v run0 > /dev/null; then
+    echo '! `run0` command missing' >&2
+    exit 1
+  fi
+
+  if [[ "${1}" =~ '-h' ]]; then
+    usage 0
+  elif ((${#} == 0)); then
+    usage 1
+  fi
+
+  echo '- RUN0'
+  run0 --pty --pipe --setenv='EDITOR' --background='' \
+    --shell-prompt-prefix='' -- ${command}
+}
+
+main "${@}"
