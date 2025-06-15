@@ -3,15 +3,28 @@
 # Upscale
 set -e
 
-if [[ "${@}" =~ '--help' ]]; then
-  cat "${0}"
-  exit 0
-fi
+usage() {
+  echo "usage: ${0##*/} [-h] [COMMAND]"
+  echo
+  echo 'upscale'
+  echo
+  echo 'options:'
+  echo '  -h  show this help message and exit'
 
-# Example: ko 30 'pk r 3'
+  exit "${1}"
+}
 
-fps="${1}"
-app="${2}"
+main() {
+  local command="${@}"
 
-SDL_VIDEODRIVER='wayland' LD_PRELOAD='' gamescope -r "${fps}" -o1 -b \
-  --force-grab-cursor -w640 -h360 --backend=sdl -S stretch -F fsr -- ${app}
+  if [[ "${1}" =~ '-h' ]]; then
+    usage 0
+  elif ((${#} == 0)); then
+    usage 1
+  fi
+
+  SDL_VIDEODRIVER='wayland' LD_PRELOAD='' gamescope -w640 -h360 -o1 -s0.5 -b \
+    --rt --force-grab-cursor --backend=sdl -S stretch -F fsr -- ${command}
+}
+
+main "${@}"
