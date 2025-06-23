@@ -1,9 +1,9 @@
-/* Waybar's CSS config */
+/* Waybar style */
 
 * {
   font-family: NotoSans;
   font-weight: 800;
-  font-size: 14px;
+  font-size: 14.5px;
   min-height: 0px;
 }
 
@@ -74,8 +74,8 @@ button:hover {
 
 @keyframes blink {
   to {
-   background-color: #ffffff;
-   color: #000000;
+   background-color: white;
+   color: black;
   }
 }
 
@@ -85,7 +85,7 @@ button:hover {
 }
 
 label:focus {
-  background-color: #000000;
+  background-color: black;
 }
 
 #network {
