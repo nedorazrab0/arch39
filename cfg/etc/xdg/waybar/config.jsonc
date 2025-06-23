@@ -1,11 +1,11 @@
-// Waybar's config
+// Waybar config
 
 {
   "layer": "top",
   "position": "bottom",
   "height": 20,
   "spacing": 4,
-  "modules-left": [ "hyprland/workspaces" ],
+  "modules-left": ["hyprland/workspaces"],
   "modules-center": [
     "network",
     "hyprland/language",
@@ -13,47 +13,45 @@
     "battery",
     "clock"
   ],
+
   // Modules configuration
   "hyprland/workspaces": {
     "format": "{name}",
   },
-  "tray": {
-    "spacing": 10
-  },
-  "clock": {
-    "tooltip-format": "<tt>{:%B :%Y}</tt>",
-    "format-alt": "{:%d.%m.%y}"
-  },
-  //"backlight": {
-  //  "format": "{percent}%",
-  //},
-  "battery": {
-    "states": {
-      "critical": 25
-    },
-    "format": "{capacity}%",
-    "format-full": "{capacity}%",
-    "format-charging": "+{capacity}%",
-    "format-plugged": "{capacity}%",
-    "format-alt": "{time}",
-  },
   "network": {
     "format-wifi": "wifi",
     "format-ethernet": "eth",
-    "tooltip-format": "{signaldBm}dBm",
     "format-linked": "{ifname}",
     "format-disconnected": "D/C",
-    "format-alt": "{ifname}/{ipaddr}"
+    "format-alt": "{signaldBm}dBm",
+    "tooltip": false
+  },
+  "hyprland/language": {
+    "format": "{short}"
   },
   "pulseaudio": {
     "format": "{volume}/100",
     "format-bluetooth": "{volume}/100 Bt",
     "format-bluetooth-muted": "Bt",
     "format-muted": "x",
-    //"format-source": "{volume}%",
-    //"format-source-muted": "x"
+    "tooltip": false
   },
-  "hyprland/language": {
-    "format": "{short}"
-  }
+  "battery": {
+    "format": "{capacity}%",
+    "format-full": "f{capacity}%",
+    "format-charging": "+{capacity}%",
+    "format-plugged": "{capacity}%",
+    "format-alt": "{time}",
+    "states": {
+      "critical": 25
+    },
+    "interval": 1,
+    "tooltip": false
+  },
+  "clock": {
+    "interval": 1,
+    "format": "{:%H:%M:%S}",
+    "format-alt": "{:%d.%m.%y %B}",
+    "tooltip": false
+  },
 }
