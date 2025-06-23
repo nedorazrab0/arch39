@@ -1,50 +1,76 @@
 #!/usr/bin/env bash
 #
-# Mount a disk
+# Mount helper
 set -e
 
 usage() {
-  cat << 'EOF'
-- Use this script to mount your disks
-  Usage: mnt <part> [options]
-- Options:
-  s  Use 'ssd_spread' btrfs mount option (useful for thumb drives)
-  x  Umount a blk
-- Exampe:
-  mnt sdd4
-  mnt nvme0n1p3 x
-EOF
+  echo "usage: ${0##*/} [-h] -b BLK [-s] [-m] [-u]"
+  echo
+  echo 'mount helper'
+  echo
+  echo 'options:'
+  echo '  -h      show this help message and exit'
+  echo '  -b BLK  specify a blk'
+  echo '  -s      use ssd_spread mount option'
+  echo '  -m      mount a blk'
+  echo '  -u      umount a blk'
 
   exit "${1}"
 }
 
-[[ "${@}" =~ '-h' ]] && usage 0
+umount_blk() {
+  local blk="${1}"
 
-if (( $(id -u) != 0 )); then
-  echo '! Run this script as root'
-  exit 1
-fi
+  umount -v "${blk}"
+  rmdir "/run${blk}"
+}
 
-blk="/dev/${1}"
+mount_blk() {
+  local blk="${1}"
+  local spread="${2}"
+  local mnt_opt
+  local fs
 
-case "${2}" in
-  s) spread='_spread';;
-  x)
-    umount -v "${blk}"
-    rmdir -v "/run${blk}"
-    exit 0
-    ;;
-esac
+  fs="$(blkid -s TYPE -o value ${blk})"
+  case "${fs}" in
+    btrfs) mnt_opt="nobarrier,nodiscard,ssd${spread},compress=zstd:3";;
+    f2fs)
+      mnt_opt='nodiscard,compress_algorithm=zstd:3,compress_chksum'
+      mnt_opt="${mnt_opt},atgc,gc_merge,fsync_mode=nobarrier"
+      ;;
+    exfat|vfat) mnt_opt='noexec,nodev,nosuid,fmask=0122,dmask=0022';;
+  esac
 
-fs="$(blkid -s TYPE -o value ${blk})"
-case "${fs}" in
-  btrfs) opt="nobarrier,nodiscard,ssd${spread},compress=zstd:3";;
-  f2fs)
-    opt='nodiscard,compress_algorithm=zstd:3,compress_chksum'
-    opt="${opt},atgc,gc_merge,fsync_mode=nobarrier"
-    ;;
-  exfat|vfat) opt='noexec,nodev,nosuid,umask=0022';;
-esac
+  mkdir -p "/run${blk}"
+  mount -v --onlyonce -o "noatime,lazytime,${mnt_opt}" "${blk}" "/run${blk}"
+}
 
-mkdir -p "/run${blk}"
-mount -v --onlyonce -o "noatime,lazytime,${opt}" "${blk}" "/run${blk}"
+main() {
+  local OPTARG
+  local arg
+
+  if (( $(id -u) != 0 )); then
+    echo '! Run this script as root' >&2
+    exit 1
+  fi
+
+  # Parse args
+  ((${#} == 0)) && usage 1 >&2
+  while getopts 'hb:smu' arg; do
+    case "${arg}" in
+      b) local blk="/dev/${OPTARG}" ;;
+      s) local spread='_spread' ;;
+      m) local cmd="${arg}" ;;
+      u) local cmd="${arg}" ;;
+      h) usage 0 ;;
+      *) usage 1 >&2 ;;
+    esac
+  done
+
+  case "${cmd}" in
+    m) mount_blk "${blk}" "${spread}" ;;
+    u) umount_blk "${blk}" ;;
+  esac
+}
+
+main "${@}"
