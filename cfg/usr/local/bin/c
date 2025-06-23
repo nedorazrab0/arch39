@@ -1,6 +1,29 @@
 #!/usr/bin/env bash
 #
-# command -v
+# Get command path
 set -e
 
-command -v "${@}"
+usage() {
+  echo "usage: ${0##*/} [-h] COMMAND"
+  echo
+  echo 'get command path'
+  echo
+  echo 'options:'
+  echo '  -h  show this help message and exit'
+
+  exit "${1}"
+}
+
+main() {
+  local command="${@}"
+
+  if [[ "${1}" =~ '-h' ]]; then
+      usage 0
+    elif ((${#} == 0)); then
+      usage 1 >&2
+    fi
+
+  command -v "${command}"
+}
+
+main "${@}"
