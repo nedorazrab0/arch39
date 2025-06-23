@@ -4,7 +4,7 @@
 set -e
 
 usage() {
-  echo "usage: ${0##*/} [-h] [COMMAND]"
+  echo "usage: ${0##*/} [-h] COMMAND"
   echo
   echo 'upscale'
   echo
@@ -20,7 +20,7 @@ main() {
   if [[ "${1}" =~ '-h' ]]; then
     usage 0
   elif ((${#} == 0)); then
-    usage 1
+    usage 1 >&2
   fi
 
   SDL_VIDEODRIVER='wayland' LD_PRELOAD='' gamescope -w640 -h360 -o1 -s0.5 -b \
