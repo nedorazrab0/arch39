@@ -6,7 +6,7 @@ zle -N zrh
 
 autoload -Uz compinit
 compinit -C
-compdef _command kp c
+compdef _command kp ko c
 compdef _pacman pm
 zstyle ':completion:*' menu select
 setopt interactivecomments
