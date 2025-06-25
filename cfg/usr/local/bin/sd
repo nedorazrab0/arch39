@@ -1,38 +1,67 @@
 #!/usr/bin/env bash
 #
-# Systemctl aliases
-
+# Systemctl alias
 set -e
-unit="${3}"
 
-if [[ "${@}" =~ '-h' ]]; then
-  cat "${0}"
-  exit 0
-fi
+usage() {
+  echo "usage: ${0##*/} [-h] [-u NAME] [-b] [-g] [-t] [-m] [-s] [-c] [-e]"
+  echo '  [-r] [-d] [-x] [-R]'
+  echo
+  echo 'systemctl alias'
+  echo
+  echo 'options:'
+  echo '  -h       show this help message and exit'
+  echo '  -u NAME  specify unit name'
+  echo '  -b       add systemd- suff'
+  echo '  -g       target unit type'
+  echo '  -m       mount unit type'
+  echo '  -t       timer unit type'
+  echo '  -s       status'
+  echo '  -c       cat'
+  echo '  -e       enable'
+  echo '  -r       restart'
+  echo '  -x       disable'
+  echo '  -R       daemon-reload'
 
-if [[ -z "${1}" ]]; then
-  systemctl
-  exit
-fi
+  exit "${1}"
+}
 
-[[ "${4}" == 'd' ]] && d='systemd-'
+main() {
+  local OPTARG
+  local arg
 
-case "${1}" in
-  s) a='start';;
-  e) a='enable';;
-  r) a='restart';;
-  d) a='disable';;
-  c) a='cat';;
-  ed) a='edit';;
-  st) a='status';;
-  sp) a='stop';;
-esac
+  # Parse args
+  ((${#} == 0)) && usage 1 >&2
+  while getopts 'hu:bgtmscerdxR' arg; do
+    case "${arg}" in
+      u) local name="${OPTARG}" ;;
+      b) local suff='systemd-' ;;
+      g) local type='.target' ;;
+      t) local type='.timer' ;;
+      m) local type='.mount' ;;
+      s) local cmd="${arg}" ;;
+      c) local cmd="${arg}" ;;
+      e) local cmd="${arg}" ;;
+      r) local cmd="${arg}" ;;
+      d) local cmd="${arg}" ;;
+      x) local cmd="${arg}" ;;
+      R) local cmd="${arg}" ;;
+      h) usage 0 ;;
+      *) usage 1 >&2 ;;
+    esac
+  done
 
-case "${2}" in
-  s) b='.service';;
-  t) b='.timer';;
-  m) b='.mount';;
-  tg) b='.target';;
-esac
+  local unit="${suff}${name}${type}"
+  case "${cmd}" in
+    s) systemctl status "${unit}" ;;
+    c) systemctl cat "${unit}" ;;
+    e) systemctl enable "${unit}" ;;
+    r) systemctl restart "${unit}" ;;
+    d) systemctl disable "${unit}" ;;
+    x) systemctl stop "${unit}" ;;
+    R) systemctl daemon-reload ;;
+    *) usage 1 >&2 ;;
+  esac
+}
 
-systemctl "${a}" "${d}${unit}${b}"
+main "${@}"
