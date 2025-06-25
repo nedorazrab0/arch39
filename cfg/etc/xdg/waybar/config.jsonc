@@ -3,7 +3,7 @@
 {
   "layer": "top",
   "position": "bottom",
-  "height": 20,
+  "height": 21,
   "spacing": 4,
   "modules-left": ["hyprland/workspaces"],
   "modules-center": [
@@ -16,7 +16,7 @@
 
   // Modules configuration
   "hyprland/workspaces": {
-    "format": "{name}",
+    "format": "{name}"
   },
   "network": {
     "format-wifi": "wifi",
@@ -53,5 +53,5 @@
     "format": "{:%H:%M:%S}",
     "format-alt": "{:%d.%m.%y %B}",
     "tooltip": false
-  },
+  }
 }
