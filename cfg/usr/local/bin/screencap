@@ -1,0 +1,84 @@
+#!/usr/bin/env bash
+#
+# Make a screenshot
+set -e
+
+usage() {
+  echo "usage: ${0##*/} [-h] [-w] [-p]"
+  echo
+  echo 'screenshot making script'
+  echo
+  echo 'options:'
+  echo '  -h  show this help message and exit'
+  echo '  -w  make a screenshot of the active window'
+  echo '  -p  make a partial screenshot of the selected region'
+
+  exit "${1}"
+}
+
+get_data() {
+  local data="${1}"
+  local exp="${2}"
+
+  echo "${data}" | grep ".${exp}." | cut -d ' ' -f2
+}
+
+window_ss() {
+  local window_data
+  local class
+  local size
+  local at
+
+  command -v hyprctl > /dev/null || partial_ss
+  window_data="$(hyprctl activewindow)"
+  class="$(get_data "${window_data}" 'class:')"
+  size="$(get_data "${window_data}" 'size:' | sed 's/,/x/')"
+  at="$(get_data "${window_data}" 'at:')"
+
+  screenshot "${at}" "${size}" "$(date +%s)-${class}"
+}
+
+partial_ss() {
+  screenshot $(slurp) "$(date +%s)-part"
+}
+
+screenshot() {
+  local at="${1}"
+  local size="${2}"
+  local filename="${3}"
+
+  grim -g "${at} ${size}" -t png -l9 \
+    "$(xdg-user-dir PICTURES)/${filename}.png"
+}
+
+main() {
+  local OPTARG
+  local arg
+
+  if ! command -v grim > /dev/null; then
+    echo '! grim command missing' >&2
+    exit 1
+  elif ! command -v slurp > /dev/null; then
+    echo '! slurp command missing' >&2
+    exit 1
+  fi
+
+  # Parse args
+  ((${#} == 0)) && usage 1 >&2
+  while getopts 'hwp' arg; do
+    case "${arg}" in
+      w) local cmd="${arg}" ;;
+      p) local cmd="${arg}" ;;
+      h) usage 0 ;;
+      *) usage 1 >&2 ;;
+    esac
+  done
+
+  case "${cmd}" in
+    w) window_ss ;;
+    p) partial_ss ;;
+    *) usage 1 >&2
+  esac
+}
+
+main "${@}"
