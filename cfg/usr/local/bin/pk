@@ -1,7 +1,29 @@
 #!/usr/bin/env bash
 #
-# Flatpak helper
+# Flatpak alias
 set -e
+
+usage() {
+  echo "usage: ${0##*/} [-h] [-s REQ] [-n NUM] [-i] [-x] [-p] [-r]"
+  echo '  [-o APP_OPT] [-l] [-u] [-k]'
+  echo
+  echo 'flatpak alias'
+  echo
+  echo 'options:'
+  echo '  -h          show this help message and exit'
+  echo '  -s REQ      search request'
+  echo '  -n NUM      specify app num'
+  echo '  -i          install an app'
+  echo '  -x          uninstall an app'
+  echo '  -p          uninstall unused'
+  echo '  -r          run an app'
+  echo '  -o APP_OPT  specify app opts'
+  echo '  -l          show local app list'
+  echo '  -u          update apps'
+  echo '  -k          kill an app'
+
+  exit "${1}"
+}
 
 local_search() {
   local num="${1}"
@@ -28,28 +50,6 @@ remote_search() {
   else
     echo "${result}" | nl
   fi
-}
-
-usage() {
-  echo "usage: ${0##*/} [-h] [-s REQ] [-n NUM] [-i] [-x] [-p] [-r]"
-  echo '  [-o APP_OPT] [-l] [-u] [-k]'
-  echo
-  echo 'flatpak helper'
-  echo
-  echo 'options:'
-  echo '  -h          show this help message and exit'
-  echo '  -s REQ      search request'
-  echo '  -n NUM      specify app num'
-  echo '  -i          install an app'
-  echo '  -x          uninstall an app'
-  echo '  -p          uninstall unused'
-  echo '  -r          run an app'
-  echo '  -o APP_OPT  specify app opts'
-  echo '  -l          show local app list'
-  echo '  -u          update apps'
-  echo '  -k          kill an app'
-
-  exit "${1}"
 }
 
 main() {
@@ -89,6 +89,7 @@ main() {
     k) flatpak kill "$(local_search ${num})" ;;
     s) remote_search "${req}" ;;
     l) local_search ;;
+    *) usage 1 >&2
   esac
 }
 
