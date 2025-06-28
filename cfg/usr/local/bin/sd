@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Systemctl alias
+# systemctl alias
 set -e
 
 usage() {
