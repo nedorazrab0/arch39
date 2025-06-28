@@ -51,32 +51,23 @@ screenshot() {
     "$(xdg-user-dir PICTURES)/${filename}.png"
 }
 
-main() {
-  local OPTARG
-  local arg
-
-  if ! command -v grim > /dev/null; then
-    echo '! grim command missing' >&2
-    exit 1
-  elif ! command -v slurp > /dev/null; then
-    echo '! slurp command missing' >&2
+check_command() {
+  local command="${1}"
+  if ! command -v "${command}" > /dev/null; then
+    echo "! ${command} command missing" >&2
     exit 1
   fi
+}
 
-  # Parse args
+main() {
+  check_command grim
+  check_command slurp
+
   ((${#} == 0)) && usage 1 >&2
-  while getopts 'hwp' arg; do
-    case "${arg}" in
-      w) local cmd="${arg}" ;;
-      p) local cmd="${arg}" ;;
-      h) usage 0 ;;
-      *) usage 1 >&2 ;;
-    esac
-  done
-
-  case "${cmd}" in
-    w) window_ss ;;
-    p) partial_ss ;;
+  case "${@}" in
+    -w) window_ss ;;
+    -p) partial_ss ;;
+    -h) usage 0 ;;
     *) usage 1 >&2
   esac
 }
