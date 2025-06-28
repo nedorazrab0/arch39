@@ -3,5 +3,22 @@
 # ls alias
 set -e
 
-LS_COLORS='ow=1;34:tw=1;34' ls -Ggaph --time-style=+ \
-  --color=always -- "${@}" | column
+usage() {
+  echo "usage: ${0##*/} [-h] PATH"
+  echo
+  echo 'ls alias'
+  echo
+  echo 'options:'
+  echo '  -h  show this help message and exit'
+
+  exit "${1}"
+}
+
+main() {
+  [[ "${@}" == '-h' ]] && usage 0
+
+  LS_COLORS='ow=1;34:tw=1;34' ls -Ggaph --time-style=+ \
+    --color=always -- "${@}" | column
+}
+
+main "${@}"
