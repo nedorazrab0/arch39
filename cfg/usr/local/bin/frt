@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 #
-# Format helper
+# mkfs alias
 set -e
 
 usage() {
   echo "usage: ${0##*/} [-h] -b BLK -l LABEL -t TYPE"
   echo
-  echo 'format helper'
+  echo 'mkfs alias'
   echo
   echo 'options:'
   echo '  -h        show this help message and exit'
