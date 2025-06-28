@@ -1,11 +1,6 @@
 #!/usr/bin/env bash
 #
-# Short pacman
+# pacman alias
 set -e
 
-if [[ -n "${@}" ]]; then
-  pacman "${@}"
-else
-  (( $(id -u) != 0 )) && exit 1
-  pacman -Scc --noconfirm
-fi
+pacman "${@}"
