@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 #
-# Mount helper
+# mount alias
 set -e
 
 usage() {
   echo "usage: ${0##*/} [-h] -b BLK [-s] [-m] [-u]"
   echo
-  echo 'mount helper'
+  echo 'mount alias'
   echo
   echo 'options:'
   echo '  -h      show this help message and exit'
