@@ -1,49 +1,68 @@
 #!/usr/bin/env bash
 #
-# Openssh helper
-
+# ssh alias
 set -e
-ip="${2}"
 
-if [[ "${@}" =~ '-h' ]]; then
-  cat << 'EOF'
-- OpenSSH helper
-  Usage: op [options]
-- Options:
-  g  Generate ed25519 keys
-  k  Copy keys to server via ssh
-  c  Clean known_hosts
-  u  Connect to the saved IP addr
-- Example:
-  op g
-  op k 192.0.0.0
-  op u
-EOF
+usage() {
+  echo "usage: ${0##*/} [-h] [-a IP] [-g] [-u] [-k] [-c] [-i] [-o] -[f FILE]"
+  echo
+  echo 'ssh alias'
+  echo
+  echo 'options:'
+  echo '  -h     show this help message and exit'
+  echo '  -a IP  specify target ip address'
+  echo '  -g     generate ssh keys'
+  echo '  -u     connect to ip'
+  echo '  -k     copy the pub key to ip'
+  echo '  -c     clean known_hosts'
+  echo '  -i     get file from ip'
+  echo '  -o     send file to ip'
+  echo '  -f     specify file to copy'
 
-  exit 0
-fi
-
-addr() {
-  if [[ -z "${ip}" ]]; then
-    echo '- Waiting for ADB device...'
-    adb wait-for-device
-    adb exec-out ip a | grep 'inet.*wlan0$' \
-      | cut -d ' ' -f6 | cut -d '/' -f1
-  else
-    echo "${ip}"
-  fi
+  exit "${1}"
 }
 
-case "${1}" in
-  g)
-    ssh-keygen -t ed25519 -f ~/.ssh/id_ed25519 \
-      -a64 -C "$(whoami)@$(uname -n)-$(date -I)"
-    ;;
-  k) ssh-copy-id -i ~/.ssh/id_ed25519 -p1838 "$(addr)";;
-  c) echo > "${HOME}/.ssh/known_hosts";;
-  u)
-    [[ -z "${ip}" ]] \
-      && ip="$(grep -o -m1 '^\[.*\]' $HOME/.ssh/known_hosts | tr -d '[,]')"
-    ssh -i ~/.ssh/id_ed25519 -p1838 "${ip}"
-    ;;
-esac
+scp_f() {
+  path_a="${1}"
+  path_b="${2}"
+
+  scp -c aes128-ctr -P8022 "${path_a}" "${path_b}"
+}
+
+main() {
+  local OPTARG
+  local arg
+
+  # Parse args
+  ((${#} == 0)) && usage 1 >&2
+  while getopts 'ha:f:gukcio' arg; do
+    case "${arg}" in
+      f) local file="${OPTARG}" ;;
+      a) local ip="${OPTARG}" ;;
+      g) local cmd="${arg}" ;;
+      u) local cmd="${arg}" ;;
+      k) local cmd="${arg}" ;;
+      c) local cmd="${arg}" ;;
+      i) local cmd="${arg}" ;;
+      o) local cmd="${arg}" ;;
+      h) usage 0 ;;
+      *) usage 1 >&2 ;;
+    esac
+  done
+
+  local termux_path='/data/data/com.termux/files/home/scp/'
+  case "${cmd}" in
+    g)
+      ssh-keygen -t ed25519 -f "${HOME}/.ssh/id_ed25519" \
+        -C "$(id -unr)@$(uname -n)-$(date -I)"
+      ;;
+    u) ssh -i "${HOME}/.ssh/id_ed25519" -p8022 "${ip}" ;;
+    k) ssh-copy-id -i "${HOME}/.ssh/id_ed25519" -p8022 "${ip}" ;;
+    c) echo > "${HOME}/.ssh/known_hosts" ;;
+    i) scp_f "${ip}:${termux_path}" "${file}" ;;
+    o) scp_f "${file}" "${ip}:${termux_path}" ;;
+    *) usage 1 >&2 ;;
+  esac
+}
+
+main "${@}"
