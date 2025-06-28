@@ -70,6 +70,7 @@ main() {
   case "${cmd}" in
     m) mount_blk "${blk}" "${spread}" ;;
     u) umount_blk "${blk}" ;;
+    *) usage 1 >&2 ;;
   esac
 }
 
