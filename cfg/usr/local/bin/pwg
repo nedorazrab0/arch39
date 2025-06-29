@@ -46,9 +46,9 @@ def secgen(chars, L):
             p += 2**3
 
         if L < minL:
-            raise RuntimeError("Too short lenght")
+            raise ValueError("Too short lenght")
         elif c == 0 or p == 0:
-            raise RuntimeError("Invalid chars")
+            raise ValueError("Invalid chars")
         elif c == p:
             break
     return password
