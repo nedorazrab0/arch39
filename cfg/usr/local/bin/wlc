@@ -18,7 +18,7 @@ main() {
   local ip
 
   [[ "${@}" == '-h' ]] && usage 0
-  [[ -n "${@}" ]] && usage 1 >&2
+  ((${#} != 0)) && usage 1 >&2
 
   adb kill-server
   adb start-server
