@@ -1,5 +1,24 @@
 #!/usr/bin/env bash
 #
-# Run Micro with custom config
+# Run micro with custom config
 set -e
-micro -config-dir /etc/micro "${@}"
+
+usage() {
+  echo "usage: ${0##*/} [-h] PATH"
+  echo
+  echo 'run micro with custom config'
+  echo
+  echo 'options:'
+  echo '  -h  show this help message and exit'
+
+  exit "${1}"
+}
+
+main() {
+  [[ "${@}" == '-h' ]] && usage 0
+  ((${#} == 0)) && usage 1 >&2
+
+  micro -config-dir /etc/micro -- "${@}"
+}
+
+main "${@}"
