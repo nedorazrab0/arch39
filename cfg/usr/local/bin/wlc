@@ -1,21 +1,36 @@
 #!/usr/bin/env bash
 #
-# Wireless adb connect
-
+# adb connect alias
 set -e
 
-if [[ "${@}" =~ '-h' ]]; then
-  echo '- Use this script to create wireless adb connect'
-  exit 0
-fi
+usage() {
+  echo "usage: ${0##*/} [-h]"
+  echo
+  echo 'adb connect alias'
+  echo
+  echo 'options:'
+  echo '  -h  show this help message and exit'
 
-adb kill-server
-adb start-server
+  exit "${1}"
+}
 
-echo '- Waititng for USB connected device...'
-adb wait-for-usb-device
-addr="$(adb exec-out ip a | grep 'inet.*wlan0$' | cut -d ' ' -f6 | cut -d '/' -f1)"
-adb tcpip 5555
-echo '- Disconnect your device from USB'
-adb wait-for-usb-disconnect
-adb connect "${addr}:5555"
+main() {
+  local ip
+
+  [[ "${@}" == '-h' ]] && usage 0
+  [[ -n "${@}" ]] && usage 1 >&2
+
+  adb kill-server
+  adb start-server
+
+  echo '- Waititng for USB connected device...'
+  adb wait-for-usb-device
+  ip="$(adb exec-out toybox ifconfig -S | grep wlan0 \
+    | awk '{print $2}' | cut -d '/' -f1)"
+  adb tcpip 5555
+  echo '- Disconnect your device from USB'
+  adb wait-for-usb-disconnect
+  adb connect "${ip}:5555"
+}
+
+main "${@}"
