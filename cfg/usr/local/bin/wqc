@@ -1,40 +1,68 @@
 #!/usr/bin/env bash
 #
-# Connect to WIFI
-
+# wpa_passpharse alias
 set -e
-iname="${1}"
 
 usage() {
-  echo '- Use this script to connect to WIFI'
-  echo '- Usage: wqc <interface name>'
+  echo "usage: ${0##*/} [-h] -i INAME -n SSID"
+  echo
+  echo 'wpa_passphrase alias'
+  echo
+  echo 'options:'
+  echo '  -h        show this help message and exit'
+  echo '  -i INAME  specify interface name'
+  echo '  -n SSID   specify a SSID'
+
   exit "${1}"
 }
 
-if [[ "${@}" =~ '-h' ]]; then
-  usage 0
-elif [[ -z "${iname}" ]]; then
-  usage 1
-fi
+check_command() {
+  local command="${1}"
+  if ! command -v "${command}" > /dev/null; then
+    echo "! ${command} command missing" >&2
+    exit 1
+  fi
+}
 
-if (( $(id -u) != 0 )); then
-  echo '! Run this script as root'
-  exit 1
-fi
+main() {
+  local OPTARG
+  local arg
 
-networkctl list "${iname}" || usage 1
+  check_command wpa_passphrase
 
-echo '- SSID: '
-read -r name
-echo '- Password: '
-stty -echo  # Do not expose a password
-read -r password
-stty echo
+  if (( $(id -u) != 0 )); then
+    echo '! Run this script as root'
+    exit 1
+  fi
 
-wsc="/etc/wpa_supplicant/wpa_supplicant-${iname}.conf"
-echo 'ctrl_interface=/run/wpa_supplicant' > "${wsc}"
-chmod 600 "${wsc}"
-wpa_passphrase "${name}" "${password}" | sed '/^..*#psk="..*"$/d' >> "${wsc}"
-systemctl enable --now "wpa_supplicant@${iname}"
-systemctl restart systemd-networkd
-echo "wpa_supplicant@${iname}"
+  # Parse args
+  ((${#} == 0)) && usage 1 >&2
+  while getopts 'hi:n:' arg; do
+    case "${arg}" in
+      i) local iname="${OPTARG}" ;;
+      n) local ssid="${OPTARG}" ;;
+      h) usage 0 ;;
+      *) usage 1 >&2 ;;
+    esac
+  done
+
+  if ! networkctl list "${iname}"; then
+    echo '! Invalid interface name' >&2
+    exit 1
+  fi
+
+  echo '- Password:'
+  stty -echo  # Do not expose a password
+  read -r password
+  stty echo
+
+  local cfg="/etc/wpa_supplicant/wpa_supplicant-${iname}.conf"
+  touch "${cfg}"
+  chmod 600 "${cfg}"
+  echo 'ctrl_interface=/run/wpa_supplicant' > "${cfg}"
+  wpa_passphrase "${ssid}" "${password}" | sed '/.#psk="..*"$/d' >> "${cfg}"
+  systemctl enable --now "wpa_supplicant@${iname}"
+  systemctl restart systemd-networkd
+}
+
+main "${@}"
