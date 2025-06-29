@@ -30,7 +30,7 @@ main() {
 
   check_command wpa_passphrase
 
-  if (( $(id -u) != 0 )); then
+  if (($(id -u) != 0)); then
     echo '! Run this script as root'
     exit 1
   fi
