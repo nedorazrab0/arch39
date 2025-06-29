@@ -3,16 +3,33 @@
 # Finish up the installation
 set -e
 
-if (( $(id -u) == 0 )); then
-  echo '! Do not run this script as root ><>'
-  exit 1
-fi
+usage() {
+  echo "usage: ${0##*/} [-h]"
+  echo
+  echo 'finish up the installation'
+  echo
+  echo 'options:'
+  echo '  -h  show this help message and exit'
 
-mkdir -p "${HOME}/"{atp,trash}
+  exit "${1}"
+}
 
-gsettings set org.gnome.desktop.interface cursor-blink false
-gsettings set org.gnome.desktop.wm.preferences button-layout 'menu:'
+main() {
+  if (($(id -u) == 0)); then
+    echo '! Do not run this script as root'
+    exit 1
+  fi
 
-flatpak install flathub \
-  org.kde.krita org.onlyoffice.desktopeditors \
-  io.mpv.Mpv net.waterfox.waterfox --noninteractive
+  [[ "${@}" == '-h' ]] && usage 0
+  ((${#} != 0)) && usage 1 >&2
+
+  mkdir -p "${HOME}/"{atp,trash}
+  gsettings set org.gnome.desktop.interface cursor-blink false
+  gsettings set org.gnome.desktop.wm.preferences button-layout 'menu:'
+
+  flatpak install flathub \
+    org.kde.krita org.onlyoffice.desktopeditors \
+    io.mpv.Mpv net.waterfox.waterfox --noninteractive
+}
+
+main "${@}"
