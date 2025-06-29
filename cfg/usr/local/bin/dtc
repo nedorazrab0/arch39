@@ -17,7 +17,7 @@ usage() {
 main() {
   local blk="${@}"
 
-  if (( $(id -u) != 0 )); then
+  if (($(id -u) != 0)); then
     echo '! Run this script as root' >&2
     exit 1
   fi
