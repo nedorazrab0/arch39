@@ -4,7 +4,7 @@
 set -e
 
 usage() {
-  echo "usage: ${0##*/} [-h] [-a IP] [-g] [-u] [-k] [-c] [-i] [-o] -[f FILE]"
+  echo "usage: ${0##*/} [-h] [-a IP] [-g] [-u] [-k] [-c] [-i] [-o] [-f FILE]"
   echo
   echo 'ssh alias'
   echo
