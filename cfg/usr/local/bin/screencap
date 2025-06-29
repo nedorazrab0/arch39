@@ -23,25 +23,6 @@ get_data() {
   echo "${data}" | grep ".${exp}." | cut -d ' ' -f2
 }
 
-window_ss() {
-  local window_data
-  local class
-  local size
-  local at
-
-  command -v hyprctl > /dev/null || partial_ss
-  window_data="$(hyprctl activewindow)"
-  class="$(get_data "${window_data}" 'class:')"
-  size="$(get_data "${window_data}" 'size:' | sed 's/,/x/')"
-  at="$(get_data "${window_data}" 'at:')"
-
-  screenshot "${at}" "${size}" "$(date +%s)-${class}"
-}
-
-partial_ss() {
-  screenshot $(slurp) "$(date +%s)-part"
-}
-
 screenshot() {
   local at="${1}"
   local size="${2}"
@@ -59,9 +40,32 @@ check_command() {
   fi
 }
 
+partial_ss() {
+  hyprpicker -rzq &
+  sleep 0.1
+  screenshot $(slurp -b 33ccbb90 -w0) "$(date +%s)-part"
+  killall hyprpicker
+}
+
+window_ss() {
+  local window_data
+  local class
+  local size
+  local at
+
+  command -v hyprctl > /dev/null || partial_ss
+  window_data="$(hyprctl activewindow)"
+  class="$(get_data "${window_data}" 'class:')"
+  size="$(get_data "${window_data}" 'size:' | sed 's/,/x/')"
+  at="$(get_data "${window_data}" 'at:')"
+
+  screenshot "${at}" "${size}" "$(date +%s)-${class}"
+}
+
 main() {
   check_command grim
   check_command slurp
+  check_command hyprpicker
 
   ((${#} == 0)) && usage 1 >&2
   case "${@}" in
