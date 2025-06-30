@@ -4,11 +4,6 @@
 set -e
 
 main() {
-  if [[ "${-}" == *i* ]]; then
-    echo '! Do not run this script interactively'
-    exit 1
-  fi
-
   mkfs.xfs -Kfq -i 'size=1024' -l 'size=64M' -m 'crc=0' "${@}"
 }
 
