@@ -1,6 +1,15 @@
 #!/usr/bin/env bash
 #
-# for zram-generator
+# mkfs alias for zram-generator
 set -e
 
-mkfs.xfs -Kfq -i 'size=1024' -l 'size=64M' -m 'crc=0' "${@}"
+main() {
+  if [[ "${-}" == *i* ]]; then
+    echo '! Do not run this script interactively'
+    exit 1
+  fi
+
+  mkfs.xfs -Kfq -i 'size=1024' -l 'size=64M' -m 'crc=0' "${@}"
+}
+
+main "${@}"
