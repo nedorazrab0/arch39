@@ -2,26 +2,40 @@ zrh() {
   rehash
 }
 
-zle -N zrh
+conf() {
+  zle -N zrh
+  autoload -Uz compinit
+  compinit -C
+  compdef _command kp c
+  compdef _pacman pm
+  zstyle ':completion:*' menu select
+  setopt interactivecomments
+  setopt rm_star_silent
 
-autoload -Uz compinit
-compinit -C
-compdef _command kp ko c
-compdef _pacman pm
-zstyle ':completion:*' menu select
-setopt interactivecomments
-setopt rm_star_silent
+  local n=$'\n'
+  (($(id -u) == 0)) && local ifroot='[ROOT] '
 
-n=$'\n'
-(($(id -u) == 0)) && ifroot='[%F{#f2074d}ROOT]%F{nocolor} '
+  PROMPT="%B%F{#f2074d}%#%? ${ifroot}%F{#33ccbb}%d%F{nocolor}${n}%b  "
+  RPROMPT='%B%F{#33ccbb}%n@%M%F{nocolor}%b'
 
-PROMPT="%B%F{#f2074d}%#%? ${ifroot}%F{#33ccbb}%d%F{nocolor}${n}%b  "
-RPROMPT='%B%F{#33ccbb}%n@%M%F{nocolor}%b'
+  bindkey '^[[H' beginning-of-line
+  bindkey '^[[F' end-of-line
+  bindkey '^[l' clear-screen
+  bindkey '^[[3~' delete-char
+  bindkey '^[[5~' backward-word
+  bindkey '^[[6~' forward-word
+  bindkey '^[u' zrh
+}
 
-bindkey '^[[H' beginning-of-line
-bindkey '^[[F' end-of-line
-bindkey '^[l' clear-screen
-bindkey '^[[3~' delete-char
-bindkey '^[[5~' backward-word
-bindkey '^[[6~' forward-word
-bindkey '^[u' zrh
+main() {
+  # If not running interactively, do not do anything
+  [[ "${-}" != *i* ]] && return
+
+  # Prevent double sourcing
+  if [[ -z "${ZSHRCSOURCED}" ]]; then
+    ZSHRCSOURCED='Y'
+    conf
+  fi
+}
+
+main
