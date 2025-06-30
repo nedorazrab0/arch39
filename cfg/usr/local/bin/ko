@@ -17,14 +17,12 @@ usage() {
 main() {
   local command="${@}"
 
-  if [[ "${1}" =~ '-h' ]]; then
-    usage 0
-  elif ((${#} == 0)); then
-    usage 1 >&2
-  fi
+  [[ "${@}" == '-h' ]] && usage 0
+  ((${#} == 0)) && usage 1 >&2
 
   SDL_VIDEODRIVER='wayland' LD_PRELOAD='' gamescope -w640 -h360 -o1 -s0.5 -b \
-    --rt --force-grab-cursor --backend=sdl -S stretch -F fsr -- ${command}
+    --rt --force-grab-cursor --backend=sdl \
+    --sharpness=0 -S stretch -F nis -- ${command}
 }
 
 main "${@}"
