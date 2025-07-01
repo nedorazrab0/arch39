@@ -62,10 +62,10 @@ main() {
   ((${#} == 0)) && usage 1 >&2
   while getopts 'hu:p:t:l:' arg; do
     case "${arg}" in
-      u) local username="${OPTARG}" ;;
+      n) local username="${OPTARG}" ;;
       p) local password="${OPTARG}" ;;
       t) local timezone="${OPTARG}" ;;
-      u) local lang="${OPTARG}" ;;
+      l) local lang="${OPTARG}" ;;
       h) usage 0 ;;
       *) usage 1 >&2 ;;
     esac
