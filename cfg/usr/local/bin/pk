@@ -57,7 +57,7 @@ main() {
   local arg
 
   # Parse args
-  ((${#} == 0)) && usage 1
+  ((${#} == 0)) && usage 1 >&2
   while getopts 'hn:s:o:ixprukl' arg; do
     case "${arg}" in
       s)
@@ -75,7 +75,7 @@ main() {
       u) local cmd="${arg}" ;;
       k) local cmd="${arg}" ;;
       h) usage 0 ;;
-      *) usage 1 ;;
+      *) usage 1 >&2 ;;
     esac
   done
 
