@@ -21,8 +21,8 @@ usage() {
 bootloader_setup() {
   sbctl create-keys
   sbctl enroll-keys --microsoft
-  sbctl sign -s /boot/vmlinuz-linux-zen
   sbctl sign -s -o /usr/lib/systemd/boot/efi/systemd-bootx64.efi{.signed,}
+  sbctl sign -s /boot/vmlinuz-linux-zen
 
   bootctl install --esp-path=/boot
 }
