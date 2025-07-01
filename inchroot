@@ -3,48 +3,80 @@
 # System tune in chroot
 set -e
 
-name="${1}"
-password="${2}"
-zone="${3}"
-sboot="${4}"
-lang="${5}"
+usage() {
+  echo "usage: ${0##*/} [-h] -n USERNAME -p PASSWORD -t TIMEZONE [-l LANG]"
+  echo
+  echo 'system setup in chroot'
+  echo
+  echo 'options:'
+  echo '  -h           show this help message and exit'
+  echo '  -n USERNAME  specify username'
+  echo '  -p PASSWORD  specify password'
+  echo '  -t TIMEZONE  specify timezone'
+  echo '  -l LANG      specify system lang (en is a default)'
 
-echo '- CHROOT'
+  exit "${1}"
+}
 
-# Tune the system
-bsdtar --uid 0 --gid 0 -x -f /mnt/cfg.tar -C /
-
-ln -sf /etc/pam.d/{su,su-l}
-hwclock -w --utc
-python3 /usr/local/bin/hostnamegen > /etc/hostname
-chmod 444 /etc/hostname
-chattr +i /etc/hostname
-
-setcap 'CAP_SYS_NICE=eip' $(command -v gamescope)
-echo '$layout = us,'"${lang}" > /etc/hypr/layout.conf
-
-# Main
-ln -sf "/usr/share/zoneinfo/${zone}" /etc/localtime
-rm -f /etc/skel/.bash*
-useradd -m -G 'wheel,video' -s /usr/bin/zsh "${name}"
-echo "${name}:${password}" | chpasswd
-pacman -Scc --noconfirm
-
-systemctl enable \
-  systemd-networkd systemd-resolved systemd-networkd-persistent-storage \
-  systemd-timesyncd fstrim.timer reflector.timer
-
-systemctl mask sshd systemd-networkd-wait-online
-
-# Secure Boot setup
-if [[ "${sboot}" == 'y' ]]; then
+bootloader_setup() {
   sbctl create-keys
   sbctl enroll-keys --microsoft
   sbctl sign -s /boot/vmlinuz-linux-zen
   sbctl sign -s -o /usr/lib/systemd/boot/efi/systemd-bootx64.efi{.signed,}
-fi
 
-# systemd-boot
-bootctl install --esp-path=/boot
+  bootctl install --esp-path=/boot
+}
 
-echo '- Exiting chroot'
+systemd_units() {
+  systemctl enable \
+    systemd-networkd systemd-resolved systemd-networkd-persistent-storage \
+    systemd-timesyncd fstrim.timer reflector.timer
+
+  systemctl mask sshd systemd-networkd-wait-online  
+}
+
+basic_setup() {
+  local username="${1}"
+  local password="${2}"
+  local timezone="${3}"
+  local lang="${4}"
+
+  ln -sf "/usr/share/zoneinfo/${timezone}" /etc/localtime
+  hwclock -w --utc
+  hostnamegen > /etc/hostname
+  setcap 'CAP_SYS_NICE=eip' "$(command -v gamescope)"
+
+  rm -f /etc/skel/.bash*
+  useradd -m -G 'wheel,video' -s /usr/bin/zsh "${username}"
+  echo "${username}:${password}" | chpasswd
+
+  pacman -Scc --noconfirm
+  echo "\$layout = us,${lang}" > /etc/hypr/layout.conf
+}
+
+main() {
+  local OPTARG
+  local arg
+
+  # Parse args
+  ((${#} == 0)) && usage 1 >&2
+  while getopts 'hu:p:t:l:' arg; do
+    case "${arg}" in
+      u) local username="${OPTARG}" ;;
+      p) local password="${OPTARG}" ;;
+      t) local timezone="${OPTARG}" ;;
+      u) local lang="${OPTARG}" ;;
+      h) usage 0 ;;
+      *) usage 1 >&2 ;;
+    esac
+  done
+
+  echo '- CHROOT'
+  bsdtar --uid 0 --gid 0 -x -f /mnt/cfg.tar -C /
+  basic_setup "${username}" "${password}" "${timezone}" "${lang}"
+  systemd_units
+  bootloader_setup
+  echo '- Exiting chroot'
+}
+
+main "${@}"
