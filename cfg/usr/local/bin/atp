@@ -1,61 +1,103 @@
 #!/usr/bin/env bash
 #
-# Transfer files via adb
-
+# adb push/pull alias
 set -e
-apath='/storage/emulated/0/atp'
-# adb(){ /custom/path/adb; }
-
-afiles() {
-  adb shell find "${apath}/*" -prune -exec basename -a {} \+
-}
 
 usage() {
-  cat << 'EOF'
-- Use this script to transport files via adb
-  Usage: atp <options>
-- Options:
-  to  Push $3 (file) to '/storage/emulated/0/atp' on your phone
-  from  Pull $3 (number of file) from '/storage/emulated/0/atp' to '$HOME/atp'
-  ls    Show files and their numbers in 'storage/emulated/0/atp'
-  -z    Turn off the compression (useful for transfer big binaries)
-- Example:
-  atp to ./hui/zzz.zip -z
-  atp from 7
-  atp ls
-EOF
+  echo "usage: ${0##*/} [-h] [-f FILE] [-n NUM] [-l] [-z]"
+  echo
+  echo 'adb push/pull alias'
+  echo
+  echo 'options:'
+  echo '  -h       show this help message and exit'
+  echo '  -f FILE  specify a file to push'
+  echo '  -n NUM   specify a number of file to pull'
+  echo '  -l       view a remote numbered list of files'
+  echo '  -z       disable compression'
 
   exit "${1}"
 }
 
-await() {
+adbwait() {
   echo '- Waiting for device...'
   adb wait-for-device
 }
 
-[[ "${@}" =~ '-h' ]] && usage 0
+remote_list() {
+  local remote_path="${1}"
+  local remote_num="${2}"
 
-if [[ "${@}" =~ '-z' ]]; then
-  compress='none'
-else
-  compress='lz4'
-fi
+  local list
+  list="$(adb shell -nT find ${remote_path}/* -type f \
+            -exec basename -a {} \+)"
 
-case "${1}" in
-  to)
-    await
-    adb shell mkdir -p "${apath}"
-    adb push "${2}" "${apath}" -z "${compress}"
-    ;;
-  from)
-    [[ -z "${2}" ]] && usage 1
-    await
-    afile="$(afiles | sed -n "${2}p")"
-    adb pull "${apath}/${afile}" "${HOME}/atp" -z "${compress}"
-    ;;
-  ls)
-    await
-    afiles | nl
-    ;;
-  *) usage 1
-esac
+  if [[ -n "${remote_num}" ]]; then
+    echo "${list}" | sed -n "${remote_num}p"
+  else
+    echo "${list}" | nl
+  fi
+}
+
+push() {
+  local remote_path="${1}"
+  local compression="${2}"
+  local file="${3}"
+
+  adbwait
+  adb exec-out mkdir -p "${remote_path}"
+  adb push -z "${compression}" "${file}" "${remote_path}"
+}
+
+pull() {
+  local remote_path="${1}"
+  local compression="${2}"
+  local remote_num="${3}"
+
+  adbwait
+  adb pull -z "${compression}" \
+    "${remote_path}/$(remote_list ${remote_path} ${remote_num})" "${HOME}/atp"
+}
+
+main() {
+  local OPTARG
+  local arg
+
+  # Parse args
+  ((${#} == 0)) && usage 1 >&2
+  local no_comp='false'
+  while getopts 'hf:n:lz' arg; do
+    case "${arg}" in
+      f)
+        local file="${OPTARG}"
+        local cmd="${arg}"
+        ;;
+      n)
+        local remote_num="${OPTARG}"
+        local cmd="${arg}"
+        ;;
+      l) local cmd="${arg}" ;;
+      z) local no_comp='true' ;;
+      h) usage 0 ;;
+      *) usage 1 >&2 ;;
+    esac
+  done
+
+  if "${no_comp}"; then
+    local compression='none'
+  else
+    local compression='zstd'
+  fi
+
+  local remote_path='/storage/emulated/0/atp'
+  case "${cmd}" in
+    f) push "${remote_path}" "${compression}" "${file}" ;;
+    n) pull "${remote_path}" "${compression}" "${remote_num}" ;;
+    l)
+      adbwait
+      remote_list "${remote_path}"
+      ;;
+    *) usage 1 >&2 ;;
+  esac
+}
+
+main "${@}"
