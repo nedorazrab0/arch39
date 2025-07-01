@@ -45,9 +45,11 @@ basic_setup() {
   hwclock -w --utc
   hostnamegen > /etc/hostname
   setcap 'CAP_SYS_NICE=eip' "$(command -v gamescope)"
+  usermod --lock -s /usr/bin/nologin root  # Lock the root account
 
+  # Create a new user
   rm -f /etc/skel/.bash*
-  useradd -m -G 'wheel,video' -s /usr/bin/zsh "${username}"
+  useradd --create-home -G 'wheel,video' -s /usr/bin/zsh "${username}"
   echo "${username}:${password}" | chpasswd
 
   pacman -Scc --noconfirm
