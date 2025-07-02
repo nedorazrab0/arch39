@@ -1,106 +1,138 @@
 #!/usr/bin/env bash
 #
-# Arch install
-
+# Arch linux install
 set -e
-lang='#'
 
-# Configure script
-echo '- Username:'
-read -r name
-echo '- Password:'
-stty -echo  # Do not expose a password
-read -r password
-stty echo
-echo '- Language (e.g. es,ru,ua. English is preinstalled):'
-read -r lang
-echo '- Timezone (e.g. Europe/Moscow):'
-read -r zone
-echo '- Target disk name:'
-read -r disk
-echo '- Do you want Secure Boot?
-  Make sure you are in the "setup mode"
-  or cleared your Secure Boot keys! (y/N)'
-read -r sboot
+usage() {
+  echo "usage: ${0##*/} [-h] -n USERNAME -t TIMEZONE [-l LAYOUT] -f FIRMWARE"
+  echo
+  echo 'arch linux installer'
+  echo
+  echo 'options:'
+  echo '  -h  show this help message and exit'
+  echo '  -n USERNAME  specify username'
+  echo '  -t TIMEZONE  specify timezone'
+  echo '  -l LAYOUT    specify keyboard layout (en is a default)'
+  echo '  -f FIRMWARE  specify a firmware list to install'
+  echo
+  echo "firmware list example: 'amdgpu realtek'"
 
-sysblock="/sys/block/${disk}"
-blk="/dev/${disk}"
-parts="${blk}"*?
-[[ "${sboot}" == 'y' ]] && sbpkg='sbctl'
+  exit "${1}"
+}
 
-# Configure pacman
-curl -f "https://raw.githubusercontent.com/nedorazrab0/arch39/main/\
-cfg/etc/pacman.conf" -o /etc/pacman.conf
+setup_pacman() {
+  local pacmanconf
+  pacmanconf='https://raw.githubusercontent.com/nedorazrab0/arch39/main/cfg'
+  pacmanconf="${pacmanconf}/etc/pacman.conf"
+  curl -f -o /etc/pacman.conf "${pacmanconf}"
 
-echo '- Configuring mirrors...'
-mlist='/etc/pacman.d/mirrorlist'
-
-# Wait for reflector complete the sync
-if ! grep -q 'Reflector' "${mlist}" && ! systemctl is-active --quiet reflector
-then
+  echo '- Waiting for reflector...'
   systemctl start reflector
-fi
 
-until grep -q 'Reflector' "${mlist}"; do
-  sleep 1
-done
+  pacman-key --init
+  pacman-key --populate archlinux
+  pacman -Syy archlinux-keyring --needed --noconfirm
+}
 
-pacman-key --init
-pacman-key --populate archlinux
-pacman -Syy archlinux-keyring --needed --noconfirm
+disk_partition() {
+  local blk="${1}"
 
-# Disk tune
-echo 'none' > "${sysblock}/queue/scheduler"
-echo '128' > "${sysblock}/queue/nr_requests"
-echo '2' > "${sysblock}/queue/rq_affinity"
+  echo 'none' > "/sys/block/${blk}/queue/scheduler"
+  echo '128' > "/sys/block/${blk}/queue/nr_requests"
+  echo '2' > "/sys/block/${blk}/queue/rq_affinity"
 
-# Disk partition
-cd /
-mountpoint -q /mnt && umount -vR /mnt
-umount -v "${blk}"* || true
+  blkid "${blk}"*? && wipefs --all "${blk}"*?
+  wipefs --all "${blk}"
+  blkdiscard -vf "${blk}"
+  sgdisk -Zo \
+    -n1::+64M -t1:ef00 -c1:'EFI System Partition' \
+    -n2::+ -t2:8304 -c2:'Arch Linux Root' -p "${blk}"
 
-wipefs --all "${parts}" || true
-wipefs --all "${blk}"
-blkdiscard -vf "${blk}" || true
-sgdisk -Zo \
-  -n1::+64M -t1:ef00 -c1:'EFI System Partition' \
-  -n2::+ -t2:8304 -c2:'Arch Linux Root' -p "${blk}"
+  mkfs.fat -F32 -n 'ESP' -v -S512 --codepage=437 "${blk}"*1
+  mkfs.btrfs -fK -L 'archlinux' -O 'block-group-tree' -n65536 --csum xxhash \
+    -m single "${blk}"*2
 
-bootpart="${blk}"*1
-rootpart="${blk}"*2
+  local btrfs_opts
+  btrfs_opts='noatime,nodiscard,nobarrier,commit=300,lazytime,ssd'
+  btrfs_opts="${btrfs_opts},compress-force=zstd:3"
+  local fat_opts
+  fat_opts='noexec,nodev,nosuid,noatime,utf8=false,fmask=0177,dmask=0077'
+  fat_opts="${fat_opts},lazytime,X-mount.mkdir=600"
 
-mkfs.fat -F32 -n 'ESP' -v -S512 --codepage=437 ${bootpart}
-mkfs.btrfs -fK -L 'archlinux' -O 'block-group-tree' \
-  -n65536 --csum xxhash -m single ${rootpart}
+  mount -t btrfs -v -o "${btrfs_opts}" "${blk}"*2 /mnt
+  mount -t vfat -v -o  "${fat_opts}" "${blk}"*1 /mnt/boot
+}
 
-mount -t btrfs -v -o "noatime,nodiscard,nobarrier,\
-commit=300,lazytime,ssd,compress-force=zstd:3" ${rootpart} /mnt
-mount -t vfat -v -o "noexec,nodev,nosuid,noatime,utf8=false,\
-fmask=0177,dmask=0077,lazytime,X-mount.mkdir=600" ${bootpart} /mnt/boot
+pkg_strap() {
+  local fwlist="${1}"
 
-# Install
-# NOTE: lib32-mesa, lib32-vulkan-radeon and lib32-vulkan-mesa-layers
-# are important for `gamescope`!!
-mountpoint -q /var/cache/pacman/pkg && hostcache='-c'
-pacstrap ${hostcache} /mnt \
-  base linux-zen booster linux-firmware amd-ucode \
-  btrfs-progs xfsprogs exfatprogs dosfstools gptfdisk \
-  android-tools git github-cli flatpak zram-generator \
-  micro zsh reflector gamescope mandoc less xxhash pigz unzip \
-  hyprland polkit xdg-desktop-portal-{gtk,hyprland} mako alacritty \
-  openssh openssl grim slurp hypridle hyprlock \
-  noto-fonts{,-extra} waybar brightnessctl xdg-user-dirs \
-  lib32-vulkan-radeon lib32-mesa lib32-vulkan-mesa-layers bluez{,-utils} \
-  iptables-nft pipewire{,-alsa,-pulse,-jack} wpa_supplicant ${sbpkg}
+  local fw
+  for fw in ${fwlist}; do
+    local fwpkglist="${fwpkglist} linux-firmare-${fw}"
+  done
 
-# Chroot actions
-mount -o 'bind,ro' -v /tmp/arch39 /mnt/mnt
-arch-chroot /mnt bash /mnt/inchroot \
-  "${name}" "${password}" "${zone}" "${sboot}" "${lang}"
-umount -v /mnt/mnt
+  # NOTE: lib32-mesa, lib32-vulkan-radeon and lib32-vulkan-mesa-layers
+  # are important for gamescope!!
+  mountpoint -q /var/cache/pacman/pkg && hostcache='-c'
+  pacstrap ${hostcache} /mnt base linux-zen booster amd-ucode btrfs-progs \
+    xfsprogs exfatprogs dosfstools gptfdisk android-tools git github-cli \
+    flatpak zram-generator micro zsh reflector gamescope mandoc less xxhash \
+    pigz unzip hyprland polkit xdg-desktop-portal-{gtk,hyprland} mako \
+    alacritty openssh openssl grim slurp hypridle hyprlock hyprsunset \
+    hyprpicker noto-fonts{,-extra} waybar brightnessctl xdg-user-dirs \
+    lib32-vulkan-radeon lib32-mesa lib32-vulkan-mesa-layers bluez{,-utils} \
+    iptables-nft pipewire{,-alsa,-pulse,-jack} wpa_supplicant sbctl \
+    ${fwpkglist}
+}
 
-# wonderhoy
-echo '- Goodbye ;)'
-sleep 2
-umount -vR /mnt
-exec systemctl poweroff
+setup_chroot() {
+  local username="${1}"
+  local password="${2}"
+  local timezone="${3}"
+  local layout="${4}"
+
+  mount -o 'bind,ro' -v /tmp/arch39 /mnt/mnt
+  arch-chroot /mnt /mnt/inchroot -n "${username}" -p "${password}" \
+    -t "${timezone}" -l "${layout}"
+  umount -v /mnt/mnt
+}
+
+end() {
+  echo '- Wonderhoy! ^^'
+  sleep 2
+  umount -vR /mnt
+  systemctl poweroff
+}
+
+main() {
+  local OPTARG
+  local arg
+
+  # Parse args
+  ((${#} == 0)) && usage 1 >&2
+  while getopts 'hn:t:l:b:f:' arg; do
+    case "${arg}" in
+      n) local username="${OPTARG}" ;;
+      t) local timezone="${OPTARG}" ;;
+      l) local layout="${OPTARG}" ;;
+      b) local blk="${OPTARG}" ;;
+      f) local fwlist="${OPTARG}" ;;
+      h) usage 0 ;;
+      *) usage 1 >&2 ;;
+    esac
+  done
+
+  echo '- Password:'
+  stty -echo  # Do not expose the password
+  local password
+  read -r password
+  stty echo
+
+  setup_pacman
+  disk_partition "${blk}"
+  pkg_strap
+  setup_choot "${username}" "${password}" "${timezone}" "${layout}"
+  end
+}
+
+main "${@}"
