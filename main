@@ -68,7 +68,7 @@ pkg_strap() {
 
   local fw
   for fw in ${fwlist}; do
-    local fwpkglist="${fwpkglist} linux-firmare-${fw}"
+    local fwpkglist="${fwpkglist} linux-firmware-${fw}"
   done
 
   # NOTE: lib32-mesa, lib32-vulkan-radeon and lib32-vulkan-mesa-layers
