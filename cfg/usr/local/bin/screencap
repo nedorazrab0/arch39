@@ -16,20 +16,25 @@ usage() {
   exit "${1}"
 }
 
-get_data() {
-  local data="${1}"
-  local exp="${2}"
+getsortnum() {
+  # Newer files will be higher in the list when sorted by name
+  local maxtime=12147483646
+  local curtime
+  local curtime="$(date +%s)"
 
-  echo "${data}" | grep ".${exp}." | cut -d ' ' -f2
+  echo "$((maxtime - curtime))"
 }
 
 screenshot() {
   local at="${1}"
   local size="${2}"
-  local filename="${3}"
+  local class="${3}"
+
+  local sortnum
+  sortnum="$(getsortnum)"
 
   grim -g "${at} ${size}" -t png -l9 \
-    "$(xdg-user-dir PICTURES)/${filename}.png"
+    "$(xdg-user-dir PICTURES)/${sortnum}-${class}.png"
 }
 
 check_command() {
@@ -43,8 +48,15 @@ check_command() {
 partial_ss() {
   hyprpicker -rzq &
   sleep 0.1
-  screenshot $(slurp -b 33ccbb90 -w0) "$(date +%s)-part"
+  screenshot $(slurp -b 33ccbb90 -w0) part
   killall hyprpicker
+}
+
+get_data() {
+  local data="${1}"
+  local exp="${2}"
+
+  echo "${data}" | grep ".${exp}." | cut -d ' ' -f2
 }
 
 window_ss() {
@@ -59,7 +71,7 @@ window_ss() {
   size="$(get_data "${window_data}" 'size:' | sed 's/,/x/')"
   at="$(get_data "${window_data}" 'at:')"
 
-  screenshot "${at}" "${size}" "$(date +%s)-${class}"
+  screenshot "${at}" "${size}" "${class}"
 }
 
 main() {
