@@ -52,7 +52,7 @@ main() {
   fi
 
   echo '- Password:'
-  stty -echo  # Do not expose a password
+  stty -echo  # Do not expose the password
   read -r password
   stty echo
 
