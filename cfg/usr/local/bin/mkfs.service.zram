@@ -3,8 +3,4 @@
 # mkfs alias for zram-generator
 set -e
 
-main() {
-  mkfs.xfs -Kfq -i 'size=1024' -l 'size=64M' -m 'crc=0' "${@}"
-}
-
-main "${@}"
+mkfs.xfs -Kfq -i 'size=1024' -l 'size=64M' -m 'crc=0' "${@}"
