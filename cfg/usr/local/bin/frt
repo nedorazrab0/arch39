@@ -41,11 +41,11 @@ main() {
   case "${cmd}" in
     btrfs)
       mkfs.btrfs -f -L "${label}" -n65536 -O 'block-group-tree' \
-      --csum xxhash -m single "${blk}"
+        --csum xxhash -m single "${blk}"
       ;;
     f2fs)
       mkfs.f2fs -fi -l "${label}" \
-      -O 'extra_attr,inode_checksum,sb_checksum,compression' "${blk}"
+        -O 'extra_attr,inode_checksum,sb_checksum,compression' "${blk}"
       ;;
     exfat) mkfs.exfat -L "${label}" "${blk}" ;;
     fat) mkfs.fat -v -S512 -n "${label}" --codepage=437 "${blk}" ;;
