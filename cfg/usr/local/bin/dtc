@@ -25,6 +25,6 @@ main() {
   ((${#} == 0)) && usage 1 >&2
   [[ "${@}" == '-h' ]] && usage 0
 
-  umount -l "/dev/${blk}"
+  umount -l "/dev/${blk}" || true
   echo 1 > "/sys/block/${blk}/device/delete"
 }
