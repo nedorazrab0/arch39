@@ -9,7 +9,7 @@ usage() {
   echo 'arch linux installer'
   echo
   echo 'options:'
-  echo '  -h  show this help message and exit'
+  echo '  -h           show this help message and exit'
   echo '  -n USERNAME  specify username'
   echo '  -t TIMEZONE  specify timezone'
   echo '  -l LAYOUT    specify keyboard layout (en is a default)'
@@ -92,7 +92,7 @@ setup_chroot() {
   local layout="${4}"
 
   mount -o 'bind,ro' -v /tmp/arch39 /mnt/mnt
-  arch-chroot /mnt /mnt/inchroot -n "${username}" -p "${password}" \
+  arch-chroot /mnt bash /mnt/inchroot -n "${username}" -p "${password}" \
     -t "${timezone}" -l "${layout}"
   umount -v /mnt/mnt
 }
