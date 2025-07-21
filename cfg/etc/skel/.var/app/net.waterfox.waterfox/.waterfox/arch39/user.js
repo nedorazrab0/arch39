@@ -135,6 +135,7 @@ user_pref("browser.sidebar.disabled", true);
 user_pref("sidebar.verticalTabs", false);
 
 // Performance
+user_pref("beacon.enabled", true);
 user_pref("nglayout.initialpaint.delay", 1000);
 user_pref("nglayout.initialpaint.delay_in_oopif", 1000);
 user_pref("content.notify.interval", 100000);
@@ -238,12 +239,20 @@ user_pref("network.cookie.sameSite.schemeful", true);
 user_pref("dom.battery.enabled", false);
 user_pref("privacy.globalprivacycontrol.enabled", true);
 user_pref("security.OCSP.enabled", 0);
+user_pref("security.remote_settings.crlite_filters.enabled", true);
+user_pref("security.pki.crlite_mode", 2);
 user_pref("security.ssl.treat_unsafe_negotiation_as_broken", true);
 user_pref("browser.xul.error_pages.expert_bad_cert", true);
 user_pref("security.tls.enable_0rtt_data", false);
 user_pref("security.tls.enable_kyber", true);
 user_pref("network.http.http3.enable_kyber", true);
-user_pref("privacy.resistFingerprinting", false);  // Breaks many things (tz, media)
+user_pref("privacy.resistFingerprinting", false);
+user_pref("privacy.trackingprotection.fingerprinting.enabled", true);
+user_pref("privacy.fingerprintingProtection", true);
+user_pref("privacy.fingerprintingProtection.remoteOverrides.enabled", false)
+user_pref("privacy.fingerprintingProtection.overrides",
+    "+AllTargets,-CSSPrefersColorScheme,-CanvasImageExtractionPrompt,-CanvasExtractionBeforeUserInputIsBlocked");
+user_pref("privacy.bounceTrackingProtection.mode", 1);
 user_pref("browser.privatebrowsing.forceMediaMemoryCache", true);
 user_pref("browser.privatebrowsing.resetPBM.enabled", true);
 user_pref("privacy.history.custom", true);
