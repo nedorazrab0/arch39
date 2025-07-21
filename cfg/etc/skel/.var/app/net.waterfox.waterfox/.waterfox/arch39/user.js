@@ -243,10 +243,7 @@ user_pref("browser.xul.error_pages.expert_bad_cert", true);
 user_pref("security.tls.enable_0rtt_data", false);
 user_pref("security.tls.enable_kyber", true);
 user_pref("network.http.http3.enable_kyber", true);
-user_pref("privacy.resistFingerprinting.randomization.daily_reset.enabled", true);
-user_pref("privacy.resistFingerprinting.randomization.daily_reset.private.enabled", true);
-user_pref("privacy.resistFingerprinting", true);  // Also sets tz to UTC
-user_pref("privacy.resistFingerprinting.block_mozAddonManager", false);  // Fix media
+user_pref("privacy.resistFingerprinting", false);  // Breaks many things (tz, media)
 user_pref("browser.privatebrowsing.forceMediaMemoryCache", true);
 user_pref("browser.privatebrowsing.resetPBM.enabled", true);
 user_pref("privacy.history.custom", true);
