@@ -122,8 +122,8 @@ user_pref("browser.preferences.experimental", true);
 user_pref("browser.preferences.experimental.hidden", true);
 user_pref("browser.uidensity", 1);
 user_pref("browser.compactmode.show", true);
-user_pref("browser.urlbar.placeholderName", "Google");
-user_pref("browser.urlbar.placeholderName.private", "Google");
+user_pref("browser.urlbar.placeholderName", "CHANGE IT TO GOOGLE");
+user_pref("browser.urlbar.placeholderName.private", "CHANGE IT TO GOOGLE");
 user_pref("browser.urlbar.suggest.quicksuggest.nonsponsored", true);
 user_pref("extensions.activeThemeID", "firefox-compact-dark@mozilla.org");
 user_pref("browser.urlbar.quicksuggest.dataCollection.enabled", true);
@@ -245,7 +245,7 @@ user_pref("network.http.http3.enable_kyber", true);
 user_pref("privacy.resistFingerprinting.randomization.daily_reset.enabled", true);
 user_pref("privacy.resistFingerprinting.randomization.daily_reset.private.enabled", true);
 user_pref("privacy.resistFingerprinting", true);
-user_pref("browser.privatebrowsing.forceMediaMemoryCache", false); // O_o
+user_pref("browser.privatebrowsing.forceMediaMemoryCache", true); // O_o aaaaaaaaaaaa
 user_pref("browser.privatebrowsing.resetPBM.enabled", true);
 user_pref("privacy.history.custom", true);
 user_pref("browser.urlbar.trimHttps", true);
