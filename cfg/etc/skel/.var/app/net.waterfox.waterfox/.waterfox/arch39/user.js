@@ -122,6 +122,7 @@ user_pref("browser.preferences.experimental", true);
 user_pref("browser.preferences.experimental.hidden", true);
 user_pref("browser.uidensity", 1);
 user_pref("browser.compactmode.show", true);
+user_pref("browser.shopping.experience2023.active", false);
 user_pref("browser.urlbar.placeholderName", "CHANGE IT TO GOOGLE");
 user_pref("browser.urlbar.placeholderName.private", "CHANGE IT TO GOOGLE");
 user_pref("browser.urlbar.suggest.quicksuggest.nonsponsored", true);
@@ -244,8 +245,9 @@ user_pref("security.tls.enable_kyber", true);
 user_pref("network.http.http3.enable_kyber", true);
 user_pref("privacy.resistFingerprinting.randomization.daily_reset.enabled", true);
 user_pref("privacy.resistFingerprinting.randomization.daily_reset.private.enabled", true);
-user_pref("privacy.resistFingerprinting", true);
-user_pref("browser.privatebrowsing.forceMediaMemoryCache", true); // O_o aaaaaaaaaaaa
+user_pref("privacy.resistFingerprinting", true);  // Also sets tz to UTC
+user_pref("privacy.resistFingerprinting.block_mozAddonManager", false);  // Fix media
+user_pref("browser.privatebrowsing.forceMediaMemoryCache", true);
 user_pref("browser.privatebrowsing.resetPBM.enabled", true);
 user_pref("privacy.history.custom", true);
 user_pref("browser.urlbar.trimHttps", true);
@@ -278,4 +280,3 @@ user_pref("browser.region.network.url", "");
 user_pref("datareporting.healthreport.uploadEnabled", true);
 user_pref("network.http.referer.spoofSource", true);
 user_pref("network.http.sendRefererHeader", 0);
-user_pref("browser.shopping.experience2023.active", false);
