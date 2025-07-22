@@ -12,7 +12,7 @@ user_pref("media.mediasource.vp9.enabled", true);
 user_pref("media.peerconnection.video.vp9_enabled", true);
 user_pref("media.webrtc.simulcast.vp9.enabled", true);
 user_pref("dom.media.webcodecs.h265.enabled", true);
-user_pref("webgl.forbid-hardware", false);
+//user_pref("webgl.forbid-hardware", false);
 
 user_pref("media.av1.new-thread-count-strategy", true);
 user_pref("media.webrtc.codec.video.av1.enabled", false);
@@ -123,8 +123,6 @@ user_pref("browser.preferences.experimental.hidden", true);
 user_pref("browser.uidensity", 1);
 user_pref("browser.compactmode.show", true);
 user_pref("browser.shopping.experience2023.active", false);
-user_pref("browser.urlbar.placeholderName", "CHANGE IT TO GOOGLE");
-user_pref("browser.urlbar.placeholderName.private", "CHANGE IT TO GOOGLE");
 user_pref("browser.urlbar.suggest.quicksuggest.nonsponsored", true);
 user_pref("extensions.activeThemeID", "firefox-compact-dark@mozilla.org");
 user_pref("browser.urlbar.quicksuggest.dataCollection.enabled", true);
@@ -133,6 +131,23 @@ user_pref("browser.urlbar.weather.featureGate", true);
 user_pref("browser.theme.toolbar-theme", 1);
 user_pref("browser.sidebar.disabled", true);
 user_pref("sidebar.verticalTabs", false);
+user_pref("sidebar.visibility", "hide-sidebar");
+
+user_pref("browser.policies.applied", true);
+user_pref("browser.urlbar.placeholderName", "GGL");
+user_pref("browser.urlbar.placeholderName.private", "GGL");
+user_pref("browser.policies.runOncePerModification.setDefaultSearchEngine",
+    "Google");
+user_pref("browser.policies.runOncePerModification.removeSearchEngines",
+    ["Startpage","Bing","Mojeek","Yahoo!","DuckDuckGo","Qwant","Ecosia"]);
+user_pref("browser.policies.runOncePerModification.extensionsInstall",
+    ["https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi",
+     "https://addons.mozilla.org/firefox/downloads/latest/decentraleyes/latest.xpi",
+     "https://addons.mozilla.org/firefox/downloads/latest/darkreader/latest.xpi",]);
+user_pref("browser.policies.runOncePerModification.extensionsUninstall",
+    ["bing@search.waterfox.net","ddg@search.waterfox.net","ecosia@search.waterfox.net",
+     "mojeek@search.waterfox.net","qwant@search.waterfox.net","startpage@search.waterfox.net",
+     "yahoo@search.waterfox.net"]);
 
 // Performance
 user_pref("beacon.enabled", true);
@@ -174,8 +189,7 @@ user_pref("media.cache_resume_threshold", 3600);
 user_pref("image.mem.decode_bytes_at_a_time", 32768);
 user_pref("media.gmp.decoder.multithreaded", true);
 user_pref("media.gmp.decoder.preferred", true);
-user_pref("webgl.power-preference-override", 1);
-user_pref("webgl.force-enabled", 1);
+//user_pref("webgl.power-preference-override", 1);
 user_pref("image.cache.size", 8388608);
 user_pref("browser.preferences.defaultPerformanceSettings.enabled", false);
 user_pref("network.captive-portal-service.enabled", false);
@@ -256,6 +270,11 @@ user_pref("privacy.bounceTrackingProtection.mode", 1);
 user_pref("browser.privatebrowsing.forceMediaMemoryCache", true);
 user_pref("browser.privatebrowsing.resetPBM.enabled", true);
 user_pref("privacy.history.custom", true);
+
+user_pref("webgl.force-enabled", 0);
+user_pref("webgl.disabled", true);
+user_pref("webgl.disable-wgl", true);
+
 user_pref("browser.urlbar.trimHttps", true);
 user_pref("browser.urlbar.untrimOnUserInteraction.featureGate", true);
 user_pref("security.insecure_connection_text.enabled", true);
