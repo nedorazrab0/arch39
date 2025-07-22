@@ -10,8 +10,8 @@ history = 1000
 multiplier = 10
 
 [font]
-normal = { family = "NotoSansMono", style = "SemiBold" }
-size = 8.25
+normal = { family = "NotoSansMono" }
+size = 10
 
 [colors.primary]
 foreground = "#ffffff"
