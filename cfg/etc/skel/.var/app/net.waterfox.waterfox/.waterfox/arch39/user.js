@@ -132,6 +132,7 @@ user_pref("browser.theme.toolbar-theme", 1);
 user_pref("browser.sidebar.disabled", true);
 user_pref("sidebar.verticalTabs", false);
 user_pref("sidebar.visibility", "hide-sidebar");
+user_pref("browser.contentblocking.fingerprinting.preferences.ui.enabled", false);
 
 user_pref("browser.policies.applied", true);
 user_pref("browser.urlbar.placeholderName", "GGL");
