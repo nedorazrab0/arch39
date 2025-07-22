@@ -9,7 +9,7 @@
   "mouse": false,
   "scrollbar": true,
   "sucmd": "kp",
-  "statusformatl": "=== $(filename) [$(line),$(col)] $(modified)",
+  "statusformatl": "==== $(filename) [$(line),$(col)] $(modified)",
   "statusformatr": "",
   "tabsize": 2,
   "tabstospaces": true,
