@@ -8,8 +8,8 @@
 }
 
 window#waybar {
-  background-color: #000000;
-  color: #ffffff;
+  background-color: black;
+  color: white;
   border-bottom: 0px;
   transition-property: background-color;
   transition-duration: .5s;
@@ -28,18 +28,18 @@ button:hover {
 
 #workspaces button {
   padding: 0 5px;
-  background-color: #000000;
-  color: #ffffff;
+  background-color: black;
+  color: white;
 }
 
 #workspaces button.active {
   background-color: #33ccbb;
-  color: #000000;
+  color: black;
 }
 
 #workspaces button.urgent {
   background-color: #f2074d;
-  color: #000000;
+  color: black;
 }
 
 #clock,
@@ -64,12 +64,12 @@ button:hover {
 
 #clock {
   background-color: #33ccbb;
-  color: #000000;
+  color: black;
 }
 
 #battery {
   background-color: #33ccbb;
-  color: #000000;
+  color: black;
 
 }
 
@@ -82,7 +82,7 @@ button:hover {
 
 #battery.critical:not(.charging) {
   background-color: #f2074d;
-  color: #000000;
+  color: black;
 }
 
 label:focus {
@@ -91,27 +91,27 @@ label:focus {
 
 #network {
   background-color: #33ccbb;
-  color: #000000;
+  color: black;
 }
 
 #network.disconnected {
   background-color: #f2074d;
-  color: #000000;
+  color: black;
 }
 
 #pulseaudio {
   background-color: #33ccbb;
-  color: #000000;
+  color: black;
 }
 
 #pulseaudio.muted {
   background-color: #33ccbb;
-  color: #000000;
+  color: black;
 }
 
 #language {
   background-color: #33ccbb;
-  color: #000000;
+  color: black;
   padding: 0 5px;
   margin: 0 0px;
   min-width: 0px;
