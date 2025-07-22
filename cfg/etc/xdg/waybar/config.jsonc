@@ -3,7 +3,7 @@
 {
   "layer": "top",
   "position": "bottom",
-  "height": 21,
+  "height": 1,
   "spacing": 4,
   "modules-left": ["hyprland/workspaces"],
   "modules-center": [
@@ -11,12 +11,16 @@
     "hyprland/language",
     "pulseaudio",
     "battery",
-    "clock"
+    "clock",
   ],
+  "modules-right": ["hyprland/window"],
 
   // Modules configuration
+  "hyprland/window": {
+    "format": "{class}"
+  },
   "hyprland/workspaces": {
-    "format": "{name}"
+    "format": "{name}",
   },
   "network": {
     "format-wifi": "wifi",
