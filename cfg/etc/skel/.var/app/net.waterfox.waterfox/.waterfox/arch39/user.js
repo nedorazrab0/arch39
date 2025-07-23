@@ -1,19 +1,19 @@
-// Firefox settings
+// firefox config
 
 // VA
 user_pref("media.ffmpeg.vaapi.enabled", true);
 user_pref("media.ffmpeg.vaapi.force-surface-zero-copy", 1);
 user_pref("media.webrtc.hw.h264.enabled", true);
 user_pref("media.gmp-gmpopenh264.autoupdate", true);
-user_pref("media.navigator.mediadatadecoder_vp8_hardware_enabled", true);
 user_pref("media.hardware-video-decoding.force-enabled", true);
 user_pref("media.peerconnection.video.vp9_preferred", true);
 user_pref("media.mediasource.vp9.enabled", true);
 user_pref("media.peerconnection.video.vp9_enabled", true);
 user_pref("media.webrtc.simulcast.vp9.enabled", true);
-user_pref("dom.media.webcodecs.h265.enabled", true);
 //user_pref("webgl.forbid-hardware", false);
 
+user_pref("media.navigator.mediadatadecoder_vp8_hardware_enabled", false);
+user_pref("dom.media.webcodecs.h265.enabled", false);
 user_pref("media.av1.new-thread-count-strategy", true);
 user_pref("media.webrtc.codec.video.av1.enabled", false);
 user_pref("media.webrtc.codec.video.av1.experimental_preferred", false);
