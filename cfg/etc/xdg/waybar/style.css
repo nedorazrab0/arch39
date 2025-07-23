@@ -59,7 +59,7 @@ button:hover {
   margin-right: 0;
 }
 
-#network.disconnected, #battery.critical:not(.charging) {
+#network.disconnected, #network.disabled, #battery.critical:not(.charging) {
   background-color: #f2074d;
   color: #000000;
 }
