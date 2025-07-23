@@ -33,8 +33,9 @@ screenshot() {
   local sortnum
   sortnum="$(getsortnum)"
 
-  grim -g "${at} ${size}" -t png -l9 \
-    "$(xdg-user-dir PICTURES)/${sortnum}-${class}.png"
+  grim -g "${at} ${size}" -t png -l0 -- - | cwebp -lossless -q 100 -z 9 -mt \
+    -o "$(xdg-user-dir PICTURES)/${sortnum}-${class}.webp" \
+    -sharp_yuv -noalpha -quiet -- -
 }
 
 check_command() {
