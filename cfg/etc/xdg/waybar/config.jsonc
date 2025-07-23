@@ -22,11 +22,11 @@
   },
   "network": {
     "interval": 1,
-    "format-wifi": "wifi",
+    "format": "D/C",
+    "format-wifi": "{signaldBm}dBm",
     "format-ethernet": "eth",
     "format-linked": "{ifname}",
     "format-disconnected": "D/C",
-    "format-alt": "{signaldBm}dBm",
     "tooltip": false
   },
   "hyprland/language": {
