@@ -1,16 +1,15 @@
-/* Waybar style */
-
 * {
   font-family: NotoSans;
-  font-weight: 800;
-  font-size: 14.5px;
+  font-weight: 700;
+  font-size: 16px;
   min-height: 0px;
 }
 
 window#waybar {
-  background-color: black;
-  color: white;
-  border-bottom: 0px;
+  background-color: #000000;
+  color: #ffffff;
+  border-top: 1px solid #121212;
+  border-bottom: 0;
   transition-property: background-color;
   transition-duration: .5s;
 }
@@ -28,29 +27,27 @@ button:hover {
 
 #workspaces button {
   padding: 0 5px;
-  background-color: black;
-  color: white;
+  background-color: #000000;
+  color: #ffffff;
 }
 
 #workspaces button.active {
   background-color: #33ccbb;
-  color: black;
+  color: #000000;
 }
 
 #workspaces button.urgent {
   background-color: #f2074d;
-  color: black;
+  color: #000000;
 }
 
-#clock,
-#battery,
-#network,
-#pulseaudio,
-#tray,
-#39 { padding: 0 5px; }
+#clock, #battery, #network, #pulseaudio, #temperature, #language {
+  padding: 0 5px;
+  background-color: #33ccbb;
+  color: #000000;
+}
 
-#window,
-#workspaces {
+#window, #workspaces {
   margin: 0 4px;
 }
 
@@ -62,15 +59,9 @@ button:hover {
   margin-right: 0;
 }
 
-#clock {
-  background-color: #33ccbb;
-  color: black;
-}
-
-#battery {
-  background-color: #33ccbb;
-  color: black;
-
+#network.disconnected, #battery.critical:not(.charging) {
+  background-color: #f2074d;
+  color: #000000;
 }
 
 @keyframes blink {
@@ -80,39 +71,6 @@ button:hover {
   }
 }
 
-#battery.critical:not(.charging) {
-  background-color: #f2074d;
-  color: black;
-}
-
 label:focus {
   background-color: #000000;
-}
-
-#network {
-  background-color: #33ccbb;
-  color: black;
-}
-
-#network.disconnected {
-  background-color: #f2074d;
-  color: black;
-}
-
-#pulseaudio {
-  background-color: #33ccbb;
-  color: black;
-}
-
-#pulseaudio.muted {
-  background-color: #33ccbb;
-  color: black;
-}
-
-#language {
-  background-color: #33ccbb;
-  color: black;
-  padding: 0 5px;
-  margin: 0 0px;
-  min-width: 0px;
 }
