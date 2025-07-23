@@ -1,21 +1,19 @@
-// Waybar config
-
 {
   "layer": "top",
   "position": "bottom",
-  "height": 1,
+  "height": 24,
   "spacing": 4,
   "modules-left": ["hyprland/workspaces"],
   "modules-center": [
     "network",
     "hyprland/language",
     "pulseaudio",
+    "temperature",
     "battery",
     "clock",
   ],
   "modules-right": ["hyprland/window"],
 
-  // Modules configuration
   "hyprland/window": {
     "format": "{class}"
   },
@@ -23,6 +21,7 @@
     "format": "{name}",
   },
   "network": {
+    "interval": 1,
     "format-wifi": "wifi",
     "format-ethernet": "eth",
     "format-linked": "{ifname}",
@@ -36,11 +35,12 @@
   "pulseaudio": {
     "format": "{volume}/100",
     "format-bluetooth": "{volume}/100 Bt",
-    "format-bluetooth-muted": "Bt",
+    "format-bluetooth-muted": "x Bt",
     "format-muted": "x",
     "tooltip": false
   },
   "battery": {
+    "interval": 1,
     "format": "{capacity}%",
     "format-full": "f{capacity}%",
     "format-charging": "+{capacity}%",
@@ -49,7 +49,10 @@
     "states": {
       "critical": 25
     },
-    "interval": 1,
+    "tooltip": false
+  },
+  "temperature": {
+    "format": "{temperatureC}°",
     "tooltip": false
   },
   "clock": {
