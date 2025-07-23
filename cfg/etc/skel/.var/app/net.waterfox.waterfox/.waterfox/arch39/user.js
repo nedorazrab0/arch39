@@ -133,6 +133,8 @@ user_pref("browser.sidebar.disabled", true);
 user_pref("sidebar.verticalTabs", false);
 user_pref("sidebar.visibility", "hide-sidebar");
 user_pref("browser.contentblocking.fingerprinting.preferences.ui.enabled", false);
+user_pref("browser.urlbar.trimHttps", true);
+user_pref("browser.urlbar.untrimOnUserInteraction.featureGate", true);
 
 user_pref("browser.policies.applied", true);
 user_pref("browser.urlbar.placeholderName", "GGL");
@@ -276,8 +278,6 @@ user_pref("webgl.force-enabled", 0);
 user_pref("webgl.disabled", true);
 user_pref("webgl.disable-wgl", true);
 
-user_pref("browser.urlbar.trimHttps", true);
-user_pref("browser.urlbar.untrimOnUserInteraction.featureGate", true);
 user_pref("security.insecure_connection_text.enabled", true);
 user_pref("security.insecure_connection_text.pbmode.enabled", true);
 user_pref("browser.urlbar.update2.engineAliasRefresh", true);
