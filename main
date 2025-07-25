@@ -82,7 +82,7 @@ pkg_strap() {
     hyprpicker noto-fonts{,-extra} waybar brightnessctl xdg-user-dirs \
     lib32-vulkan-radeon lib32-mesa lib32-vulkan-mesa-layers bluez{,-utils} \
     iptables-nft pipewire{,-alsa,-pulse,-jack} wpa_supplicant sbctl \
-    ${fwpkglist}
+    cliphist wl-clipboard wl-clip-persist ${fwpkglist}
 }
 
 setup_chroot() {
