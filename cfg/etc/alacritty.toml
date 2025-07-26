@@ -5,6 +5,9 @@ dynamic_padding = true
 [mouse]
 hide_when_typing = true
 
+[terminal]
+osc52 = "OnlyCopy"
+
 [scrolling]
 history = 1000
 multiplier = 10
