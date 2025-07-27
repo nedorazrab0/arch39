@@ -26,8 +26,10 @@ setup_pacman() {
   pacmanconf="${pacmanconf}/etc/pacman.conf"
   curl -f -o /etc/pacman.conf "${pacmanconf}"
 
-  echo '- Waiting for reflector...'
-  systemctl start reflector
+  local mirrorconf
+  mirrorconf='https://raw.githubusercontent.com/nedorazrab0/arch39/main/cfg'
+  mirrorconf="${pacmanconf}/etc/pacman.d/mirrorlist"
+  curl -f -o /etc/pacman.d/mirrorlist "${mirrorconf}"
 
   pacman-key --init
   pacman-key --populate archlinux
@@ -76,7 +78,7 @@ pkg_strap() {
   mountpoint -q /var/cache/pacman/pkg && hostcache='-c'
   pacstrap ${hostcache} /mnt base linux-zen booster amd-ucode btrfs-progs \
     xfsprogs exfatprogs dosfstools gptfdisk android-tools git github-cli \
-    flatpak zram-generator micro zsh reflector gamescope mandoc less xxhash \
+    flatpak zram-generator micro zsh python gamescope mandoc less xxhash \
     pigz unzip hyprland polkit xdg-desktop-portal-{gtk,hyprland} mako \
     alacritty openssh openssl grim slurp hypridle hyprlock hyprsunset \
     hyprpicker noto-fonts{,-extra} waybar brightnessctl xdg-user-dirs \
