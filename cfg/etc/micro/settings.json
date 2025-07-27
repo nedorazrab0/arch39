@@ -7,6 +7,7 @@
   "mouse": false,
   "scrollbar": true,
   "sucmd": "kp",
+  "mkparents": true,
   "statusformatl": "==== $(filename) [$(line),$(col)] $(modified)",
   "statusformatr": "",
   "tabsize": 2,
