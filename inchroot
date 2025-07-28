@@ -4,7 +4,7 @@
 set -e
 
 usage() {
-  echo "usage: ${0##*/} [-h] -n USERNAME -p PASSWORD -t TIMEZONE [-l LAYOUT]"
+  echo "usage: ${0##*/} [-h] -n USERNAME -p PASSWORD -t TIMEZONE -l LAYOUT"
   echo
   echo 'system setup in chroot'
   echo
@@ -13,7 +13,7 @@ usage() {
   echo '  -n USERNAME  specify username'
   echo '  -p PASSWORD  specify password'
   echo '  -t TIMEZONE  specify timezone'
-  echo '  -l LAYOUT    specify keyboard layout (en is a default)'
+  echo '  -l LAYOUT    specify keyboard layout (e.g. us,ru)'
 
   exit "${1}"
 }
@@ -53,7 +53,7 @@ basic_setup() {
   echo "${username}:${password}" | chpasswd
 
   pacman -Scc --noconfirm
-  echo "\$layout = us,${layout}" > /etc/hypr/layout.conf
+  echo "\$layout = ${layout}" > /etc/hypr/layout.conf
 }
 
 main() {
