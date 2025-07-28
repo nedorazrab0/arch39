@@ -30,7 +30,7 @@ bootloader_setup() {
 systemd_units() {
   systemctl enable \
     systemd-networkd systemd-resolved systemd-networkd-persistent-storage \
-    systemd-timesyncd fstrim.timer
+    systemd-timesyncd bluetooth fstrim.timer
 
   systemctl mask sshd systemd-networkd-wait-online  
 }
