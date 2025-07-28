@@ -4,7 +4,7 @@
 set -e
 
 usage() {
-  echo "usage: ${0##*/} [-h] -n USERNAME -t TIMEZONE [-l LAYOUT] -f FIRMWARE"
+  echo "usage: ${0##*/} [-h] -n USERNAME -t TIMEZONE -l LAYOUT -f FIRMWARE"
   echo
   echo 'arch linux installer'
   echo
@@ -12,7 +12,7 @@ usage() {
   echo '  -h           show this help message and exit'
   echo '  -n USERNAME  specify username'
   echo '  -t TIMEZONE  specify timezone'
-  echo '  -l LAYOUT    specify keyboard layout (en is a default)'
+  echo '  -l LAYOUT    specify keyboard layout (e.g. us,ru)'
   echo '  -f FIRMWARE  specify a firmware list to install'
   echo
   echo "firmware list example: 'amdgpu realtek'"
