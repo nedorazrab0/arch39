@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+#
+# bluetoothctl alias
+set -e
+
+usage() {
+  echo "usage: ${0##*/} [-h] [-c] [-d]"
+  echo
+  echo 'bluetoothctl alias'
+  echo
+  echo 'options:'
+  echo '  -h  show this help message and exit'
+  echo '  -c  connect'
+  echo '  -d  disconnect'
+  echo
+  echo 'store your target mac addr to ~/.btmac.sh'
+
+  exit "${1}"
+}
+
+disconnect() {
+  bluetoothctl disconnect
+}
+
+connect() {
+  . "${HOME}/.btmac.sh"
+  bluetoothctl pair "${btmac}" || true
+  bluetoothctl connect "${btmac}"
+}
+
+main() {
+  ((${#} == 0)) && usage 1 >&2
+  case "${@}" in
+    -c) connect ;;
+    -d) disconnect ;;
+    -h) usage 0 ;;
+    *) usage 1 >&2 ;;
+  esac
+}
+
+main "${@}"
