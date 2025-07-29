@@ -16,19 +16,9 @@ usage() {
   exit "${1}"
 }
 
-check_command() {
-  local command="${1}"
-  if ! command -v "${command}" > /dev/null; then
-    echo "! ${command} command missing" >&2
-    exit 1
-  fi
-}
-
 main() {
   local OPTARG
   local arg
-
-  check_command iwctl
 
   if (($(id -u) != 0)); then
     echo '! Run this script as root'
@@ -46,14 +36,14 @@ main() {
     esac
   done
 
-  local password
-  local password="$(systemd-ask-password --echo=no --emoji=no)"
+  local passphrase
+  passphrase="$(systemd-ask-password --echo=no --emoji=no 'Passphrase')"
 
-  iwctl --passphrase "${password}" station "${iname}" connect "${ssid}"
+  systemctl enable --now iwd
+  iwctl --passphrase "${passphrase}" station "${iname}" connect "${ssid}"
   # Remove clear text password
   sed -i '/^Passphrase=./d' "/var/lib/iwd/${ssid}.psk"
 
-  systemctl enable --now iwd
   systemctl restart systemd-networkd
 }
 
