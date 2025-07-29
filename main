@@ -5,6 +5,7 @@ set -e
 
 usage() {
   echo "usage: ${0##*/} [-h] -n USERNAME -t TIMEZONE -l LAYOUT -f FIRMWARE"
+  
   echo
   echo 'arch linux installer'
   echo
@@ -13,9 +14,9 @@ usage() {
   echo '  -n USERNAME  specify username'
   echo '  -t TIMEZONE  specify timezone'
   echo '  -l LAYOUT    specify keyboard layout (e.g. us,ru)'
+  echo '  -d DISK      specify target disk (e.g. sda)'
   echo '  -f FIRMWARE  specify a firmware list to install'
-  echo
-  echo "firmware list example: 'amdgpu realtek'"
+  echo "               (e.g. 'amdgpu realtek')"
 
   exit "${1}"
 }
@@ -28,7 +29,7 @@ setup_pacman() {
 
   local mirrorconf
   mirrorconf='https://raw.githubusercontent.com/nedorazrab0/arch39/main/cfg'
-  mirrorconf="${pacmanconf}/etc/pacman.d/mirrorlist"
+  mirrorconf="${mirrorconf}/etc/pacman.d/mirrorlist"
   curl -f -o /etc/pacman.d/mirrorlist "${mirrorconf}"
 
   pacman-key --init
@@ -134,7 +135,7 @@ main() {
       n) local username="${OPTARG}" ;;
       t) local timezone="${OPTARG}" ;;
       l) local layout="${OPTARG}" ;;
-      b) local blk="${OPTARG}" ;;
+      d) local blk="${OPTARG}" ;;
       f) local fwlist="${OPTARG}" ;;
       h) usage 0 ;;
       *) usage 1 >&2 ;;
