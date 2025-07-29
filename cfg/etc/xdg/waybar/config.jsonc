@@ -27,6 +27,7 @@
     "format-ethernet": "eth",
     "format-linked": "{ifname}",
     "format-disconnected": "D/C",
+    "format-disabled": "blocked",
     "tooltip": false
   },
   "hyprland/language": {
