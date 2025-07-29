@@ -149,7 +149,7 @@ main() {
   setup_pacman
   disk_partition "${blk}"
   pkg_strap
-  setup_choot "${username}" "${password}" "${timezone}" "${layout}"
+  setup_chroot "${username}" "${password}" "${timezone}" "${layout}"
   end
 }
 
