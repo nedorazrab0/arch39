@@ -38,11 +38,12 @@ setup_pacman() {
 }
 
 disk_partition() {
-  local blk="/dev/${1}"
+  local rblk="${1}"
+  local blk="/dev/${blk}"
 
-  echo 'none' > "/sys/block/${blk}/queue/scheduler"
-  echo '128' > "/sys/block/${blk}/queue/nr_requests"
-  echo '2' > "/sys/block/${blk}/queue/rq_affinity"
+  echo 'none' > "/sys/block/${rblk}/queue/scheduler"
+  echo '128' > "/sys/block/${rblk}/queue/nr_requests"
+  echo '2' > "/sys/block/${rblk}/queue/rq_affinity"
 
   blkid "${blk}"*? && wipefs --all "${blk}"*?
   wipefs --all "${blk}"
