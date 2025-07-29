@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 #
-# wpa_passpharse alias
+# iwctl alias
 set -e
 
 usage() {
   echo "usage: ${0##*/} [-h] -i INAME -n SSID"
   echo
-  echo 'wpa_passphrase alias'
+  echo 'iwctl alias'
   echo
   echo 'options:'
   echo '  -h        show this help message and exit'
@@ -28,7 +28,7 @@ main() {
   local OPTARG
   local arg
 
-  check_command wpa_passphrase
+  check_command iwctl
 
   if (($(id -u) != 0)); then
     echo '! Run this script as root'
@@ -46,22 +46,14 @@ main() {
     esac
   done
 
-  if ! networkctl list "${iname}"; then
-    echo '! Invalid interface name' >&2
-    exit 1
-  fi
+  local password
+  local password="$(systemd-ask-password --echo=no --emoji=no)"
 
-  echo '- Password:'
-  stty -echo  # Do not expose the password
-  read -r password
-  stty echo
+  iwctl --passphrase "${password}" station "${iname}" connect "${ssid}"
+  # Remove clear text password
+  sed -i '/^Passphrase=./d' "/var/lib/iwd/${ssid}.psk"
 
-  local cfg="/etc/wpa_supplicant/wpa_supplicant-${iname}.conf"
-  touch "${cfg}"
-  chmod 600 "${cfg}"
-  echo 'ctrl_interface=/run/wpa_supplicant' > "${cfg}"
-  wpa_passphrase "${ssid}" "${password}" | sed '/.#psk="..*"$/d' >> "${cfg}"
-  systemctl enable --now "wpa_supplicant@${iname}"
+  systemctl enable --now iwd
   systemctl restart systemd-networkd
 }
 
