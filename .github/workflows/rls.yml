@@ -11,7 +11,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Delete old release
-        run: gh release delete test --cleanup-tag -y || true
+        run: gh release delete rolling --cleanup-tag -y || true
         env:
           GH_TOKEN: ${{ github.token }}
 
@@ -40,6 +40,6 @@ jobs:
       - name: Release
         run: |
           printf "XXH128:\n\`${xxh}\`" \
-            | gh release create test ./arch39.tar.lz4 -F-
+            | gh release create rolling ./arch39.tar.lz4 -F-
         env:
           GH_TOKEN: ${{ github.token }}
