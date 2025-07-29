@@ -75,15 +75,15 @@ pkg_strap() {
 
   # NOTE: lib32-mesa, lib32-vulkan-radeon and lib32-vulkan-mesa-layers
   # are important for gamescope!!
-  mountpoint -q /var/cache/pacman/pkg && hostcache='-c'
+  mountpoint -q /var/cache/pacman/pkg && local hostcache='-c'
   pacstrap ${hostcache} /mnt base linux-zen booster amd-ucode btrfs-progs \
     xfsprogs exfatprogs dosfstools gptfdisk android-tools git github-cli \
-    flatpak zram-generator micro zsh python gamescope mandoc less xxhash \
+    flatpak zram-generator micro zsh python gamescope mandoc less \
     pigz unzip hyprland polkit xdg-desktop-portal-{gtk,hyprland} mako \
-    alacritty openssh openssl grim slurp hypridle hyprlock hyprsunset \
+    alacritty openssh grim slurp hypridle hyprlock hyprsunset \
     hyprpicker noto-fonts{,-extra} waybar brightnessctl xdg-user-dirs \
     lib32-vulkan-radeon lib32-mesa lib32-vulkan-mesa-layers bluez{,-utils} \
-    iptables-nft pipewire{,-alsa,-pulse,-jack} wpa_supplicant sbctl \
+    iptables-nft pipewire{,-alsa,-pulse,-jack} iwd sbctl \
     wl-clipboard wl-clip-persist ${fwpkglist}
 }
 
