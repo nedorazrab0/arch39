@@ -41,6 +41,8 @@ disk_partition() {
   local rblk="${1}"
   local blk="/dev/${blk}"
 
+  mountpoint -q /mnt && umount -R /mnt
+
   echo 'none' > "/sys/block/${rblk}/queue/scheduler"
   echo '128' > "/sys/block/${rblk}/queue/nr_requests"
   echo '2' > "/sys/block/${rblk}/queue/rq_affinity"
