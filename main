@@ -150,7 +150,7 @@ main() {
 
   setup_pacman
   disk_partition "${blk}"
-  pkg_strap
+  pkg_strap "${fwlist}"
   setup_chroot "${username}" "${password}" "${timezone}" "${layout}"
   end
 }
