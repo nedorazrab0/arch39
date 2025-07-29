@@ -130,7 +130,7 @@ main() {
 
   # Parse args
   ((${#} == 0)) && usage 1 >&2
-  while getopts 'hn:t:l:b:f:' arg; do
+  while getopts 'hn:t:l:d:f:' arg; do
     case "${arg}" in
       n) local username="${OPTARG}" ;;
       t) local timezone="${OPTARG}" ;;
