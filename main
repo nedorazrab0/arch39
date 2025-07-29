@@ -4,8 +4,8 @@
 set -e
 
 usage() {
-  echo "usage: ${0##*/} [-h] -n USERNAME -t TIMEZONE -l LAYOUT -f FIRMWARE"
-  
+  echo "usage: ${0##*/} [-h] -n USERNAME -t TIMEZONE -l LAYOUT -d DISK"
+  echo '  -f FIRMWARE'
   echo
   echo 'arch linux installer'
   echo
