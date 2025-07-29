@@ -38,7 +38,7 @@ setup_pacman() {
 }
 
 disk_partition() {
-  local blk="${1}"
+  local blk="/dev/${1}"
 
   echo 'none' > "/sys/block/${blk}/queue/scheduler"
   echo '128' > "/sys/block/${blk}/queue/nr_requests"
