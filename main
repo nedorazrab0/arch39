@@ -99,6 +99,23 @@ setup_chroot() {
   umount -v /mnt/mnt
 }
 
+ask-password() {
+  echo '- Enter a new password'
+  local password1
+  password1="$(systemd-ask-password --echo=no --emoji=no)"
+
+  echo '- Retype the password'
+  local password2
+  password2="$(systemd-ask-password --echo=no --emoji=no)"
+
+  if [[ "${password1}" == "${password2}" ]]; then
+    echo "${password1}"
+  else
+    echo '! The passwords do not match' >&2
+    exit 1
+  fi
+}
+
 end() {
   echo '- Wonderhoy! ^^'
   sleep 2
@@ -124,11 +141,8 @@ main() {
     esac
   done
 
-  echo '- Password:'
-  stty -echo  # Do not expose the password
   local password
-  read -r password
-  stty echo
+  password="$(ask-password)"
 
   setup_pacman
   disk_partition "${blk}"
