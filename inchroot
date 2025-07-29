@@ -62,7 +62,7 @@ main() {
 
   # Parse args
   ((${#} == 0)) && usage 1 >&2
-  while getopts 'hu:p:t:l:' arg; do
+  while getopts 'hn:p:t:l:' arg; do
     case "${arg}" in
       n) local username="${OPTARG}" ;;
       p) local password="${OPTARG}" ;;
