@@ -101,13 +101,13 @@ setup_chroot() {
 }
 
 ask-password() {
-  echo '- Enter a new password'
   local password1
-  password1="$(systemd-ask-password --echo=no --emoji=no)"
+  password1="$(systemd-ask-password --echo=no \
+    --emoji=no 'Enter a new password')"
 
-  echo '- Retype the password'
   local password2
-  password2="$(systemd-ask-password --echo=no --emoji=no)"
+  password2="$(systemd-ask-password --echo=no \
+    --emoji=no 'Retype the password')"
 
   if [[ "${password1}" == "${password2}" ]]; then
     echo "${password1}"
