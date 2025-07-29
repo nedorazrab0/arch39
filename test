@@ -36,7 +36,13 @@ main() {
   local mainarc='https://github.com/nedorazrab0/arch39/releases/download'
   mainarc="${mainarc}/test/arch39.tar.lz4"
   curl -fL "${mainarc}" | lz4 -dvc | bsdtar -x -C "${tmp}"
-  echo "${tmp}"
+
+  if [[ -f "${tmp}/main" ]]; then
+    echo "${tmp}/main"
+  else
+    echo '! Try downloading again' >&2
+    exit 1
+  fi
 }
 
 main
