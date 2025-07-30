@@ -21,7 +21,7 @@ main() {
     exit 1
   fi
 
-  [[ "${@}" = '-h' ]] && usage 0
+  [[ "${command}" = '-h' ]] && usage 0
 
   echo '- RUN0'
   run0 --pty --pipe --setenv='EDITOR' --background='' \
