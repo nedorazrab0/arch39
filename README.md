@@ -25,6 +25,8 @@ arch linux installer
 1) I did it for myself
 2) amd + ssd only
 3) clean install only
+4) Make sure you are in [setup mode](https://wiki.archlinux.org/title/Unified_Extensible_Firmware_Interface/Secure_Boot#Putting_firmware_in_%22Setup_Mode%22)
+or cleared your Secure Boot keys
 
 Enter this code in your archiso to download the [installation script](./main):
 
