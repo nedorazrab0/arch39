@@ -9,6 +9,7 @@ arch linux installer
 - [systemd-boot configs](./cfg/boot/loader)
 - [hyprland configs](./cfg/etc/hypr)
 - [micro configs](./cfg/etc/micro)
+- [firefox user.js](./cfg/etc/skel/.var/app/net.waterfox.waterfox/.waterfox/arch39/user.js)
 - [sysctl configs](./cfg/etc/sysctl.d)
 - [systemd configs](./cfg/etc/systemd)
 - [udev rules](./cfg/etc/udev/rules.d)
