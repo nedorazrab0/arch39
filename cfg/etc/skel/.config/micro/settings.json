@@ -1,7 +1,7 @@
 {
   "clipboard": "external",
   "colorscheme": "arch39",
-  "diffgutter": true,
+  "diffgutter": false,
   "infobar": false,
   "parsecursor": true,
   "mouse": false,
