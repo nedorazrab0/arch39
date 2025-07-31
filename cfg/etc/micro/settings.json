@@ -9,7 +9,7 @@
   "sucmd": "kp",
   "mkparents": true,
   "statusformatl": "==== $(filename) [$(line),$(col)] $(modified)",
-  "statusformatr": "",
+  "statusformatr": "micro ",
   "tabsize": 2,
   "tabstospaces": true,
   "*.py": {
