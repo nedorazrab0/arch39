@@ -3,7 +3,7 @@
   "colorscheme": "arch39",
   "diffgutter": false,
   "infobar": false,
-  "parsecursor": true,
+  "parsecursor": false,
   "mouse": false,
   "scrollbar": true,
   "sucmd": "kp",
