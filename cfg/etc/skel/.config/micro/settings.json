@@ -1,5 +1,5 @@
 {
-  "clipboard": "external",
+  "clipboard": "terminal",
   "colorscheme": "arch39",
   "diffgutter": false,
   "infobar": false,
