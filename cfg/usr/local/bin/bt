@@ -24,6 +24,7 @@ disconnect() {
 
 connect() {
   . "${HOME}/.btmac.sh"
+  bluetoothctl scan on
   bluetoothctl pair "${btmac}" || true
   bluetoothctl connect "${btmac}"
 }
