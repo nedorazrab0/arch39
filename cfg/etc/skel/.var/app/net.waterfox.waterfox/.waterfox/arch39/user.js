@@ -142,13 +142,13 @@ user_pref("browser.urlbar.placeholderName.private", "GGL");
 user_pref("browser.policies.runOncePerModification.setDefaultSearchEngine",
     "Google");
 user_pref("browser.policies.runOncePerModification.removeSearchEngines",
-    ["Startpage","Bing","Mojeek","Yahoo!","DuckDuckGo","Qwant","Ecosia"]);
+    ["Startpage","Bing","Mojeek","Yahoo!","Qwant","Ecosia"]);
 user_pref("browser.policies.runOncePerModification.extensionsInstall",
     ["https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi",
      "https://addons.mozilla.org/firefox/downloads/latest/decentraleyes/latest.xpi",
      "https://addons.mozilla.org/firefox/downloads/latest/darkreader/latest.xpi",]);
 user_pref("browser.policies.runOncePerModification.extensionsUninstall",
-    ["bing@search.waterfox.net","ddg@search.waterfox.net","ecosia@search.waterfox.net",
+    ["bing@search.waterfox.net","ecosia@search.waterfox.net",
      "mojeek@search.waterfox.net","qwant@search.waterfox.net","startpage@search.waterfox.net",
      "yahoo@search.waterfox.net"]);
 
