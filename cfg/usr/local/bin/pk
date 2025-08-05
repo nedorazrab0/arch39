@@ -89,7 +89,7 @@ main() {
     k) flatpak kill "$(local_search ${num})" ;;
     s) remote_search "${req}" ;;
     l) local_search ;;
-    *) usage 1 >&2
+    *) usage 1 >&2 ;;
   esac
 }
 
