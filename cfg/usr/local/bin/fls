@@ -53,7 +53,7 @@ main() {
   local dd_opts="iflag=fullblock ibs=4M obs=256K conv=fsync"
   case "${cmd}" in
     p) dd if="${path}" of="${blk}" ${dd_opts} ;;
-    u) curl -ZLf "${url}" | dd of="${blk}" ${dd_opts} ;;
+    u) curl -ZLf -- "${url}" | dd of="${blk}" ${dd_opts} ;;
     *) usage 1 >&2
   esac
 }
