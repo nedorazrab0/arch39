@@ -32,7 +32,7 @@ or cleared your Secure Boot keys
 Enter this code in your archiso to download the [installation script](./main):
 
 ```shell
-bash -c "$(curl -f 'https://raw.githubusercontent.com/nedorazrab0/arch39/main/ins')"
+bash -c "$(curl -f -- 'https://raw.githubusercontent.com/nedorazrab0/arch39/main/ins')"
 ```
 
 Then exec it
