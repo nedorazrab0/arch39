@@ -87,7 +87,7 @@ pkg_strap() {
     alacritty openssh grim slurp hypridle hyprlock hyprsunset \
     hyprpicker noto-fonts{,-extra} waybar brightnessctl xdg-user-dirs \
     lib32-vulkan-radeon lib32-mesa lib32-vulkan-mesa-layers bluez{,-utils} \
-    iptables-nft pipewire{,-alsa,-pulse,-jack} iwd sbctl \
+    iptables-nft pipewire{,-alsa,-pulse,-jack} iwd sbctl uwsm \
     wl-clipboard wl-clip-persist ${fwpkglist}
 }
 
