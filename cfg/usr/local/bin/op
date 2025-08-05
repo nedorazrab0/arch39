@@ -14,7 +14,7 @@ usage() {
   echo '  -g     generate ssh keys'
   echo '  -u     connect to ip'
   echo '  -k     copy the pub key to ip'
-  echo '  -c     clean known_hosts'
+  echo '  -c     clear known_hosts'
   echo '  -i     get file from ip'
   echo '  -o     send file to ip'
   echo '  -f     specify file to copy'
