@@ -8,15 +8,15 @@ configure_system() {
 
   local sysctlconf='https://raw.githubusercontent.com/nedorazrab0/arch39'
   sysctlconf="${sysctlconf}/main/cfg/etc/sysctl.d/99-cust.conf"
-  curl -f "${sysctlconf}" | sysctl -q -p - || true
+  curl -f -- "${sysctlconf}" | sysctl -q -p - || true
 
   local resolvedconf='https://raw.githubusercontent.com/nedorazrab0/arch39'
   resolvedconf="${resolvedconf}/main/cfg/etc/systemd/resolved.conf.d/cust.conf"
-  curl -f "${resolvedconf}" -o /etc/systemd/resolved.conf.d/cust.conf
+  curl -f -- "${resolvedconf}" -o /etc/systemd/resolved.conf.d/cust.conf
 
   local ntpconf='https://raw.githubusercontent.com/nedorazrab0/arch39/main'
   ntpconf="${ntpconf}/cfg/etc/systemd/timesyncd.conf.d/ntp.conf"
-  curl -f "${ntpconf}" -o /etc/systemd/timesyncd.conf.d/ntp.conf
+  curl -f -- "${ntpconf}" -o /etc/systemd/timesyncd.conf.d/ntp.conf
 
   systemctl restart systemd-{timesyncd,resolved,networkd}
 }
@@ -35,7 +35,7 @@ main() {
 
   local mainarc='https://github.com/nedorazrab0/arch39/releases/download'
   mainarc="${mainarc}/rolling/arch39.tar.lz4"
-  curl -fL "${mainarc}" | lz4 -dvc | bsdtar -x -C "${tmp}"
+  curl -fL -- "${mainarc}" | lz4 -dvc | bsdtar -x -C "${tmp}"
 
   if [[ -f "${tmp}/main" ]]; then
     echo "${tmp}/main"
