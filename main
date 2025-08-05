@@ -25,12 +25,12 @@ setup_pacman() {
   local pacmanconf
   pacmanconf='https://raw.githubusercontent.com/nedorazrab0/arch39/main/cfg'
   pacmanconf="${pacmanconf}/etc/pacman.conf"
-  curl -f -o /etc/pacman.conf "${pacmanconf}"
+  curl -f -o /etc/pacman.conf -- "${pacmanconf}"
 
   local mirrorconf
   mirrorconf='https://raw.githubusercontent.com/nedorazrab0/arch39/main/cfg'
   mirrorconf="${mirrorconf}/etc/pacman.d/mirrorlist"
-  curl -f -o /etc/pacman.d/mirrorlist "${mirrorconf}"
+  curl -f -o /etc/pacman.d/mirrorlist -- "${mirrorconf}"
 
   pacman-key --init
   pacman-key --populate archlinux
