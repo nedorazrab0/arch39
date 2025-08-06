@@ -3,7 +3,7 @@
 # Elevate privileges
 
 usage() {
-  echo "usage: ${0##*/} [-h] [COMMAND]"
+  echo "usage: ${0##*/} [-h] COMMAND"
   echo
   echo 'elevate privileges'
   echo
@@ -17,10 +17,11 @@ main() {
   local command="${@}"
 
   if ! command -v run0 > /dev/null; then
-    echo '! `run0` command missing' >&2
+    echo '! run0 command missing' >&2
     exit 1
   fi
 
+  ((${#} == 0)) && usage 1 >&2
   [[ "${command}" = '-h' ]] && usage 0
 
   echo '- RUN0'
