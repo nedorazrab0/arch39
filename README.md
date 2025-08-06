@@ -15,7 +15,7 @@ arch linux installer
 - [udev rules](./cfg/etc/udev/rules.d)
 - [bluez config](./cfg/etc/wireplumber/wireplumber.conf.d/bluez.conf)
 - [waybar configs](./cfg/etc/xdg/waybar)
-- [zsh configs](./cfg/etc/zsh)
+- [zshrc](./cfg/etc/zsh/zshrc)
 - [alacritty config](./cfg/etc/alacritty.toml)
 - [pacman config](./cfg/etc/pacman.conf)
 - [pacman mirrorlist](./cfg/etc/pacman.d/mirrorlist)
