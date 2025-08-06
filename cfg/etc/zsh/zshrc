@@ -6,9 +6,10 @@ conf() {
   zle -N zrh
   autoload -Uz compinit
   compinit -C
+  compdef _pacman_zsh_comp pm
   compdef _command kp c
-  compdef _pacman pm
   zstyle ':completion:*' menu select
+  unsetopt prompt_cr
   setopt interactivecomments
   setopt rm_star_silent
 
@@ -20,10 +21,10 @@ conf() {
 
   bindkey '^[[H' beginning-of-line
   bindkey '^[[F' end-of-line
-  bindkey '^[l' clear-screen
   bindkey '^[[3~' delete-char
   bindkey '^[[5~' backward-word
   bindkey '^[[6~' forward-word
+  bindkey '^[l' clear-screen
   bindkey '^[u' zrh
 }
 
