@@ -6,7 +6,6 @@ conf() {
   zle -N zrh
   autoload -Uz compinit
   compinit -C
-  compdef _pacman_zsh_comp pm
   compdef _command kp c
   zstyle ':completion:*' menu select
   unsetopt prompt_cr
