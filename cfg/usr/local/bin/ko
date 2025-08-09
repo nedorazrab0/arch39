@@ -20,7 +20,7 @@ main() {
   [[ "${@}" == '-h' ]] && usage 0
   ((${#} == 0)) && usage 1 >&2
 
-  SDL_VIDEODRIVER='wayland' LD_PRELOAD='' gamescope -w640 -h360 -o1 -s0.5 -b \
+  SDL_VIDEODRIVER='wayland' LD_PRELOAD='' gamescope -w640 -h360 -s0.5 -b \
     --rt --force-grab-cursor --backend=sdl \
     --sharpness=0 -S stretch -F nis -- ${command}
 }
