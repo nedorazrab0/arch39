@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+#
+# ffmpeg alias
+set -e
+
+usage() {
+  echo "usage: ${0##*/} [-h] [-i FILE] [-o FILE] [-O OPTIONS]"
+  echo
+  echo 'ffmpeg alias'
+  echo
+  echo 'options:'
+  echo '  -h          show this help message and exit'
+  echo '  -i FILE     specify input file'
+  echo '  -o FILE     specify output file'
+  echo '  -O OPTIONS  specify ffmpeg options'
+
+  exit "${1}"
+}
+
+main() {
+  local OPTARG
+  local arg
+
+  # Parse args
+  ((${#} == 0)) && usage 1 >&2
+  while getopts 'hi:o:O:' arg; do
+    case "${arg}" in
+      i) local input="${OPTARG}" ;;
+      o) local output="${OPTARG}" ;;
+      O) local ffoptions="${OPTARG}" ;;
+      h) usage 0 ;;
+      *) usage 1 >&2 ;;
+    esac
+  done
+
+  # https://docs.flatpak.org/en/latest/flatpak-command-reference.html
+  flatpak run --command=ffmpeg --file-forwarding -- org.freedesktop.Platform \
+    -hide_banner -i @@ "${input}" @@ ${ffoptions} -- - > "${output}"
+}
+
+main "${@}"
