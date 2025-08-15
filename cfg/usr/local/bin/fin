@@ -27,8 +27,9 @@ main() {
   gsettings set org.gnome.desktop.interface cursor-blink false
   gsettings set org.gnome.desktop.wm.preferences button-layout 'menu:'
 
-  flatpak install flathub org.inkscape.Inkscape org.onlyoffice.desktopeditors \
-    io.mpv.Mpv net.waterfox.waterfox --noninteractive
+  flatpak install flathub org.inkscape.Inkscape \
+    org.onlyoffice.desktopeditors io.mpv.Mpv net.waterfox.waterfox \
+    io.github.spacingbat3.webcord org.telegram.desktop --noninteractive
 }
 
 main "${@}"
