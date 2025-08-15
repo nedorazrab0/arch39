@@ -29,7 +29,7 @@ main() {
 
   flatpak install flathub org.inkscape.Inkscape \
     org.onlyoffice.desktopeditors io.mpv.Mpv net.waterfox.waterfox \
-    io.github.spacingbat3.webcord org.telegram.desktop --noninteractive
+    dev.vencord.Vesktop org.telegram.desktop --noninteractive
 }
 
 main "${@}"
