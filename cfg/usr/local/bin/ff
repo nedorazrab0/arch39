@@ -4,7 +4,8 @@
 set -e
 
 usage() {
-  echo "usage: ${0##*/} [-h] [-i FILE] [-o FILE] [-f FORMAT] [-O OPTIONS]"
+  echo "usage: ${0##*/} [-h] [-i FILE] [-o FILE] [-f FORMAT]  [-I OPTIONS]"
+  echo '  [-O OPTIONS]'
   echo
   echo 'ffmpeg alias'
   echo
@@ -13,7 +14,8 @@ usage() {
   echo '  -i FILE     specify input file'
   echo '  -o FILE     specify output file'
   echo '  -f FORMAT   specify output format'
-  echo '  -O OPTIONS  specify ffmpeg options'
+  echo '  -I OPTIONS  specify input options'
+  echo '  -O OPTIONS  specify output options'
 
   exit "${1}"
 }
@@ -24,12 +26,13 @@ main() {
 
   # Parse args
   ((${#} == 0)) && usage 1 >&2
-  while getopts 'hi:o:f:O:' arg; do
+  while getopts 'hi:o:f:I:O:' arg; do
     case "${arg}" in
       i) local input="${OPTARG}" ;;
       o) local output="${OPTARG}" ;;
       f) local format="${OPTARG}" ;;
-      O) local ffoptions="${OPTARG}" ;;
+      I) local in_opts="${OPTARG}" ;;
+      O) local out_opts="${OPTARG}" ;;
       h) usage 0 ;;
       *) usage 1 >&2 ;;
     esac
@@ -37,8 +40,8 @@ main() {
 
   # https://docs.flatpak.org/en/latest/flatpak-command-reference.html
   flatpak run --command=ffmpeg --file-forwarding -- org.freedesktop.Platform \
-    -hide_banner -i @@ "${input}" @@ ${ffoptions} -f "${format}" -- - \
-    > "${output}"
+    -hide_banner ${in_opts} -i @@ "${input}" @@ ${out_opts} -f "${format}" \
+    -- - > "${output}"
 }
 
 main "${@}"
