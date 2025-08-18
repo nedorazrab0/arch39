@@ -135,6 +135,9 @@ user_pref("sidebar.visibility", "hide-sidebar");
 user_pref("browser.contentblocking.fingerprinting.preferences.ui.enabled", false);
 user_pref("browser.urlbar.trimHttps", true);
 user_pref("browser.urlbar.untrimOnUserInteraction.featureGate", true);
+user_pref("media.navigator.mediadatadecoder_h264_enabled", true);
+user_pref("media.ffmpeg.enabled", true);
+
 
 user_pref("browser.policies.applied", true);
 user_pref("browser.urlbar.placeholderName", "GGL");
@@ -142,13 +145,13 @@ user_pref("browser.urlbar.placeholderName.private", "GGL");
 user_pref("browser.policies.runOncePerModification.setDefaultSearchEngine",
     "Google");
 user_pref("browser.policies.runOncePerModification.removeSearchEngines",
-    ["Startpage","Bing","Mojeek","Yahoo!","Qwant","Ecosia"]);
+    ["Startpage","Bing","Mojeek","Yahoo!","DuckDuckGo","Qwant","Ecosia"]);
 user_pref("browser.policies.runOncePerModification.extensionsInstall",
     ["https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi",
      "https://addons.mozilla.org/firefox/downloads/latest/decentraleyes/latest.xpi",
      "https://addons.mozilla.org/firefox/downloads/latest/darkreader/latest.xpi",]);
 user_pref("browser.policies.runOncePerModification.extensionsUninstall",
-    ["bing@search.waterfox.net","ecosia@search.waterfox.net",
+    ["bing@search.waterfox.net","ddg@search.waterfox.net","ecosia@search.waterfox.net",
      "mojeek@search.waterfox.net","qwant@search.waterfox.net","startpage@search.waterfox.net",
      "yahoo@search.waterfox.net"]);
 
