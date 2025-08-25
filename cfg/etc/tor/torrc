@@ -1,0 +1,41 @@
+# https://support.torproject.org/tbb/tbb-editing-torrc/
+User tor
+
+#UseBridges 1
+#Bridge
+#Bridge
+
+#AutomapHostsOnResolve 1
+BandwidthBurst 2097152000
+BandwidthRate 2097152000
+RelayBandwidthBurst 2097152000
+RelayBandwidthRate 2097152000
+CircuitBuildTimeout 4
+CircuitPriorityHalflife 16.000000
+ClientOnly 1
+DisableDebuggerAttachment 0
+DownloadExtraInfo 1
+ConstrainedSockSize 16384
+DirReqStatistics 0
+
+#EntryNodes {ru},{by},{fi},{kz}
+MiddleNodes {ru},{by},{fi},{kz}
+ExitNodes {ru},{by},{fi},{kz}
+
+StrictNodes 1
+FetchDirInfoEarly 1
+FetchDirInfoExtraEarly 1
+FetchUselessDescriptors 1
+
+KeepalivePeriod 60
+LongLivedPorts 80,443
+MaxCircuitDirtiness 1600
+MaxClientCircuitsPending 128
+NumCPUs 4
+NumDirectoryGuards 32
+NumEntryGuards 128
+TokenBucketRefillInterval 1000
+UseMicrodescriptors 1
+
+Log notice syslog
+DataDirectory /var/lib/tor
