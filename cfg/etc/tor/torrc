@@ -31,7 +31,7 @@ KeepalivePeriod 60
 LongLivedPorts 80,443
 MaxCircuitDirtiness 1600
 MaxClientCircuitsPending 128
-NumCPUs 4
+NumCPUs 0
 NumDirectoryGuards 32
 NumEntryGuards 128
 TokenBucketRefillInterval 1000
