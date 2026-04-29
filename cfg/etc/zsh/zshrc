@@ -1,22 +1,23 @@
-zrh() {
+# Customize zsh
+
+zsh_rehash() {
   rehash
 }
 
-conf() {
-  zle -N zrh
-  autoload -Uz compinit
-  compinit -C
-  compdef _command kp c
-  zstyle ':completion:*' menu select
+customize() {
+  local new_line=$'\n'
+  (($(id -u) == 0)) && local is_root='[ROOT] '
+  PROMPT="%B%F{#99ccff}%? ${is_root}%F{#ffdd44}%~${new_line}%#%b%f "
+
   unsetopt prompt_cr
   setopt interactivecomments
   setopt rm_star_silent
 
-  local n=$'\n'
-  (($(id -u) == 0)) && local ifroot='[ROOT] '
-
-  PROMPT="%B%F{#f2074d}%#%? ${ifroot}%F{#33ccbb}%d%F{nocolor}${n}%b  "
-  RPROMPT='%B%F{#33ccbb}%n@%M%F{nocolor}%b'
+  autoload -Uz compinit
+  compinit -C
+  compdef _command kp c
+  zstyle ':completion:*' menu select
+  zle -N zsh_rehash
 
   bindkey '^[[H' beginning-of-line
   bindkey '^[[F' end-of-line
@@ -24,17 +25,21 @@ conf() {
   bindkey '^[[5~' backward-word
   bindkey '^[[6~' forward-word
   bindkey '^[l' clear-screen
-  bindkey '^[u' zrh
+  bindkey '^[u' zsh_rehash
+}
+
+set_env() {
+  export PYTHON_HISTORY='/dev/null'
+  export LANG='en_US.UTF-8'
+  export EDITOR='nano'
+  export PAGER='less'
 }
 
 main() {
-  # If not running interactively, do not do anything
-  [[ "${-}" != *i* ]] && return
-
-  # Prevent double sourcing
-  if [[ -z "${ZSHRCSOURCED}" ]]; then
-    ZSHRCSOURCED='Y'
-    conf
+  if [[ -o interactive && -z "${ZSHRC_USED}" ]]; then
+    ZSHRC_USED=1
+    set_env
+    customize
   fi
 }
 
