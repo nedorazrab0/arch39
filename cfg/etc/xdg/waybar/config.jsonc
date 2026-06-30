@@ -13,7 +13,6 @@
     "clock",
   ],
   "modules-right": ["hyprland/window"],
-
   "hyprland/window": {
     "format": "{class}"
   },
@@ -48,7 +47,7 @@
     "format-plugged": "{capacity}%",
     "format-alt": "{time}",
     "states": {
-      "critical": 25
+      "critical": 30
     },
     "tooltip": false
   },
