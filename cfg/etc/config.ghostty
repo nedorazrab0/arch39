@@ -1,0 +1,50 @@
+font-size = 14
+
+shell-integration = zsh
+shell-integration-features = no-cursor
+window-padding-balance = true
+window-theme = ghostty
+palette-generate = false
+
+cursor-color = ffffff
+background = 101020
+foreground = b2b2b2
+
+palette = 0=101020
+palette = 1=ff9393
+palette = 2=28cc28
+palette = 3=b8b810
+palette = 4=aaaafd
+palette = 5=ff80ff
+palette = 6=10c5c5
+palette = 7=b2b2b2
+palette = 8=787878
+palette = 9=ff9393
+palette = 10=28cc28
+palette = 11=b8b810
+palette = 12=aaaafd
+palette = 13=ff80ff
+palette = 14=10c5c5
+palette = 15=b2b2b2
+
+cursor-style-blink = false
+cursor-click-to-move = false
+mouse-hide-while-typing = true
+
+window-decoration = none
+gtk-tabs-location = hidden
+faint-opacity = 1.0
+
+selection-clear-on-typing = true
+selection-clear-on-copy = false
+mouse-shift-capture = never
+mouse-scroll-multiplier = precision:1,discrete:4
+confirm-close-surface = false
+
+scrollback-limit = 2048
+link-previews = false
+mouse-reporting = false
+clipboard-read = deny
+image-storage-limit = 0
+copy-on-select = false
+auto-update = off
