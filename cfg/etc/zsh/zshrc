@@ -7,7 +7,7 @@ zsh_rehash() {
 customize() {
   local new_line=$'\n'
   (($(id -u) == 0)) && local is_root='[ROOT] '
-  PROMPT="%B%F{#99ccff}%? ${is_root}%F{#ffdd44}%~${new_line}%#%b%f "
+  PROMPT="%F{#99ccff}%? ${is_root}%F{#ffdd44}%~${new_line}%#%f "
 
   unsetopt prompt_cr
   setopt interactivecomments
