@@ -12,18 +12,12 @@ usage() {
   echo '  -h  show this help message and exit'
   echo '  -c  connect'
   echo '  -d  disconnect'
-  echo
-  echo 'store your target mac addr to ~/.btmac.sh'
-
   exit "${1}"
 }
 
-disconnect() {
-  bluetoothctl disconnect
-}
-
 connect() {
-  . "${HOME}/.btmac.sh"
+  local mac_addr
+  mac_addr="$(cat ${HOME/.mac_addr})"
   bluetoothctl scan on
   bluetoothctl pair "${btmac}" || true
   bluetoothctl connect "${btmac}"
@@ -33,7 +27,7 @@ main() {
   ((${#} == 0)) && usage 1 >&2
   case "${@}" in
     -c) connect ;;
-    -d) disconnect ;;
+    -d) bluetoothctl disconnect ;;
     -h) usage 0 ;;
     *) usage 1 >&2 ;;
   esac
