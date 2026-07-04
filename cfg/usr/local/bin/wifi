@@ -10,9 +10,8 @@ usage() {
   echo
   echo 'options:'
   echo '  -h        show this help message and exit'
-  echo '  -i INAME  specify interface name'
-  echo '  -n SSID   specify a SSID'
-
+  echo '  -i INAME  set an interface name'
+  echo '  -n SSID   set a SSID'
   exit "${1}"
 }
 
@@ -36,14 +35,10 @@ main() {
     esac
   done
 
-  local passphrase
-  passphrase="$(systemd-ask-password --echo=no --emoji=no 'Passphrase')"
-
   systemctl enable --now iwd
-  iwctl --passphrase "${passphrase}" station "${iname}" connect "${ssid}"
-  # Remove clear text password
+  iwctl station "${iname}" connect "${ssid}"
+  # Remove the plain text passphrase
   sed -i '/^Passphrase=./d' "/var/lib/iwd/${ssid}.psk"
-
   systemctl restart systemd-networkd
 }
 
