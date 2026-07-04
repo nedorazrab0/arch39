@@ -1,16 +1,15 @@
 #!/usr/bin/env bash
 #
-# Run hyprland with custom config
+# Run hyprland
 set -e
 
 usage() {
   echo "usage: ${0##*/} [-h]"
   echo
-  echo 'run hyprland with custom config'
+  echo 'run hyprland'
   echo
   echo 'options:'
   echo '  -h  show this help message and exit'
-
   exit "${1}"
 }
 
@@ -18,7 +17,8 @@ main() {
   [[ "${@}" == '-h' ]] && usage 0
   ((${#} != 0)) && usage 1 >&2
 
-  exec -- Hyprland -c /etc/hypr/hyprland.conf
+  start-hyprland -- -c /etc/hypr/hyprland.lua
 }
 
 main "${@}"
+    
