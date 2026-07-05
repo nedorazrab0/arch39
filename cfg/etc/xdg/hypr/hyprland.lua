@@ -53,9 +53,7 @@ hl.on(
 hl.on(
     "hyprland.shutdown",
     function()
-        os.execute(
-            "systemctl --user stop hyprland-session.target && sleep 1"
-        )
+        os.execute("systemctl --user stop hyprland-session.target && sleep 1")
     end
 )
 
