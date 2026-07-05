@@ -17,7 +17,7 @@ main() {
   [[ "${@}" == '-h' ]] && usage 0
   ((${#} != 0)) && usage 1 >&2
 
-  start-hyprland -- -c /etc/hypr/hyprland.lua
+  start-hyprland -- -c /etc/xdg/hypr/hyprland.lua
 }
 
 main "${@}"
