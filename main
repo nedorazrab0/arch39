@@ -82,13 +82,13 @@ pkg_strap() {
   mountpoint -q /var/cache/pacman/pkg && local hostcache='-c'
   pacstrap ${hostcache} /mnt base linux-zen booster amd-ucode btrfs-progs \
     xfsprogs exfatprogs dosfstools gptfdisk android-tools git github-cli \
-    flatpak zram-generator micro zsh python gamescope mandoc less \
-    pigz unzip hyprland polkit xdg-desktop-portal-{gtk,hyprland} mako \
-    alacritty openssh grim slurp hypridle hyprlock hyprsunset \
-    hyprpicker noto-fonts{,-extra} waybar brightnessctl xdg-user-dirs \
+    flatpak zram-generator nano zsh python gamescope mandoc less \
+    unzip hyprland polkit xdg-desktop-portal-{gtk,hyprland} mako \
+    ghostty openssh grim slurp hypridle hyprlock \
+    waybar brightnessctl xdg-user-dirs \
     lib32-vulkan-radeon lib32-mesa lib32-vulkan-mesa-layers bluez{,-utils} \
-    iptables-nft pipewire{,-alsa,-pulse,-jack} iwd sbctl uwsm \
-    wl-clipboard wl-clip-persist torsocks ${fwpkglist}
+    iptables ttf-jetbrains-mono adwaita-fonts pipewire{,-pulse,-jack} iwd sbctl \
+    wl-clipboard wl-clip-persist ${fwpkglist}
 }
 
 setup_chroot() {
