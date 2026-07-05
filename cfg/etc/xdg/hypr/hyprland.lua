@@ -54,7 +54,7 @@ hl.on(
     "hyprland.shutdown",
     function()
         os.execute(
-            "systemctl --user stop hyprland-session.target && sleep 0.1"
+            "systemctl --user stop hyprland-session.target && sleep 1"
         )
     end
 )
@@ -141,15 +141,9 @@ hl.bind(
     mod .. " + F",
     hl.dsp.window.fullscreen({mode="fullscreen", action="toggle"})
 )
-hl.bind(
-    mod .. " + SPACE",
-    function ()
-        hl.dispatch(hl.dsp.exec_cmd(lock))
-        hl.dispatch(hl.dsp.exec_cmd("systemctl suspend"))
-    end
-)
 hl.bind(mod .. " + SHIFT + ALT_L", hl.dsp.exec_cmd('grim -l9 -g "$(slurp)"'))
 hl.bind(mod .. " + ALT_R", hl.dsp.exec_cmd("systemctl poweroff"))
+hl.bind(mod .. " + SPACE", hl.dsp.exec_cmd("systemctl suspend"))
 hl.bind(mod .. " + ALT_L", hl.dsp.exec_cmd("grim -l9"))
 hl.bind(mod .. " + M", hl.dsp.force_renderer_reload())
 hl.bind(mod .. " + SHIFT + X", hl.dsp.window.kill())
