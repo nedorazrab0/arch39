@@ -32,7 +32,7 @@ hl.env("QT_QPA_PLATFORMTHEME", "gtk3")
 hl.env("HYPRCURSOR_SIZE", "24")
 hl.env("XCURSOR_SIZE", "24")
 
-hl.env("RADV_PERFTEST", "gpl,video_decode,video_encode")
+hl.env("RADV_EXPERIMENTAL", "gpl,video_decode,video_encode")
 hl.env("_JAVA_AWT_WM_NONREPARENTING", "1")
 hl.env("PYTHON_HISTORY", "/dev/null")
 hl.env("QSG_RHI_BACKEND", "vulkan")
