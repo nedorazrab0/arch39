@@ -1,7 +1,7 @@
 -- Hyprland config
 
 local run = "flatpak run"
-local lock = "pidof -q hyprlock || hyprlock -c /etc/hypr/hyprlock.conf"
+local lock = "pidof -q hyprlock || hyprlock -q -g 0 --immediate-render"
 local terminal = "ghostty --config-default-files=false"
     .. " --config-file=/etc/config.ghostty"
 
@@ -43,7 +43,7 @@ hl.on(
     function () 
         hl.exec_cmd("systemctl --user start hyprland-session.target")
         hl.exec_cmd("mako")
-        hl.exec_cmd("hypridle -c /etc/hypr/hypridle.conf")
+        hl.exec_cmd("hypridle -q")
         hl.exec_cmd("wl-clip-persist --clipboard regular")
         hl.exec_cmd("waybar -l off")
         hl.exec_cmd(terminal)
