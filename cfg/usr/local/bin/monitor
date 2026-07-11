@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# SPDX-License-Identifier: 0BSD
+# System monitor
+set -e
+
+main() {
+    local capacity='/sys/class/power_supply/BAT1/capacity'
+    [[ -f "${capacity}" ]] && local capacity_cmd="cat ${capacity}"
+    while :; do
+        clear
+        date
+        ${capacity_cmd}
+        sleep 60
+    done
+}
+
+main
